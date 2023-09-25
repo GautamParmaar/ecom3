@@ -1,0 +1,8 @@
+fs.collection('Cart '+user.uid ).onSnapshot=>{
+    const newCartProduct=snapshot.docs.map((doc)=>(
+        {
+            ID:doc.id,
+            ...doc.data(),
+        }
+    ))
+}
