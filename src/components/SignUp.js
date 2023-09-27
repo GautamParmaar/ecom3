@@ -75,26 +75,24 @@ function SignUp() {
     <section className='sectionContainer' >
     <div class="container signupForm">
       
-      <div class="alert alert-warning text-center my-4">
-
-      Registration on this platform is exclusively available to medical professionals and individuals in the retail or wholesale sector. After a thorough verification process, you will gain access to the ordering feature.      </div>
+      
       
       <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-8 col-xl-6">
           <div class="row">
             <div class="col text-center">
-              <h1>Register</h1>
-              <p class="text-h3">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia. </p>
+              <h2>Register</h2>
+              <p class="text-h3"> Registration on this platform is exclusively available to medical professionals and individuals in the retail or wholesale sector.</p>
             </div>
           </div>
-          <div class="row align-items-center">
-            <div class="col mt-3">
+          <div class="row align-items-center mt-0">
+            <div class="col mt-0">
               <input type="text" name='name' class="form-control" placeholder="Your Name" required onChange={(events)=>{
   setValues((prev)=>({...prev,name:events.target.value}))
 }} />
             </div>
           </div>
-          <div class="row align-items-center mt-4">
+          <div class="row align-items-center mt-2">
             <div class="col">
               <input type="number" class="form-control" placeholder="Your Phone Number" name='phone' onChange={(events)=>{
   setValues((prev)=>({...prev,phone:events.target.value}))
@@ -106,7 +104,7 @@ function SignUp() {
 }} required/>
             </div>
           </div>
-          <div class="row align-items-center mt-4">
+          <div class="row align-items-center mt-2">
             <div class="col">
               <input type="password" name='pass' class="form-control"onChange={(events)=>{
   setValues((prev)=>({...prev,pass:events.target.value}))
@@ -118,19 +116,20 @@ function SignUp() {
             
             
           </div>
-          <br/>
           
-            <div class="row align-items-center">
-            <h6>Register as</h6>
+          
+            <div class="row align-items-center mt-2">
+            <h6>Business Type</h6>
             <div className='col'>
         <select id="brandFilter" name='select'  required onChange={(events)=>{
           setValues((prev)=>({...prev,select:events.target.value}))
         }}    >
+                    <option value="retailer">Retailer/wholesaler</option>
+
           <option  value="Doctor">Doctor</option>
-          <option value="retailer">Retailer/wholesaler</option>
         </select>
 
-        <div class="col mt-3">
+        <div class="col mt-2">
               <input type="text" name='GST' disabled={values.select === 'Doctor'}  title="GST number is only required for Retailers/Wholesalers"  class="form-control" onChange={(events)=>{
   setValues((prev)=>({...prev,GST:events.target.value}))
 }} placeholder="Your GST number" required/>
@@ -142,7 +141,7 @@ function SignUp() {
 
           </div>
           <div class="">
-              <button type='submit' onClick={handleSubmit} class="btn btn-primary mt-4">Submit</button>
+              <button type='submit' onClick={handleSubmit} class="btn btn-primary mt-2">Submit</button>
 
           </div>
       

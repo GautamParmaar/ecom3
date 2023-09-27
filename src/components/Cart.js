@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { auth, db } from '../config/Config';
-import { getDoc,doc,collection, getDocs, onSnapshot,updateDoc } from "firebase/firestore";
+import { getDoc,doc,collection, getDocs, onSnapshot,updateDoc, deleteDoc } from "firebase/firestore";
 import CartProducts from './CartProducts';
 import StripeCheckout from 'react-stripe-checkout'
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 
-
-function Cart() {
+<ToastContainer
+    autoClose={5000}
+    hideProgressBar={true}
+   
+/>
+function  Cart(props) {
+   
 
     useEffect(()=>{
         auth.onAuthStateChanged(async(user)=>{
@@ -31,7 +41,7 @@ function Cart() {
 
 
         
-        
+        const history=useNavigate();
         
         
         //state of cart products
@@ -169,6 +179,66 @@ function Cart() {
         const reducerOfPrice=(accumulator,currentValue)=>accumulator+currentValue;
         const totalPrice=price.reduce(reducerOfPrice,0);
 
+
+
+        //charging payment
+
+        const handleToken=async(token)=>{
+        const cart={name:'All Products',totalPrice}
+        const response=await axios.post('http://localhost:8080/checkout',{
+            token,
+            cart
+        })
+        console.log(response)
+        let {status}=response.data;
+        if(status==='success'){
+            history('/')
+            toast.success('Your order has been placed successfully', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+              });
+
+              auth.onAuthStateChanged(async(user)=>{
+                if(user){
+                    const cartCollection = collection(db, 'Cart ' + user.uid);
+
+                    // Fetch all documents in the 'Cart {user.uid}' collection
+                    const cartsSnapshot = await getDocs(cartCollection);
+                    
+                    // Iterate through the documents and delete them
+                    for (const docRef of cartsSnapshot.docs) {
+                      const cartDocRef = doc(db, 'Cart ' + user.uid, docRef.id);
+                      await deleteDoc(cartDocRef)
+                        .then(() => {
+                          console.log('Document successfully deleted.');
+                        })
+                        .catch((error) => {
+                          console.error('Error deleting document: ', error);
+                        });
+                      
+
+                      }
+                      
+    
+                   
+                }
+                else{
+                    console.log("user is not logged in")
+                }
+            })
+
+
+
+        }
+        else{
+            alert('Something went wrong')
+        }
+        }
         
          
 
@@ -191,7 +261,15 @@ function Cart() {
     Total Price to Pay :<span> ₹ {totalPrice}</span>
   </div>
   <br/>
-  <StripeCheckout></StripeCheckout>
+  <StripeCheckout  stripeKey='pk_test_51NuEdsSH8i0IOWv3H4lHoRZIosQT0yraBQpCA2WNVGAHY3pWCUtRMlwY88bStOpKzZj63AnuPA7tNummvV4K5rCF00aLQTZTNe'  token={handleToken}
+//   billingAddress='Jaora'
+
+  shippingAddress='jaora'
+  name='All Products'
+  amount={totalPrice*100}
+  >
+  
+  </StripeCheckout>
 </div>
     </div>
    )}

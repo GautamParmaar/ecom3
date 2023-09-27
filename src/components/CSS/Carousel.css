@@ -1,0 +1,169 @@
+h1 {
+    margin: 1rem auto 4rem;
+  }
+  
+  .product--image {
+    width: 100%;
+    height: 16em;
+    object-fit: cover;
+  }
+  
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 320px;
+    margin: auto;
+    text-align: center;
+    font-family: Arial;
+    
+  }
+  
+  .price {
+    color: grey;
+    font-size: 22px;
+  }
+  
+  .card button {
+    border: none;
+    outline: 0;
+    padding: 12px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+  
+  .card button:hover {
+    opacity: 0.7;
+  }
+
+  .stylish-box {
+   
+    padding-top: 0.6em;
+    padding-bottom: 2em;
+    padding-left: 2em;
+    padding-right: 2em;
+    
+    
+    
+    width: 100%;
+    background: linear-gradient(to right, #ff9a8b, #f6d365); /* Gradient background */
+    color: #fff;
+    box-sizing: border-box;
+    border-radius: 20px; /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  }
+  
+  .box-title {
+    font-size: 28px;
+    margin: 0;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  
+  .box-description {
+    font-size: 18px;
+    margin-top: 10px;
+    text-align: center;
+  }
+  .offer-label {
+    color: rgb(251, 247, 247);
+    /* position: absolute; */
+    /* top: 10px; Adjust the top position as needed */
+    bottom: 3em;
+  /* margin: auto auto; */
+  /* padding-bottom: 2em; */
+  margin-top: 1em;
+  margin-bottom: 0.8em;
+  font-size: 1.5em;
+
+  }
+    .cardBorder{
+      background-color: white;
+      border: 2px solid white;
+      border-radius: 22px;
+    }
+
+    carousel{
+      margin-right: -20em;
+      width: 1em;
+    }
+
+    .stylish-box2 {
+      margin-left: 1em;
+      margin-right: 1em;
+      margin-bottom: 1em;
+      
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 200px;
+  border: 2px solid #3498db;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    .offer-label2 {
+      color: rgb(12, 0, 0);
+      /* position: absolute; */
+      /* top: 10px; Adjust the top position as needed */
+      bottom: 1em;
+    /* margin: auto auto; */
+    /* padding-bottom: 2em; */
+    margin-top: 0.1em;
+    /* margin-bottom: 0.8em; */
+    font-size: 1.3em;
+  
+    }
+    
+
+    .icon2 {
+      margin: auto;
+      margin-right: 4em;
+    }
+
+    .textbox {
+      margin: auto
+       auto;
+      display: flex;
+      margin-top: 2em;
+      
+
+     
+    }
+
+    .flex2{
+      margin: auto ;
+      margin-top: 2em;
+      display: flex;
+      
+    }
+    .text2{
+      margin: auto;
+      margin-right: 2em;
+
+    }
+    .box2{
+      display: flex;
+    }
+    .ico{
+      margin-left: 4em;
+    }
+
+
+    @media (max-width: 480px) {
+     .box2{
+      display: flex;
+      flex-direction: column;
+     }
+     .flex2{
+      margin: auto ;
+      /* margin-top: 2em; */
+      display: flex;
+      flex-direction: column;
+
+      
+    }
+  }

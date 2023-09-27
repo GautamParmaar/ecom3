@@ -13,6 +13,7 @@ import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
 import Profile from './components/Profile';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import HomePage from './components/HomePage';
 
 
 function App() {
@@ -24,6 +25,7 @@ const [user,setUser]=useState();
 useEffect(()=>{
   auth.onAuthStateChanged(user=>{
     if(user){
+      console.log(user.uid)
       setUID(user.uid)
       setUser(user);
     }
@@ -36,7 +38,7 @@ useEffect(()=>{
 
 
 
-console.log("id is",userid)
+
 
 
 //getting products function
@@ -54,16 +56,18 @@ const [products, setProducts]=useState([]);
     
     <Navbar2 user={user}/>
     <Routes>
-    
-          <Route path="/" element={<Home2/> }/>
+           <Route path="/" element={<HomePage/> }/>
+
+          <Route path="/products" element={<Home2/> }/>
           <Route path="/signup2" element={<Signup2/> }/>
           <Route path="/login2" element={<Login2/> }/>
           <Route path="/add" element={<AddProducts/>}/>
-          <Route path="/cart" element={<Cart/>}/>
+          <Route path="/cart" element={<Cart user={user} />}/>
           <Route path='/single/:id' element={<SingleProduct userid={userid}/>}/>
-          <Route path='/profile' element={<Profile/>}></Route>
+          <Route path='/profile' element={<Profile user={user}/>}></Route>
           <Route path="/login" element={<Login/> }/>
           <Route path="/signup" element={<SignUp/>}/>
+
 
 
 

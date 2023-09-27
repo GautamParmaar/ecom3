@@ -1,6 +1,57 @@
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import "./CSS/Profile.css"
-function Profile() {
+import { doc, getDoc } from 'firebase/firestore'
+import { auth, db } from '../config/Config'
+function Profile({user}) {
+  const [userName,setUsername]=useState("")
+ const [userEmail,setUserEmail]=useState("")
+ const [userPhoneNo,setUserPhoneNo]=useState("")
+ const [userUID,setUserUID]=useState("")
+ const[userPhone,setUserPhone]=useState("")
+ const [userGST,setUserGST]=useState("")
+ useEffect(()=>{
+  auth.onAuthStateChanged(async(user)=>{
+    if(user){
+      setUsername(user.displayName)
+      setUserEmail(user.email)
+      // setUserPhoneNo(user.phoneNumber)
+      setUserUID(user.uid);}
+    else{
+      setUsername()
+    }
+    console.log(user);
+    console.log(user.uid);
+    const userDocRef = doc(db, 'users', user.uid);
+    const userDoc = await getDoc(userDocRef);
+    if (userDoc.exists()) {
+      // Document data exists, you can access it using .data() method
+      const userData = userDoc.data();
+      console.log('Fetched data:', userData);
+      setUserPhone(userData.phone);
+      setUserGST(userData.GST);
+      
+      return userData;
+    } else {
+      console.log('No such document!');
+      return null;
+    }
+  
+    
+  // console.log(user.uid)
+  
+  
+  })
+  
+  
+  
+  
+  
+  // code for getting data
+  
+  
+  
+  
+    })
   return (
     <>
    
@@ -9,7 +60,7 @@ function Profile() {
     <div class="panel profile-panel">
       <div class="panel-heading">
         <div class="text-left">
-          <h2>Joe Doe</h2>
+          <h2>Welcome {userName}</h2>
         </div>
       </div>
       {/* <!-- panel body --> */}

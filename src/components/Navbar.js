@@ -1,7 +1,5 @@
 import React,{useEffect, useState} from "react";
-import navbarItems from "./NavBarItems";
-import { NavLink, redirect, useNavigate } from "react-router-dom";
-import { FaBars } from "react-icons/fa";
+import { NavLink, useNavigate } from "react-router-dom";
 import {Icon} from 'react-icons-kit'
 import {shoppingCart} from 'react-icons-kit/feather/shoppingCart'
 
@@ -10,6 +8,7 @@ import "./CSS/NavBar.css";
 import { auth, db } from "../config/Config";
 import { signOut } from "firebase/auth";
 import { collection, onSnapshot, query } from "firebase/firestore";
+
 
 
 const Navbar2 = ({ user }) => {
@@ -66,9 +65,24 @@ const Navbar2 = ({ user }) => {
         <li className="nav-item">
           <NavLink
             exact
+            to="/products"
+            activeClassName="active"
+            className="nav-links"
+            onClick={handleClick}
+
+           
+          >
+            Products
+          </NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink
+            exact
             to="/profile"
             activeClassName="active"
             className="nav-links"
+            onClick={handleClick}
+
             
           >
            Profile
