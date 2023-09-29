@@ -48,7 +48,7 @@ console.log("cart",cartProduct)
                     <Icon icon={plus} size={20}/>
                 </div>
             </div>
-            <div className='product-text cart-price'>$ {cartProduct.TotalProductPrice}</div>
+            <div className='product-text cart-price'>₹ {cartProduct.TotalProductPrice}</div>
             <div className='btn btn-danger btn-md cart-btn' onClick={handleCartDelete}>DELETE</div>            
         </div>
     

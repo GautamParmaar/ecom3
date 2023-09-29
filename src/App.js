@@ -14,6 +14,7 @@ import Profile from './components/Profile';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
 import HomePage from './components/HomePage';
+import OrderDetails from './components/OrderDetails';
 
 
 function App() {
@@ -67,6 +68,7 @@ const [products, setProducts]=useState([]);
           <Route path='/profile' element={<Profile user={user}/>}></Route>
           <Route path="/login" element={<Login/> }/>
           <Route path="/signup" element={<SignUp/>}/>
+          <Route path='/order' element={<OrderDetails user={user}/>}/>
 
 
 

@@ -15,7 +15,8 @@ import { ToastContainer } from 'react-toastify';
     hideProgressBar={true}
    
 />
-function  Cart(props) {
+function  Cart({user}) {
+    let[cartitems,setCartItems]=useState([])
    
 
     useEffect(()=>{
@@ -65,6 +66,9 @@ function  Cart(props) {
                 
                 // Do something with the new cart products here
                 setCartProducts(newCartProducts)
+                setCartItems(newCartProducts)
+
+                
             });
 
             
@@ -180,19 +184,24 @@ function  Cart(props) {
         const totalPrice=price.reduce(reducerOfPrice,0);
 
 
-
         //charging payment
 
         const handleToken=async(token)=>{
-        const cart={name:'All Products',totalPrice}
+            
+        const cart={name:cartitems,totalPrice}
         const response=await axios.post('http://localhost:8080/checkout',{
             token,
-            cart
+            cart,
+            user
         })
-        console.log(response)
+        console.log("token",token)
+        console.log("cart",cart)
         let {status}=response.data;
+        let{order}=response.data
+
         if(status==='success'){
             history('/')
+            console.log(order,"carge")
             toast.success('Your order has been placed successfully', {
                 position: 'top-right',
                 autoClose: 5000,
