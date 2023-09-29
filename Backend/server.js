@@ -39,9 +39,13 @@ app.post('/checkout',async(req,res)=>{
     let error;
     let status;
     let order=[]
+    let productNames=[]
+
     
     try{
-        const {cart,token,user}=req.body;
+        const {cart,token,user,id}=req.body;
+        
+      
         const customer=await stripe.customers.create({
             email:token.email,
             source:token.id
@@ -52,7 +56,9 @@ app.post('/checkout',async(req,res)=>{
             currency:'inr',
             customer:customer.id,
             receipt_email:token.email,
-            description:cart.cartname,
+            description:"null",
+            
+
             shipping:{
                 name:token.card.name,
                 address:{
@@ -63,8 +69,13 @@ app.post('/checkout',async(req,res)=>{
                     postal_code:token.card.address_zip
 
                 }
-            }
+               
+            },
+           metadata: {
+        productNames: productName // Join array elements into a string
+      },
         },{idempotencyKey:key})
+        console.log(charge)
 
         status="success"
         order.push(charge.id);
@@ -81,6 +92,24 @@ app.post('/checkout',async(req,res)=>{
                             await updateDoc(cartProductRef,{
                                 OrderId: arrayUnion(charge.id)
                             });
+
+  // for putting order id into user database
+                             const orderIds = []; // Replace with your order IDs
+            const userDocRef = doc(db, 'users', id);
+            const userDoc = await getDoc(userDocRef);
+            if (userDoc.exists()) {
+              // Document data exists, you can access it using .data() method
+              const userData = userDoc.data();
+              orderIds.push(...userData.OrderId)
+              console.log('Fetched data:', userData.OrderId);
+              console.log(orderIds)
+             
+            } else {
+              console.log('No such document!');
+              return null;
+            }
+
+
                             
                             console.log("Data updated successfully");
                         } else {

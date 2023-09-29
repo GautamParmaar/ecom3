@@ -16,13 +16,18 @@ import { ToastContainer } from 'react-toastify';
    
 />
 function  Cart({user}) {
+    const [userDetails,setUserDetails]=useState()
     let[cartitems,setCartItems]=useState([])
-   
+        let[ProductQTY,setProductQTY]=useState([])
+    // let[ProductID,setProductID]=useState([])
+    let ProductID=[]
+    let ProductQty=[]
 
+    //forr getting product id & name
     useEffect(()=>{
         auth.onAuthStateChanged(async(user)=>{
           if(user){
-            console.log("fhfdkf",user.uid);
+            
             const userDocRef = doc(db, 'users', user.uid);
             const userDoc = await getDoc(userDocRef);
             if (userDoc.exists()) {
@@ -41,10 +46,35 @@ function  Cart({user}) {
         })
 
 
+   
+
+    useEffect(()=>{
+        auth.onAuthStateChanged(async(user)=>{
+          if(user){
+           
+            const userCollectionRef = collection(db, 'Cart '+user.uid);
+            const querySnapshot = await getDocs(userCollectionRef);
+            
+            querySnapshot.forEach((doc) => {
+              // Access individual documents here using doc.data()
+              // console.log("data",doc.id, ' => ', doc.data());
+              let data=doc.data();
+              ProductID.push(doc.id)
+              ProductQty.push(data.qty)
+             
+              console.log(ProductQty,"ID")
+            });
+
+          }
+         
+         })
+        })
+
+
         
         const history=useNavigate();
         
-        
+        console.log(cartitems,"gffg")
         //state of cart products
 
         const [cartProducts,setCartProducts]=useState([])
@@ -67,6 +97,7 @@ function  Cart({user}) {
                 // Do something with the new cart products here
                 setCartProducts(newCartProducts)
                 setCartItems(newCartProducts)
+               
 
                 
             });
@@ -184,18 +215,23 @@ function  Cart({user}) {
         const totalPrice=price.reduce(reducerOfPrice,0);
 
 
-        //charging payment
+const json=JSON.stringify(cartitems)
+console.log("json",json)
 
+       let id=userDetails;
+
+        //charging payment
+let ProductId= [] ;//array for storing successful order's product id
         const handleToken=async(token)=>{
+             
             
         const cart={name:cartitems,totalPrice}
         const response=await axios.post('http://localhost:8080/checkout',{
             token,
             cart,
-            user
+            user,id,ProductId,ProductQty
         })
-        console.log("token",token)
-        console.log("cart",cart)
+        
         let {status}=response.data;
         let{order}=response.data
 
@@ -218,10 +254,31 @@ function  Cart({user}) {
 
                     // Fetch all documents in the 'Cart {user.uid}' collection
                     const cartsSnapshot = await getDocs(cartCollection);
+                      const documentIds =  cartsSnapshot.docs.map((doc) => doc.id);
+                      ProductId.push(documentIds);
+
+
+                      const cartProductRef = doc(db, 'Orders', user.uid);
+                      const existingData = await getDoc(cartProductRef);
+                     if (existingData.exists()) {
+                                          // Get the existing product data from the document
+                                          
+                                      
+                                          // Update the document with the modified data
+                                          await updateDoc(cartProductRef,{
+                                              OrderId: ProductID
+                                          });
+                                          
+                                          console.log("Data updated successfully");
+                                      } else {
+                                          console.log("Document does not exist");
+                                      } 
+
+
                     
                     // Iterate through the documents and delete them
                     for (const docRef of cartsSnapshot.docs) {
-                      const cartDocRef = doc(db, 'Cart ' + user.uid, docRef.id);
+                      const cartDocRef =  doc(db, 'Cart ' + user.uid, docRef.id);
                       await deleteDoc(cartDocRef)
                         .then(() => {
                           console.log('Document successfully deleted.');
