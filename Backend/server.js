@@ -35,6 +35,121 @@ app.get('/',(req,res)=>{
     res.send("welcome")
 })
 
+
+app.post('/create-checkout',async(req,res)=>{
+  let order=[]
+const {products,id}=req.body;
+console.log(products,"gggg")
+// console.log(id,"id");
+// console.log(products,"pppp")
+
+const lineItems= await products.map((products)=>({
+  price_data:{
+    currency:"inr",
+    product_data:{
+      name:products.name,
+      
+    },
+    unit_amount:products.price*100,
+    customer_details:products.id,
+
+  },
+  quantity:products.qty,
+  customer_details:products.id,
+}))
+
+  const productID=[];
+  products.forEach((product) => {
+    productID.push(product.ID);
+  });
+  const metadata = {
+    'productID': JSON.stringify(products),
+  };
+  
+try{
+  const data=[]
+products.map((products)=>{
+  data.push(products.ID)
+  console.log(data)
+})
+// console.log(products,"hello")
+const session=await stripe.checkout.sessions.create({
+  payment_method_types:["card"],
+  line_items:lineItems,
+  mode:"payment",
+  success_url:'http://localhost:3000/',
+  cancel_url:"http://localhost:3000/cart",
+  metadata : {
+    products:JSON.stringify(data)
+  }
+
+})
+res.json({id:session.id})
+
+console.log(session)
+order.push(session.id)
+
+
+//code for inserting order id into user's database
+const orderIds = [];
+orderIds.push(session.id)
+
+ // Replace with your order IDs
+try {
+  const userDocRef = doc(db, 'users', id);
+
+  const existingData = await getDoc(userDocRef);
+  if (existingData.exists()) {
+    // Get the existing product data from the document
+
+
+    // Update the document with the modified data
+    await updateDoc(userDocRef, {
+        OrderId: arrayUnion(session.id)
+    });
+
+    console.log("Data updated successfully");
+} else {
+    console.log("Document does not exist");
+}
+} catch (error) {
+  console.error('Error updating document: ', error);
+}
+
+//for inserting order details in order database ,document id will be user uid
+const cartProductRef = doc(db, 'Orders', id);
+const existingData = await getDoc(cartProductRef);
+
+if (existingData.exists()) {
+  // Get the existing product data from the document
+  const existingProductData = existingData.data();
+
+  // Merge the existing data with the new session object
+  const updatedData = {
+    ...existingProductData,
+    Orders: session,
+  };
+
+  // Update the document with the modified data without overwriting other fields
+  await setDoc(cartProductRef, updatedData, { merge: true });
+
+  console.log("Data updated successfully");
+} else {
+  console.log("Document does not exist");
+}
+
+
+
+
+
+}
+catch(error){
+  console.log(error)
+}
+
+
+})
+
 app.post('/checkout',async(req,res)=>{
     let error;
     let status;
@@ -43,44 +158,9 @@ app.post('/checkout',async(req,res)=>{
 
     
     try{
-        const {cart,token,user,id,cartProducts}=req.body;
-        console.log("cart",cartProducts)
-        const metaData=cartProducts.map((cartproduct)=>{
-          {
-            productName: cartproduct.name
-          }
-        })
-        
+        const {cart,token,user,id,Products}=req.body;
+        console.log("cart",Products)
       
-        const customer=await stripe.customers.create({
-            email:token.email,
-            source:token.id
-        })
-        const key=uuidv4();
-        const charge=await stripe.paymentIntents.create({
-            amount:cart.totalPrice*100,
-            currency:'inr',
-            customer:customer.id,
-            receipt_email:token.email,
-            description:"null",
-            
-
-            shipping:{
-                name:token.card.name,
-                address:{
-                    line1:token.card.address_line1,
-                    line2:token.card.address_line2,
-                    city:token.card.address_city,
-                    country:token.card.address_country,
-                    postal_code:token.card.address_zip
-
-                }
-               
-            },
-            metaData
-          
-        },{idempotencyKey:key})
-        console.log(charge.metadata)
 
         status="success"
         order.push(charge.id);
@@ -142,8 +222,8 @@ app.get('/orderDetails',async(req,res)=>{
               // Document data exists, you can access it using .data() method
               const userData = userDoc.data();
               orderIds.push(...userData.OrderId)
-              console.log('Fetched data:', userData.OrderId);
-              console.log(orderIds)
+              // console.log('Fetched data:', userData.OrderId);
+              // console.log(orderIds)
              
             } else {
               console.log('No such document!');
@@ -157,8 +237,10 @@ app.get('/orderDetails',async(req,res)=>{
             const fetchPaymentIntentsSequentially = async () => {
               for (const orderId of orderIds) {
                 try {
-                  const paymentIntent = await retrievePaymentIntent(orderId);
+                  const paymentIntent = await retrievePaymentIntent('cs_test_b1riX13bwreSi7YqRTaLxJh6UWNgZI9UcSH3vt9jL05gujVyidf5CIEXQy');
                   paymentIntents.push(paymentIntent);
+                  console.log(paymentIntents,"payment");
+
 
                   const docRef = await setDoc(doc(db, "Orders", id), {
                     uid:id,
@@ -195,6 +277,42 @@ app.get('/orderDetails',async(req,res)=>{
 // console.log(transaction)
 // orderData=paymentIntents;
 // res.json({orderData})
+
+})
+const orderIds = [
+  'cs_test_b136rhgWjZ1UG5En3w2czBWyZY9XHfzZlYygc9fTlDp5cNHClhb8YIRkAz',
+  'cs_test_b1L2NluARSC1e1PeN3rN4VJU6Zk3AVbT3T8yJqZNHcbxfWUnrrHo94dJFc'
+  // Add more order IDs as needed
+];
+
+
+app.get('/orderDetails2',async(req,res,orderId)=>{
+  const { id } = req.query;
+console.log("cart",id)
+let orderIds=['cs_test_b1L2NluARSC1e1PeN3rN4VJU6Zk3AVbT3T8yJqZNHcbxfWUnrrHo94dJFc','cs_test_b1RHd3ZLD1UG3fi09KC1fWxcGCCGkYuBnmqo4wY00zsqaqk0T9cnnDBLMg']
+
+const retrieveOrderDetails = async (orderId) => {
+  try {
+    const session = await stripe.checkout.sessions.retrieve(orderId);
+    return session; // You can return the session or any specific data you need
+  } catch (error) {
+    console.error(`Error retrieving order details for ${orderId}:`, error);
+    return null;
+  }
+};
+
+// Use Promise.all with map to fetch order details for all order IDs concurrently
+const fetchOrderDetails = async () => {
+  const orderDetails = await Promise.all(orderIds.map(retrieveOrderDetails));
+
+  // orderDetails is an array of order details for each order ID
+  console.log(orderDetails);
+
+  // You can process the order details here
+};
+
+// Call the function to fetch order details
+fetchOrderDetails();
 
 })
 

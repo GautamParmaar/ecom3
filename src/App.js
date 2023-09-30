@@ -15,6 +15,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import HomePage from './components/HomePage';
 import OrderDetails from './components/OrderDetails';
+import MyOrder from './components/Order/MyOrder';
 
 
 function App() {
@@ -69,6 +70,7 @@ const [products, setProducts]=useState([]);
           <Route path="/login" element={<Login/> }/>
           <Route path="/signup" element={<SignUp/>}/>
           <Route path='/order' element={<OrderDetails user={user}/>}/>
+          <Route path='/myorder' element={<MyOrder/>}/>
 
 
 

@@ -28,12 +28,24 @@ useEffect(()=>{
        console.log(orderData,"data")
         }
 
+        const handleToken2=async(token)=>{
+          const cart={id:userid}
+          const queryParams = new URLSearchParams(cart).toString();
+          
+        const response=await axios.get(`http://localhost:8080/orderDetails2?${queryParams}`)
+        let {orderData}=response.data
+        console.log(orderData,"data")
+
+        }
+
 
        
         
   return (
    <>
    <button onClick={handleToken}>okay</button>
+   <button className='btn btn-success' onClick={handleToken2}>okay</button>
+
    </>
   )
 }
