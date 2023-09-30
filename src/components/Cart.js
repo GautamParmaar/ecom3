@@ -229,7 +229,7 @@ let ProductId= [] ;//array for storing successful order's product id
         const response=await axios.post('http://localhost:8080/checkout',{
             token,
             cart,
-            user,id,ProductId,ProductQty
+            user,id,ProductId,ProductQty,cartProducts
         })
         
         let {status}=response.data;

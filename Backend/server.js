@@ -43,7 +43,13 @@ app.post('/checkout',async(req,res)=>{
 
     
     try{
-        const {cart,token,user,id}=req.body;
+        const {cart,token,user,id,cartProducts}=req.body;
+        console.log("cart",cartProducts)
+        const metaData=cartProducts.map((cartproduct)=>{
+          {
+            productName: cartproduct.name
+          }
+        })
         
       
         const customer=await stripe.customers.create({
@@ -71,11 +77,10 @@ app.post('/checkout',async(req,res)=>{
                 }
                
             },
-           metadata: {
-        productNames: productName // Join array elements into a string
-      },
+            metaData
+          
         },{idempotencyKey:key})
-        console.log(charge)
+        console.log(charge.metadata)
 
         status="success"
         order.push(charge.id);
@@ -94,20 +99,20 @@ app.post('/checkout',async(req,res)=>{
                             });
 
   // for putting order id into user database
-                             const orderIds = []; // Replace with your order IDs
-            const userDocRef = doc(db, 'users', id);
-            const userDoc = await getDoc(userDocRef);
-            if (userDoc.exists()) {
-              // Document data exists, you can access it using .data() method
-              const userData = userDoc.data();
-              orderIds.push(...userData.OrderId)
-              console.log('Fetched data:', userData.OrderId);
-              console.log(orderIds)
+            //                  const orderIds = []; // Replace with your order IDs
+            // const userDocRef = doc(db, 'users', id);
+            // const userDoc = await getDoc(userDocRef);
+            // if (userDoc.exists()) {
+            //   // Document data exists, you can access it using .data() method
+            //   const userData = userDoc.data();
+            //   orderIds.push(...userData.OrderId)
+            //   console.log('Fetched data:', userData.OrderId);
+            //   console.log(orderIds)
              
-            } else {
-              console.log('No such document!');
-              return null;
-            }
+            // } else {
+            //   console.log('No such document!');
+            //   return null;
+            // }
 
 
                             
