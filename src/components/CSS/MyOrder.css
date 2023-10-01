@@ -1,0 +1,204 @@
+.container {
+    background: white;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    align-items: flex-start;
+  }
+  
+  /* sidebar */
+  .sidebar {
+    background: #f8f8ff;
+    width: 400px;
+    height: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .sidebar .top {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+  .sidebar .profile {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  .sidebar .profile h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+  .sidebar .profile img {
+    width: 5rem;
+    height: 5rem;
+    object-fit: cover;
+    border-radius: 1.5rem;
+  }
+  .sidebar nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .sidebar a {
+    display: block;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-left: solid transparent 0.5rem;
+    border-radius: 0.2rem;
+  }
+  .sidebar a:hover {
+    border-left-color: tomato;
+  }
+  .sidebar a ion-icon {
+    font-size: 2rem;
+  }
+  
+  /* plan */
+  .plan {
+    width: 350px;
+    background: tomato;
+    padding: 2rem;
+    border-radius: 1rem;
+    margin: 0 2rem;
+    margin-top: 10rem;
+  }
+  .plan p {
+    font-size: 1rem;
+    color: white;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .plan h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    margin: 1rem 0;
+  }
+  .plan a {
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    border: solid white 0.1rem;
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+  }
+  
+  /* main section starts here */
+  .main {
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+  }
+  .main h1 {
+    font-size: 3rem;
+    margin-bottom: 4rem;
+  }
+  .main h3 {
+    font-size: 1.5rem;
+  }
+  .main p {
+    font-size: 1rem;
+  }
+  table,
+  th,
+  td {
+    border-collapse: collapse;
+  }
+  .main table {
+    margin: 2rem 0;
+    width: 100%;
+    max-width: 40rem;
+    text-align: center;
+  }
+  .main th {
+    font-size: 1rem;
+    padding: 1rem 0.5rem;
+    font-weight: 500;
+  }
+  .main td {
+    font-size: 1rem;
+    padding: 1rem 0.5rem;
+    font-weight: 700;
+  }
+  .main td a {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border: solid #393a625f 0.1rem;
+    border-radius: 0.3rem;
+  }
+  .main td a:hover {
+    background: tomato;
+    color: white;
+    border-color: tomato;
+  }
+  .main tbody tr:hover {
+    box-shadow: #393a622f 0 0.2rem 1rem;
+    border-radius: 0.5rem;
+  }
+  
+  .main .more {
+    color: tomato;
+    text-decoration: underline;
+    font-size: 1rem;
+    margin-bottom: 4rem;
+  }
+  
+  .main .card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 3rem 0;
+  }
+  .main .left {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .main .visa {
+    width: 7rem;
+    border: solid #393a625f 0.1rem;
+    border-radius: 0.4rem;
+    padding: 0.5rem;
+  }
+  .main .remove {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border: solid #393a625f 0.1rem;
+    border-radius: 0.3rem;
+  }
+  .main .remove:hover {
+    background: tomato;
+    color: white;
+    border-color: tomato;
+  }
+  
+  /* responsive */
+  @media only screen and (max-width: 990px) {
+    .plan{
+      display: none;
+    }
+    html{
+      font-size: 10px;
+    }
+  }
+  
+  @media only screen and (max-width: 720px){
+    .sidebar{
+      width: 10rem;
+    }
+    .sidebar .profile_info, .sidebar a span{
+      display: none;
+    }
+  }

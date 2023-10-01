@@ -70,7 +70,7 @@ const [products, setProducts]=useState([]);
           <Route path="/login" element={<Login/> }/>
           <Route path="/signup" element={<SignUp/>}/>
           <Route path='/order' element={<OrderDetails user={user}/>}/>
-          <Route path='/myorder' element={<MyOrder/>}/>
+          <Route path='/myorder' element={<MyOrder user={user}/>}/>
 
 
 

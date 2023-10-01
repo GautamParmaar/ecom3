@@ -116,7 +116,10 @@ try {
   console.error('Error updating document: ', error);
 }
 
+const SessionData=[]
+
 //for inserting order details in order database ,document id will be user uid
+
 const cartProductRef = doc(db, 'Orders', id);
 const existingData = await getDoc(cartProductRef);
 
@@ -124,18 +127,29 @@ if (existingData.exists()) {
   // Get the existing product data from the document
   const existingProductData = existingData.data();
 
-  // Merge the existing data with the new session object
-  const updatedData = {
-    ...existingProductData,
-    Orders: session,
-  };
+  // Check if the 'Orders' field exists and is an array
+  if (existingProductData.hasOwnProperty('Orders') && Array.isArray(existingProductData.Orders)) {
+    // Create a copy of the existing array
+    const existingOrders = [...existingProductData.Orders];
 
-  // Update the document with the modified data without overwriting other fields
-  await setDoc(cartProductRef, updatedData, { merge: true });
+    // Add the new session object to the array
+    existingOrders.push(session);
 
-  console.log("Data updated successfully");
+    // Update the document with the modified array
+    await updateDoc(cartProductRef, {
+      Orders: existingOrders
+    });
+
+    console.log("Data updated successfully");
+  } else {
+    console.error("'Orders' field does not exist or is not an array");
+  }
 } else {
-  console.log("Document does not exist");
+  // If the document doesn't exist, create it with the 'Orders' field containing the new session object
+  await setDoc(doc(db, "Orders", id), {
+    Orders: [session]
+  });
+  console.log("Data has been created");
 }
 
 
