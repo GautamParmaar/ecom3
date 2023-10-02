@@ -1,204 +1,248 @@
-.container {
-    background: white;
+
+
+/*  */
+/* =============================================================================
+   Responsive Table CSS
+   ========================================================================== */
+   
+   .responsive-table {
     width: 100%;
-    max-width: 1280px;
-    margin: 0 auto;
-    height: 100vh;
-    display: flex;
-    align-items: flex-start;
+    margin-bottom: 1.5em;
+    align-items: center;
+    margin: auto;
+  }
+  .responsive-table thead {
+    position: absolute;
+    clip: rect(1px 1px 1px 1px);
+    /* IE6, IE7 */
+    clip: rect(1px, 1px, 1px, 1px);
+    padding: 0;
+    border: 0;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+  }
+  .responsive-table thead th {
+    background-color: #1d96b2;
+    border: 1px solid #1d96b2;
+    font-weight: normal;
+    text-align: center;
+    color: white;
+  }
+  .responsive-table thead th:first-of-type {
+    text-align: left;
+  }
+  .responsive-table tbody,
+  .responsive-table tr,
+  .responsive-table th,
+  .responsive-table td {
+    display: block;
+    padding: 0;
+    text-align: left;
+    white-space: normal;
+  }
+  .responsive-table th,
+  .responsive-table td {
+    padding: .5em;
+    vertical-align: middle;
+  }
+  .responsive-table caption {
+    margin-bottom: 1em;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+  }
+  .responsive-table tfoot {
+    font-size: .8em;
+    font-style: italic;
+  }
+  .responsive-table tbody tr {
+    margin-bottom: 1em;
+    border: 2px solid #1d96b2;
+  }
+  .responsive-table tbody tr:last-of-type {
+    margin-bottom: 0;
+  }
+  .responsive-table tbody th[scope="row"] {
+    background-color: #1d96b2;
+    color: white;
+  }
+  .responsive-table tbody td[data-type=currency] {
+    text-align: right;
+  }
+  .responsive-table tbody td[data-title]:before {
+    content: attr(data-title);
+    float: left;
+    font-size: .8em;
+    color: rgba(94, 93, 82, 0.75);
+  }
+  .responsive-table tbody td {
+    text-align: right;
+    border-bottom: 1px solid #1d96b2;
   }
   
-  /* sidebar */
-  .sidebar {
-    background: #f8f8ff;
-    width: 400px;
-    height: 100%;
-    padding: 2rem;
+  
+  @media (min-width: 52em) {
+    .responsive-table {
+      font-size: .9em;
+    }
+    
+    .responsive-table thead {
+      position: relative;
+      clip: auto;
+      height: auto;
+      width: auto;
+      overflow: auto;
+    }
+    .responsive-table tr {
+      display: table-row;
+    }
+    .responsive-table th,
+    .responsive-table td {
+      display: table-cell;
+      padding: .5em;
+    }
+  
+    .responsive-table caption {
+      font-size: 1.5em;
+    }
+    .responsive-table tbody {
+      display: table-row-group;
+    }
+    .responsive-table tbody tr {
+      display: table-row;
+      border-width: 1px;
+    }
+    .responsive-table tbody tr:nth-of-type(even) {
+      background-color: rgba(94, 93, 82, 0.1);
+    }
+    .responsive-table tbody th[scope="row"] {
+      background-color: transparent;
+      color: #5e5d52;
+      text-align: left;
+    }
+    .responsive-table tbody td {
+      text-align: center;
+    }
+    .responsive-table tbody td[data-title]:before {
+      content: none;
+    }
+  }
+  @media (min-width: 62em) {
+    .responsive-table {
+      font-size: 1em;
+    }
+    .responsive-table th,
+    .responsive-table td {
+      padding: .75em .5em;
+    }
+    .responsive-table tfoot {
+      font-size: .9em;
+    }
+    
+  }
+  
+  @media (min-width: 75em) {
+    .responsive-table th,
+    .responsive-table td {
+      padding: .75em;
+    }
+    
+  }
+  .responsive-font-size {
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis; /* Show ellipsis (...) for overflow text */
+  }
+  
+  /* Media query for screens with a maximum width of 600px (adjust as needed) */
+  @media (max-width: 600px) {
+    .responsive-font-size {
+      font-size: 8px; /* Decrease font size for small screens */
+      max-width: 323px; /* Decrease max-width for small screens */
+    }
+  }
+  
+
+
+  /*  */
+  .product-box {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styling for individual product information */
+  .product-info {
+    flex: 1;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .product-info p {
+    margin: 0;
+    padding: 5px 0;
+    font-size: 16px;
+  }
+  
+  .product-id {
+    font-weight: bold;
+  }
+  
+  .total-price {
+    color: #ff5722; /* Change the color to your preference */
+  }
+  
+  /* Styling for the buttons */
+  .buttons {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
-  .sidebar .top {
-    display: flex;
-    flex-direction: column;
-    gap: 4rem;
-  }
-  .sidebar .profile {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-  }
-  .sidebar .profile h2 {
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-  }
-  .sidebar .profile img {
-    width: 5rem;
-    height: 5rem;
-    object-fit: cover;
-    border-radius: 1.5rem;
-  }
-  .sidebar nav ul {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .sidebar a {
-    display: block;
-    padding: 1rem;
-    font-size: 1rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    border-left: solid transparent 0.5rem;
-    border-radius: 0.2rem;
-  }
-  .sidebar a:hover {
-    border-left-color: tomato;
-  }
-  .sidebar a ion-icon {
-    font-size: 2rem;
+  
+  .button {
+    padding: 10px 20px;
+    margin: 5px 0;
+    background-color: #007bff; /* Button background color */
+    color: #fff; /* Button text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
   }
   
-  /* plan */
-  .plan {
-    width: 350px;
-    background: tomato;
-    padding: 2rem;
-    border-radius: 1rem;
-    margin: 0 2rem;
-    margin-top: 10rem;
-  }
-  .plan p {
-    font-size: 1rem;
-    color: white;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  }
-  .plan h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: white;
-    margin: 1rem 0;
-  }
-  .plan a {
-    color: white;
-    font-size: 1rem;
-    font-weight: 500;
-    border: solid white 0.1rem;
-    display: block;
-    text-align: center;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    margin-top: 2rem;
+  .button:hover {
+    background-color: #0056b3; /* Button background color on hover */
   }
   
-  /* main section starts here */
-  .main {
-    width: 100%;
-    height: 100%;
-    padding: 2rem;
-  }
-  .main h1 {
-    font-size: 3rem;
-    margin-bottom: 4rem;
-  }
-  .main h3 {
-    font-size: 1.5rem;
-  }
-  .main p {
-    font-size: 1rem;
-  }
-  table,
-  th,
-  td {
-    border-collapse: collapse;
-  }
-  .main table {
-    margin: 2rem 0;
-    width: 100%;
-    max-width: 40rem;
-    text-align: center;
-  }
-  .main th {
-    font-size: 1rem;
-    padding: 1rem 0.5rem;
-    font-weight: 500;
-  }
-  .main td {
-    font-size: 1rem;
-    padding: 1rem 0.5rem;
-    font-weight: 700;
-  }
-  .main td a {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-    border: solid #393a625f 0.1rem;
-    border-radius: 0.3rem;
-  }
-  .main td a:hover {
-    background: tomato;
-    color: white;
-    border-color: tomato;
-  }
-  .main tbody tr:hover {
-    box-shadow: #393a622f 0 0.2rem 1rem;
-    border-radius: 0.5rem;
-  }
-  
-  .main .more {
-    color: tomato;
-    text-decoration: underline;
-    font-size: 1rem;
-    margin-bottom: 4rem;
-  }
-  
-  .main .card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 3rem 0;
-  }
-  .main .left {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-  }
-  .main .visa {
-    width: 7rem;
-    border: solid #393a625f 0.1rem;
-    border-radius: 0.4rem;
-    padding: 0.5rem;
-  }
-  .main .remove {
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    border: solid #393a625f 0.1rem;
-    border-radius: 0.3rem;
-  }
-  .main .remove:hover {
-    background: tomato;
-    color: white;
-    border-color: tomato;
-  }
-  
-  /* responsive */
-  @media only screen and (max-width: 990px) {
-    .plan{
-      display: none;
+  /* Media query for responsive design */
+  @media (max-width: 768px) {
+    .product-box {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 15px;
     }
-    html{
-      font-size: 10px;
+  
+    .product-info p {
+      font-size: 14px;
+    }
+  
+    .buttons {
+      flex-direction: row;
+    }
+  
+    .button {
+      margin: 0 5px;
     }
   }
   
-  @media only screen and (max-width: 720px){
-    .sidebar{
-      width: 10rem;
-    }
-    .sidebar .profile_info, .sidebar a span{
-      display: none;
-    }
-  }
+  
+  
+  
+  
+  
+  

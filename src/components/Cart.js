@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { loadStripe } from '@stripe/stripe-js';
+import MyOrder from './Order/MyOrder';
 
 
 
@@ -315,7 +316,7 @@ setUserDetails(user.uid)//for sending user's uid to backend
         const stripe = await loadStripe("pk_test_51NuEdsSH8i0IOWv3H4lHoRZIosQT0yraBQpCA2WNVGAHY3pWCUtRMlwY88bStOpKzZj63AnuPA7tNummvV4K5rCF00aLQTZTNe")
 
         const body = {
-            products: cartProducts,id:id
+            products: cartProducts,id:id,totalQty:totalQty
         }
         const headers = {
             "Content-Type": "application/json"
@@ -382,6 +383,7 @@ setUserDetails(user.uid)//for sending user's uid to backend
             {cartProducts.length < 1 && (
                 <div className='container-fluid'>No products to show</div>
             )}
+
         </>
     )
 }

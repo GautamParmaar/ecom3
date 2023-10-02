@@ -38,7 +38,7 @@ app.get('/',(req,res)=>{
 
 app.post('/create-checkout',async(req,res)=>{
   let order=[]
-const {products,id}=req.body;
+const {products,id,totalQty}=req.body;
 console.log(products,"gggg")
 // console.log(id,"id");
 // console.log(products,"pppp")
@@ -65,11 +65,22 @@ const lineItems= await products.map((products)=>({
   const metadata = {
     'productID': JSON.stringify(products),
   };
+  var currentdate = new Date(); 
+  var datetime = currentdate.getDate() + "/"
+                  + (currentdate.getMonth()+1)  + "/" 
+                  + currentdate.getFullYear() + " @ "  
+                  + currentdate.getHours() + ":"  
+                  + currentdate.getMinutes() + ":" 
+                  + currentdate.getSeconds();
   
 try{
   const data=[]
+  const nameOfProducts=[]
+  let qtyData;
 products.map((products)=>{
   data.push(products.ID)
+  nameOfProducts.push(products.name)
+  qtyData=products.qty
   console.log(data)
 })
 // console.log(products,"hello")
@@ -80,7 +91,10 @@ const session=await stripe.checkout.sessions.create({
   success_url:'http://localhost:3000/',
   cancel_url:"http://localhost:3000/cart",
   metadata : {
-    products:JSON.stringify(data)
+    products:JSON.stringify(data),
+    quantity :JSON.stringify(totalQty),
+    productName:JSON.stringify(nameOfProducts),
+    Date:datetime
   }
 
 })
