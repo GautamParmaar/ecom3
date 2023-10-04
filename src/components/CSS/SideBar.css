@@ -1,61 +1,29 @@
-.sidebar-container{
-    position: fixed;
-    z-index: 999;
-    width: 100%;
-    height: 100%;
-    background: #000d1a;
-    display: grid;
-    align-items: center;
-    left: 0;
-    transition: 0.3s ease-in-out;
+.app {
+    background: #a8d5e5;
+    margin-top: -21px;
 }
-
-.opacity-on{
-    opacity: 1;
-    top: 0;
+h1 {
+    color: #165a72;
+    margin: 50px auto;
+    font-size: 40px;
 }
-.opacity-off{
-    opacity: 0;
-    top: -100%;
+.menu1 {
+    margin-bottom: 40px;
+    margin-top: 20px;
 }
-.icon{
-    background: transparent;
-    font-size: 2rem;
-    cursor: pointer;
-    outline: none;
-    color: white;
-    position: absolute;
-    top: 2rem;
-    right: 2.5rem;
+h2 {
+    color: #165a72;
 }
-.close-icon{
-    color : whitesmoke
-}
-.sidebar-menu{
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, 80px);
-    text-align: center;
-    margin-bottom: 4rem;
-}
-.sidebar-links{
+.sidebar-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 1.5rem;
-    text-decoration: none;
-    list-style: none;
-    cursor: pointer;
-    transition: 0.2s ease-in-out ;
-}
-
-@media screen and (max-width: 480px){
-    .sidebar-menu{
-        grid-template-rows: repeat(4, 60px)
-    }
-}
-.button-wrap{
-    display: flex;
-    justify-content: center;
-}
+  }
+  
+  .sidebar {
+    width: 25%; /* Adjust the width as needed */
+    padding: 20px;
+  }
+  
+  .right-side {
+    flex: 1; /* Take remaining space */
+    padding: 20px;
+  }

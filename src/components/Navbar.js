@@ -8,6 +8,7 @@ import "./CSS/NavBar.css";
 import { auth, db } from "../config/Config";
 import { signOut } from "firebase/auth";
 import { collection, onSnapshot, query } from "firebase/firestore";
+import SmallNav from "./SmallNav";
 
 
 
@@ -43,7 +44,9 @@ const Navbar2 = ({ user }) => {
     })
   })
   return (
-    <nav className="navbar">
+<>
+
+    <nav className="navbar" >
     <div className="nav-container">
       <NavLink exact to="/" className="nav-logo">
         Ecommerce
@@ -51,7 +54,7 @@ const Navbar2 = ({ user }) => {
       </NavLink>
 
       <ul className={click ? "nav-menu active" : "nav-menu"}>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <NavLink
             exact
             to="/"
@@ -61,7 +64,7 @@ const Navbar2 = ({ user }) => {
           >
             Home
           </NavLink>
-        </li>
+        </li> */}
         <li className="nav-item">
           <NavLink
             exact
@@ -112,7 +115,7 @@ const Navbar2 = ({ user }) => {
             Signout
           </NavLink>
         </li>}
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <NavLink
             exact
             to="/add"
@@ -122,7 +125,7 @@ const Navbar2 = ({ user }) => {
           >
             Add product
           </NavLink>
-        </li>
+        </li> */}
         <li className="nav-item">
           <NavLink
             exact
@@ -141,6 +144,10 @@ const Navbar2 = ({ user }) => {
       </div>
     </div>
   </nav>
+<br/>
+  {/* <SmallNav/> */}
+   
+  </>
   );
 };
 

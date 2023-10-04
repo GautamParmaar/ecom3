@@ -2,6 +2,8 @@ import React,{useEffect, useState} from 'react'
 import "./CSS/Profile.css"
 import { doc, getDoc } from 'firebase/firestore'
 import { auth, db } from '../config/Config'
+import SideBar from './SideBar'
+
 function Profile({user}) {
   const [userName,setUsername]=useState("")
  const [userEmail,setUserEmail]=useState("")
@@ -36,31 +38,20 @@ function Profile({user}) {
       return null;
     }
   
-    
-  // console.log(user.uid)
+   })
   
-  
-  })
-  
-  
-  
-  
-  
-  // code for getting data
-  
-  
-  
-  
-    })
+})
+
+   
   return (
-    <>
+    <> <SideBar/>
    
    <div class="container">
   <div class="col-md-8 col-sm-6">
     <div class="panel profile-panel">
       <div class="panel-heading">
         <div class="text-left">
-          <h2>Welcome {userName}</h2>
+         
         </div>
       </div>
       {/* <!-- panel body --> */}

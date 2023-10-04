@@ -94,7 +94,8 @@ const session=await stripe.checkout.sessions.create({
     products:JSON.stringify(data),
     quantity :JSON.stringify(totalQty),
     productName:JSON.stringify(nameOfProducts),
-    Date:datetime
+    Date:datetime,
+    lineItems:JSON.stringify(lineItems)
   }
 
 })

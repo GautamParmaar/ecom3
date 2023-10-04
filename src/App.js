@@ -16,6 +16,8 @@ import SignUp from './components/SignUp';
 import HomePage from './components/HomePage';
 import OrderDetails from './components/OrderDetails';
 import MyOrder from './components/Order/MyOrder';
+import SideBar from './components/SideBar';
+import { Sidebar } from 'react-pro-sidebar';
 
 
 function App() {
@@ -57,6 +59,7 @@ const [products, setProducts]=useState([]);
    
     
     <Navbar2 user={user}/>
+    
     <Routes>
            <Route path="/" element={<HomePage/> }/>
 
@@ -70,7 +73,10 @@ const [products, setProducts]=useState([]);
           <Route path="/login" element={<Login/> }/>
           <Route path="/signup" element={<SignUp/>}/>
           <Route path='/order' element={<OrderDetails user={user}/>}/>
-          <Route path='/myorder' element={<MyOrder user={user}/>}/>
+          {/* <Route path='/myorder' element={<MyOrder user={user}/>}/> */}
+          <Route path='/myorder' element={<>
+          <SideBar/>
+          </>}/>
 
 
 

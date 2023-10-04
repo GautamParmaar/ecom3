@@ -8,6 +8,7 @@ import Sidebar from './SideBar';
 import { useNavigate } from 'react-router-dom';
 import IndividualFilteredProduct2 from './IndividualFilteredProduct2';
 import SingleProduct from './SingleProduct';
+import SmallNav from './SmallNav';
 
 
 
@@ -201,6 +202,8 @@ const returnToAllProducts=()=>{
   } {products.length<1 && (
     <div className='container-fluid'>Please wait......</div>
   )}   */}
+
+
 
    <div className='container-fluid filter-products-main-box'>
 

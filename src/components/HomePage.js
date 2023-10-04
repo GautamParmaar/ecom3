@@ -2,12 +2,16 @@ import React from 'react'
 import "./CSS/Home.css"
 import SignUp from './SignUp'
 import CarouselProduct from './CarouselProduct'
+import SmallNav from './SmallNav'
 
 
 
 function HomePage() {
   return (
     <>
+    
+
+
     <div className='d-sm-flex borderBox' >
     <div id="carouselExampleAutoplaying" data-interval="3000" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">

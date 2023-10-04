@@ -5,6 +5,7 @@ import { doc, getDoc } from 'firebase/firestore';
 
 function MyOrder() {
 const [order,setOrder]=useState([]);
+
 useEffect(()=>{
   auth.onAuthStateChanged(async(user)=>{
     if(user){
@@ -13,8 +14,13 @@ useEffect(()=>{
           if (userDoc.exists()) {
                   // Document data exists, you can access it using .data() method
                   const userData = userDoc.data();
-                  console.log('Fetched data:', userData);
+                  // console.log('Fetched data:', userData.Orders[0].metadata.lineItems);
+                  // const JSONData=userData.Orders[0].metadata.lineItems;
                   setOrder(userData);
+                  // const second=JSON.parse(JSONData)
+                  // console.log("json",second
+
+                  // )
                   
                  
                   
@@ -28,7 +34,7 @@ useEffect(()=>{
     else{
   console.log("not logged in")
     }
-      
+   
    
   
 },[])
@@ -36,76 +42,110 @@ useEffect(()=>{
 
 
 //get product info 
+let dataForSearch=[]
+order.Orders && order.Orders.map((order,index)=>{
+  dataForSearch=order.metadata.productName
+  console.log(dataForSearch)
+
+})
+let datavalue;
+let data2;
+order.Orders && order.Orders.map((order,index)=>{
+  datavalue=order.metadata.productName
+  data2=JSON.parse(datavalue)
+  console.log(data2,"data")
+
+})
+// if(order.Orders) {for (var i = 0; i < data2.length; i++) {
+//   var item = data2[i];
+//   console.log("Item " + i + ":");
+//   for (var key in item) {
+//     if (item.hasOwnProperty(key)) {
+//       var value = item[key];
+//       console.log(key + ": " + value);
+//     }
+//   }
+// }
+// }
 
 
 
 
 
 
-// order.Orders.map(item => {
-//   // do something here ...
-//   return item
-// })
 
 
 
-
-
-
+const [searchQuery, setSearchQuery] = useState('');
+const handleSearch = (event) => {
+  setSearchQuery(event.target.value);
+};
   
   
   
   
   
   
-  
-  
-  //get product info
-
-  order.Orders && order.Orders.map((order)=>{
-
-  })
  
-  
+// const [filter,setFilter]=useState('')
+// const searchText=(event)=>{
+// setFilter(event.target.value);
+// }
+// if(order.Orders){let dataSearch=JSON.parse(order.Orders.metadata.productName).filter(item=>{
+//   return Object.keys(item).some(key=>item[key].toString().toLowerCase().includes(filter.toString().toLowerCase()))
+// })}
     
 
   
   return (
     < >
 
+    {/* <input type='text' value={filter} placeholder='Search' onChange={searchText.bind(this)} /> */}
+ 
 
-<h2 className='my-4' align="center">Order History</h2>
 
-  {order.Orders && order.Orders.map((order,index) => (
-   
+    <div className='col-md-9'>
+      <h2 className='my-4' align="center">Order History</h2>
+      <input
+        type="text"
+        value={searchQuery}
+        onChange={handleSearch}
+        placeholder="Search by product name"
+      />
 
-  
+      {order.Orders &&
+        order.Orders.map((orderItem, index) => (
+          // Filter orders by product name
+          orderItem.metadata.productName
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) && (
+            <div className="product-box" key={orderItem.id}>
+              {/* Render order details */}
+              <div className="product-info">
+                <p className="quantity">S.No: {index + 1}</p>
+                <p className="product-id">Order ID: {orderItem.id}</p>
 
-<div class="product-box">
-  <div class="product-info">
-  <p class="quantity">S.No : {index+1}</p>
-    <p class="product-id">Product ID: {order.id}</p> 
-    
-   
-    {order.metadata.productName ? (
-        <p className="product-id">Product Name: {order.metadata.productName.replace(/"/g, '')}</p>
-      ) : (
-        <p className="product-id">Product Name: N/A</p>
-      )}
-    <p class="total-price">Total Price: ₹{order.amount_total/100}</p>
-    <p class="quantity">Quantity: {order.metadata.quantity}</p>
-    <p class="order-date">Order Date: {order.metadata.Date}</p>
-    <p class="payment-status">Payment Status: {order.payment_status}</p>
-  </div>
-  <div class="buttons">
-    <button class="btn btn-primary my-0 mx-1">Order Details</button>
-    <button class="btn btn-danger my-0 mx-1">Cancel Order</button>
-    <button class="btn btn-primary my-0 mx-1">Pay Now</button> 
-    
-  </div>
-</div>
-
-))}
+                {orderItem.metadata.productName ? (
+                  <p className="product-name">
+                    Product Name: {JSON.parse(orderItem.metadata.productName).join(', ')}
+                  </p>
+                ) : (
+                  <p className="product-name">Product Name: N/A</p>
+                )}
+                <p className="total-price">Total Price: ₹{orderItem.amount_total / 100}</p>
+                <p className="quantity">Quantity: {orderItem.metadata.quantity}</p>
+                <p className="order-date">Order Date: {orderItem.metadata.Date}</p>
+                <p className="payment-status">Payment Status: {orderItem.payment_status}</p>
+              </div>
+              <div className="buttons">
+                <button className="btn btn-primary my-0 mx-1">Order Details</button>
+                <button className="btn btn-danger my-0 mx-1">Cancel Order</button>
+                <button className="btn btn-primary my-0 mx-1">Pay Now</button>
+              </div>
+            </div>
+          )
+        ))}
+    </div>
 
 
 
