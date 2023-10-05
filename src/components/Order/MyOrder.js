@@ -98,15 +98,18 @@ const handleSearch = (event) => {
 // if(order.Orders){let dataSearch=JSON.parse(order.Orders.metadata.productName).filter(item=>{
 //   return Object.keys(item).some(key=>item[key].toString().toLowerCase().includes(filter.toString().toLowerCase()))
 // })}
-
-const handleToken2=async(token)=>{
-  const cart={id:User}
-  const queryParams = new URLSearchParams(cart).toString();
+useEffect(()=>{
+  const handleToken2=async(token)=>{
+    const cart={id:User}
+    const queryParams = new URLSearchParams(cart).toString();
+    
+  const response=await axios.get(`http://localhost:8080/orderDetails2?${queryParams}`)
   
-const response=await axios.get(`http://localhost:8080/orderDetails2?${queryParams}`)
+  
+  }
+  order.Orders && handleToken2()
+})
 
-
-}
     
 
   
@@ -116,7 +119,7 @@ const response=await axios.get(`http://localhost:8080/orderDetails2?${queryParam
     {/* <input type='text' value={filter} placeholder='Search' onChange={searchText.bind(this)} /> */}
  
 
-    <button className='btn btn-success' onClick={handleToken2}>Refresh Transactions</button>
+    {/* <button className='btn btn-success' onClick={handleToken2}>Refresh Transactions</button> */}
 
     <div >
       <h2 className='my-4' align="center">Order History</h2>

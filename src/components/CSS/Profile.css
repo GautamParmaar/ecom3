@@ -74,3 +74,57 @@ form{
 	background-color: #008080;
 	/* color:#fff; */
 }
+
+
+/* ProfilePage.css */
+.profile-page {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 20px;
+	background-color: #f7f7f7;
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .profile-header {
+	text-align: center;
+  }
+  
+  .profile-header img {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	object-fit: cover;
+	margin-bottom: 10px;
+  }
+  
+  .profile-header h1 {
+	font-size: 24px;
+	margin: 0;
+  }
+  
+  .profile-header p {
+	font-size: 18px;
+	color: #888;
+  }
+  
+  .profile-details {
+	margin-top: 20px;
+  }
+  
+  .profile-details h2 {
+	font-size: 20px;
+	margin-bottom: 10px;
+  }
+  
+  .profile-details p {
+	font-size: 16px;
+	margin: 0;
+  }
+  
+  /* Add media queries for responsiveness as needed */
+  @media (max-width: 768px) {
+	.profile-page {
+	  padding: 10px;
+	}
+  }

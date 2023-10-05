@@ -44,38 +44,38 @@ function Profile({user}) {
 
    
   return (
-    <> <SideBar/>
+    <> 
    
-   <div class="container">
-  <div class="col-md-8 col-sm-6">
-    <div class="panel profile-panel">
-      <div class="panel-heading">
-        <div class="text-left">
+   <div className="container">
+  <div className="col-md-8 col-sm-6">
+    <div className="panel profile-panel">
+      <div className="panel-heading">
+        <div className="text-left">
          
         </div>
       </div>
       {/* <!-- panel body --> */}
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-md-4">
-          <div class="figure-wrapper">
+      <div className="panel-body">
+        <div className="row">
+          <div className="col-md-4">
+          <div className="figure-wrapper">
             <figure>
               <img src="http://i2.imgbus.com/doimg/5co1mm5on9b50e7.jpg" alt=""/>
             </figure>
           </div>
          
         </div>
-          <div class="col-md-8">
-          <div class="profile-block">
-            <header class="profile-header">
-              <h2><i class="fa fa-user"></i> Information</h2>
-              <ul class="actions">
-                <li class="dropdown">
+          <div className="col-md-8">
+          <div className="profile-block">
+            <header className="profile-header">
+              <h2><i className="fa fa-user"></i> Profile</h2>
+              <ul className="actions">
+                <li className="dropdown">
                   <a href="#" data-toggle="dropdown">
-                    <i class="fa fa-pencil-square-o"></i>
+                    {/* <i className="fa fa-pencil-square-o"></i> */}
                   </a>
 
-                  <ul class="dropdown-menu dropdown-menu-right">
+                  <ul className="dropdown-menu dropdown-menu-right">
                     <li>
                       <a data-profile-action="edit" href="#">Edit</a>
                     </li>
@@ -83,42 +83,42 @@ function Profile({user}) {
                 </li>
               </ul>
             </header>
-            <div class="profile-body">
-              <div class="profile-view">
-                <dl class="dl-horizontal">
+            <div className="profile-body">
+              <div className="profile-view">
+                <dl className="dl-horizontal">
                   <dt>Full Name</dt>
-                  <dd>Joe Doe</dd>
+                  <dd>{userName}</dd>
                 </dl>
                 
                 
-                <dl class="dl-horizontal">
+                <dl className="dl-horizontal">
                   <dt>Phone</dt>
-                  <dd>00971 12345678</dd>
+                  <dd>{userPhone}</dd>
                 </dl>
-                <dl class="dl-horizontal">
+                <dl className="dl-horizontal">
                   <dt>Email</dt>
-                  <dd>joedoe@gmail.com</dd>
+                  <dd>{userEmail}</dd>
                 </dl>
-                <dl class="dl-horizontal">
+                <dl className="dl-horizontal">
                   <dt>GST</dt>
-                  <dd>joedoe@gmail.com</dd>
+                  <dd>{userGST}</dd>
                 </dl>
               </div>
 
-              <div class="profile-edit">
-                {/* <dl class="dl-horizontal">
-                  <dt class="p-10">Full Name</dt>
+              <div className="profile-edit">
+                {/* <dl className="dl-horizontal">
+                  <dt className="p-10">Full Name</dt>
                   <dd>
-                    <div class="fg-line">
-                      <input type="text" class="form-control" placeholder="eg. Joe Doe"/>
+                    <div className="fg-line">
+                      <input type="text" className="form-control" placeholder="eg. Joe Doe"/>
                     </div>
                   </dd>
                 </dl> */}
-                {/* <dl class="dl-horizontal">
-                  <dt class="p-10">Role</dt>
+                {/* <dl className="dl-horizontal">
+                  <dt className="p-10">Role</dt>
                   <dd>
-                    <div class="fg-line">
-                      <select class="form-control">
+                    <div className="fg-line">
+                      <select className="form-control">
                                                                     <option>Business development</option>
                                                                     <option>Business Analyst</option>
                                                                     <option>Operations Manager</option>
@@ -127,33 +127,33 @@ function Profile({user}) {
                   </dd>
                 </dl> */}
                 
-                <dl class="dl-horizontal">
-                  <dt class="p-10">Pincode</dt>
+                <dl className="dl-horizontal">
+                  <dt className="p-10">Pincode</dt>
                   <dd>
-                    <div class="fg-line">
-                      <input type="text" class="form-control" placeholder="eg. 00971 12345678"/>
+                    <div className="fg-line">
+                      <input type="text" className="form-control" placeholder="eg. 00971 12345678"/>
                     </div>
                   </dd>
                 </dl>
-                <dl class="dl-horizontal">
-                  <dt class="p-10">Address</dt>
+                <dl className="dl-horizontal">
+                  <dt className="p-10">Address</dt>
                   <dd>
-                    <div class="fg-line">
-                      <input type="text" class="form-control" placeholder="eg. 00971 12345678"/>
+                    <div className="fg-line">
+                      <input type="text" className="form-control" placeholder="eg. 00971 12345678"/>
                     </div>
                   </dd>
                 </dl>
-                <dl class="dl-horizontal">
-                  <dt class="p-10">Landmark</dt>
+                <dl className="dl-horizontal">
+                  <dt className="p-10">Landmark</dt>
                   <dd>
-                    <div class="fg-line">
-                      <input type="text" class="form-control" placeholder="eg. 00971 12345678"/>
+                    <div className="fg-line">
+                      <input type="text" className="form-control" placeholder="eg. 00971 12345678"/>
                     </div>
                   </dd>
                 </dl>
 
-                <div class="m-t-30">
-                  <button class="btn btn-primary btn-sm waves-effect">Save</button>
+                <div className="m-t-30">
+                  <button className=" btn btn-primary " style={{color:'white'}}>Save</button>
                 </div>
               </div>
             </div>

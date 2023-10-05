@@ -43,7 +43,7 @@ function Login() {
       <a class="submit" type='submit' onClick={handleSubmit} align="center">Sign in</a>
       <p class="forgot" align="center"><a href="#">Forgot Password?</a></p>
           </form>  
-      <p className='new'><Link to="/signup"> <a href='#'> Not Registered ? Create account</a> </Link>    </p>     
+      {/* <p className='new'><Link to="/signup"> <a href='#'>  Create account</a> </Link>    </p>      */}
     </div>
    </>
   )

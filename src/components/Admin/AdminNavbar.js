@@ -1,19 +1,14 @@
-import React,{useEffect, useState} from "react";
+import React,{useState} from 'react'
+import { Link } from 'react-router-dom';
 import { NavLink, useNavigate } from "react-router-dom";
+import { auth } from '../../config/Config';
+import { signOut } from 'firebase/auth';
 import {Icon} from 'react-icons-kit'
-import {shoppingCart} from 'react-icons-kit/feather/shoppingCart'
+import "../CSS/NavBar.css"
 
 
-import "./CSS/NavBar.css";
-import { auth, db } from "../config/Config";
-import { signOut } from "firebase/auth";
-import { collection, onSnapshot, query } from "firebase/firestore";
-
-
-
-const Navbar2 = ({ user }) => {
+function AdminNavbar() {
   const navigate=useNavigate();
-
   const handleSignOut=()=>{
     signOut(auth).then(val=>{
       console.log(val)
@@ -21,35 +16,21 @@ const Navbar2 = ({ user }) => {
       
     })
     } 
+
+  
    
 
   const [click, setClick] = useState(false);
 
   const handleClick = () => setClick(!click);
-  const [totalProducts,setTotalProducts]=useState(0);
-  useEffect(()=>{
-    auth.onAuthStateChanged(user=>{
-      if(user){
-        const cartCollectionRef = collection(db, 'Cart '+user.uid);
-        const cartCollectionQuery = query(cartCollectionRef);
-        onSnapshot(cartCollectionQuery, (snapshot) => {
-          const qty = snapshot.size;
-          setTotalProducts(qty);
-          console.log("qt",qty)
-      });
-      
-
-      }
-    })
-  })
   return (
-<>
-
-    <nav className="navbar" >
+    <>
+  
+  <nav className="navbar" >
     <div className="nav-container">
       <NavLink exact to="/" className="nav-logo">
         Ecommerce
-        <i className="fas fa-code"></i>
+       
       </NavLink>
 
       <ul className={click ? "nav-menu active" : "nav-menu"}>
@@ -81,54 +62,32 @@ const Navbar2 = ({ user }) => {
         <li className="nav-item">
           <NavLink
             exact
-            to="/myorder"
+            to="/adminOrders"
             activeClassName="active"
             className="nav-links"
             onClick={handleClick}
 
            
           >
-           My Order
+           Orders
           </NavLink>
         </li>
+        
+        
+        
         <li className="nav-item">
           <NavLink
             exact
-            to="/profile"
-            activeClassName="active"
-            className="nav-links"
-            onClick={handleClick}
-
-            
-          >
-           Profile
-          </NavLink>
-        </li>
-        {!user&&
-        <li className="nav-item">
-          <NavLink
-            exact
-            to="/login"
-            activeClassName="active"
-            className="nav-links"
-            onClick={handleClick}
-          >
-            Login
-           
-          </NavLink>
-        </li>}
-        {user&&<li className="nav-item">
-          <NavLink
-            exact
-            to="/contact"
+           to='/adminlogin'
             activeClassName="active"
             className="nav-links"
             onClick={handleSignOut}
+            
           >
             Signout
           </NavLink>
-        </li>}
-        {/* <li className="nav-item">
+        </li>
+        <li className="nav-item">
           <NavLink
             exact
             to="/add"
@@ -138,18 +97,8 @@ const Navbar2 = ({ user }) => {
           >
             Add product
           </NavLink>
-        </li> */}
-        <li className="nav-item">
-          <NavLink
-            exact
-            to="/cart"
-            activeClassName="active"
-            className="nav-links"
-            onClick={handleClick}
-          >
-                            Cart <Icon icon={shoppingCart} size={25}/>
-                                </NavLink>
         </li>
+        
         
       </ul>
       <div className="nav-icon" onClick={handleClick}>
@@ -157,11 +106,8 @@ const Navbar2 = ({ user }) => {
       </div>
     </div>
   </nav>
-<br/>
-  {/* <SmallNav/> */}
-   
-  </>
-  );
-};
+    </>
+  )
+}
 
-export default Navbar2;
+export default AdminNavbar

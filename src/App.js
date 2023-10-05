@@ -19,6 +19,10 @@ import MyOrder from './components/Order/MyOrder';
 import SideBar from './components/SideBar';
 import { Sidebar } from 'react-pro-sidebar';
 import MyOrder2 from './components/Order/MyOrder2';
+import AdminLogin from './components/Admin/AdminLogin';
+import AdminDashboard from './components/Admin/AdminDashboard';
+import AdminNavbar from './components/Admin/AdminNavbar';
+import AllOrders from './components/Admin/AllOrders';
 
 
 function App() {
@@ -59,23 +63,32 @@ const [products, setProducts]=useState([]);
     <BrowserRouter>
    
     
-    <Navbar2 user={user}/>
+   
     
     <Routes>
-           <Route path="/" element={<HomePage/> }/>
+           <Route path="/" element={<>
+            <Navbar2 user={user}/>
+           <HomePage/></> }/>
 
-          <Route path="/products" element={<Home2/> }/>
-          <Route path="/signup2" element={<Signup2/> }/>
-          <Route path="/login2" element={<Login2/> }/>
+          <Route path="/products" element={<> <Navbar2 user={user}/><Home2/> </>}/>
+          <Route path="/signup2" element={<> <Navbar2 user={user}/><Signup2/></> }/>
+          <Route path="/login2" element={<> <Navbar2 user={user}/><Login2/> </> }/>
           <Route path="/add" element={<AddProducts/>}/>
-          <Route path="/cart" element={<Cart user={user} />}/>
-          <Route path='/single/:id' element={<SingleProduct userid={userid}/>}/>
-          <Route path='/profile' element={<Profile user={user}/>}></Route>
-          <Route path="/login" element={<Login/> }/>
-          <Route path="/signup" element={<SignUp/>}/>
-          <Route path='/order' element={<OrderDetails user={user}/>}/>
-          <Route path='/myorder' element={<MyOrder user={user}/>}/>
-          <Route path='order2' element={<MyOrder2/>}/>
+          <Route path="/cart" element={<> <Navbar2 user={user}/><Cart user={user} /></>}/>
+          <Route path='/single/:id' element={<> <Navbar2 user={user}/><SingleProduct userid={userid}/></>}/>
+          <Route path='/profile' element={<> <Navbar2 user={user}/><Profile user={user}/></>}></Route>
+          <Route path="/login" element={<> <Navbar2 user={user}/><Login/></> }/>
+          <Route path="/signup" element={<> <Navbar2 user={user}/><SignUp/></>}/>
+          <Route path='/order' element={<> <Navbar2 user={user}/><OrderDetails user={user}/></>}/>
+          <Route path='/myorder' element={<> <Navbar2 user={user}/><MyOrder user={user}/></>}/>
+          <Route path='order2' element={<> <Navbar2 user={user}/><MyOrder2/></>}/>
+
+
+          {/*Route for admin  */}
+          <Route path='/AdminLogin' element={<AdminLogin/>}/>
+          <Route path='/AdminDashboard' element={<>  <AdminDashboard/></>}/>
+          <Route path='/adminOrders' element={<AllOrders/>}/>
+
           
 
 

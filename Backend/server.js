@@ -39,8 +39,8 @@ app.get('/',(req,res)=>{
 app.post('/create-checkout',async(req,res)=>{
   let order=[]
 const {products,id,totalQty}=req.body;
-console.log(products,"gggg")
-// console.log(id,"id");
+// console.log(products,"gggg")
+console.log(id,"id");
 // console.log(products,"pppp")
 
 const lineItems= await products.map((products)=>({
@@ -125,7 +125,7 @@ try {
 
     console.log("Data updated successfully");
 } else {
-    console.log("Document does not exist");
+  
 }
 } catch (error) {
   console.error('Error updating document: ', error);
@@ -151,9 +151,7 @@ if (existingData.exists()) {
     existingOrders.push(session);
 
     // Update the document with the modified array
-    await updateDoc(cartProductRef, {
-      Orders: existingOrders
-    });
+   
 
     console.log("Data updated successfully");
   } else {
@@ -164,7 +162,11 @@ if (existingData.exists()) {
   }
 } else {
   // If the document doesn't exist, create it with the 'Orders' field containing the new session object
-  
+   await setDoc(doc(db, "Orders", id), {
+      Orders: [session]
+    });
+        console.log("Data has been created2");
+
 }
 
 
@@ -326,6 +328,9 @@ if (userDoc.exists()) {
     // console.log('Fetched data:', userData.id);
     orderIds=userData.OrderId
     console.log('id',orderIds)
+    console.log('triggered')
+
+
 
 
 } else {
@@ -342,8 +347,10 @@ const retrieveOrderDetails = async (orderId) => {
     return null;
   }
 };
+
 let orderData=[];
 // Use Promise.all with map to fetch order details for all order IDs concurrently
+try{
 const fetchOrderDetails = async () => {
   const orderDetails = await Promise.all(orderIds.map(retrieveOrderDetails));
 
@@ -365,6 +372,7 @@ if(orderData){
   })();
 
 }
+
 else{
   console.log("not found")
 }
@@ -373,7 +381,9 @@ else{
 };
 
 // Call the function to fetch order details
-fetchOrderDetails();
+fetchOrderDetails();}catch(error){
+  res.json('error')
+}
 
 })
 

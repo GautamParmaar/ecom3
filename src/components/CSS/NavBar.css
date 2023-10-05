@@ -1,6 +1,6 @@
 .navbar {
-  position: sticky;
-top: 0;
+  position: sticky !important; /* Change to position: fixed */
+  top: 0;
   background-color: #00030b;
   height: 80px;
   display: flex;
@@ -8,10 +8,12 @@ top: 0;
   align-items: center;
   font-size: 1.2rem;
   margin-bottom: 0;
-  
-  z-index: 2000;
+  z-index: 500;
 }
-
+nav{
+  position: sticky;
+  top: 0;
+}
 .nav-container {
   display: flex;
   justify-content: center;
