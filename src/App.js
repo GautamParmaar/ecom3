@@ -18,6 +18,7 @@ import OrderDetails from './components/OrderDetails';
 import MyOrder from './components/Order/MyOrder';
 import SideBar from './components/SideBar';
 import { Sidebar } from 'react-pro-sidebar';
+import MyOrder2 from './components/Order/MyOrder2';
 
 
 function App() {
@@ -73,10 +74,9 @@ const [products, setProducts]=useState([]);
           <Route path="/login" element={<Login/> }/>
           <Route path="/signup" element={<SignUp/>}/>
           <Route path='/order' element={<OrderDetails user={user}/>}/>
-          {/* <Route path='/myorder' element={<MyOrder user={user}/>}/> */}
-          <Route path='/myorder' element={<>
-          <SideBar/>
-          </>}/>
+          <Route path='/myorder' element={<MyOrder user={user}/>}/>
+          <Route path='order2' element={<MyOrder2/>}/>
+          
 
 
 

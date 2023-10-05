@@ -2,13 +2,17 @@ import React, { useState ,useEffect} from 'react'
 import "../CSS/MyOrder.css"
 import { auth, db } from '../../config/Config';
 import { doc, getDoc } from 'firebase/firestore';
+import axios from 'axios';
 
 function MyOrder() {
 const [order,setOrder]=useState([]);
+const [User,setUser]=useState();
+
 
 useEffect(()=>{
   auth.onAuthStateChanged(async(user)=>{
     if(user){
+      setUser(user.uid)
       const userDocRef = doc(db, 'Orders', user.uid);
           const userDoc = await getDoc(userDocRef);
           if (userDoc.exists()) {
@@ -94,6 +98,15 @@ const handleSearch = (event) => {
 // if(order.Orders){let dataSearch=JSON.parse(order.Orders.metadata.productName).filter(item=>{
 //   return Object.keys(item).some(key=>item[key].toString().toLowerCase().includes(filter.toString().toLowerCase()))
 // })}
+
+const handleToken2=async(token)=>{
+  const cart={id:User}
+  const queryParams = new URLSearchParams(cart).toString();
+  
+const response=await axios.get(`http://localhost:8080/orderDetails2?${queryParams}`)
+
+
+}
     
 
   
@@ -103,8 +116,9 @@ const handleSearch = (event) => {
     {/* <input type='text' value={filter} placeholder='Search' onChange={searchText.bind(this)} /> */}
  
 
+    <button className='btn btn-success' onClick={handleToken2}>Refresh Transactions</button>
 
-    <div className='col-md-9'>
+    <div >
       <h2 className='my-4' align="center">Order History</h2>
       <input
         type="text"

@@ -157,14 +157,14 @@ if (existingData.exists()) {
 
     console.log("Data updated successfully");
   } else {
-    console.error("'Orders' field does not exist or is not an array");
+    await setDoc(doc(db, "Orders", id), {
+      Orders: [session]
+    });
+    console.log("Data has been created");
   }
 } else {
   // If the document doesn't exist, create it with the 'Orders' field containing the new session object
-  await setDoc(doc(db, "Orders", id), {
-    Orders: [session]
-  });
-  console.log("Data has been created");
+  
 }
 
 
@@ -318,7 +318,20 @@ const orderIds = [
 app.get('/orderDetails2',async(req,res,orderId)=>{
   const { id } = req.query;
 console.log("cart",id)
-let orderIds=['cs_test_b1L2NluARSC1e1PeN3rN4VJU6Zk3AVbT3T8yJqZNHcbxfWUnrrHo94dJFc','cs_test_b1RHd3ZLD1UG3fi09KC1fWxcGCCGkYuBnmqo4wY00zsqaqk0T9cnnDBLMg']
+let orderIds
+const userDocRef = doc(db, 'users', id);
+const userDoc = await getDoc(userDocRef);
+if (userDoc.exists()) {
+    const userData = userDoc.data();
+    // console.log('Fetched data:', userData.id);
+    orderIds=userData.OrderId
+    console.log('id',orderIds)
+
+
+} else {
+    console.log('No such document!');
+
+}
 
 const retrieveOrderDetails = async (orderId) => {
   try {
@@ -329,13 +342,32 @@ const retrieveOrderDetails = async (orderId) => {
     return null;
   }
 };
-
+let orderData=[];
 // Use Promise.all with map to fetch order details for all order IDs concurrently
 const fetchOrderDetails = async () => {
   const orderDetails = await Promise.all(orderIds.map(retrieveOrderDetails));
 
   // orderDetails is an array of order details for each order ID
   console.log(orderDetails);
+  orderData.push(orderDetails)
+
+  
+if(orderData){
+  
+  const orderDocRef=doc(db, 'Orders', id);
+  (async () => {
+    try {
+      await setDoc(orderDocRef, { Orders: orderDetails }, { merge: true });
+      console.log('Array replaced successfully.');
+    } catch (error) {
+      console.error('Error replacing array:', error);
+    }
+  })();
+
+}
+else{
+  console.log("not found")
+}
 
   // You can process the order details here
 };

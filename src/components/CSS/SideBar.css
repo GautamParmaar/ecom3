@@ -27,3 +27,63 @@ h2 {
     flex: 1; /* Take remaining space */
     padding: 20px;
   }
+
+  .stylish-box {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Add other styling for your stylish box */
+  }
+  .textNav{
+    text-decoration: none;
+  }
+
+
+  .order-history {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Style the order table */
+  .order-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+  }
+  
+  /* Style table headers */
+  .order-table th {
+    background-color: #f5f5f5;
+    text-align: left;
+    padding: 12px;
+  }
+  
+  /* Style table rows */
+  .order-table td {
+    padding: 12px;
+  }
+  
+  /* Alternate row background color */
+  .order-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Media query for responsiveness */
+  @media (max-width: 768px) {
+    .order-table {
+      font-size: 14px; /* Reduce font size on smaller screens */
+    }
+  
+    /* Center-align table headers on smaller screens */
+    .order-table th {
+      text-align: center;
+    }
+  
+    /* Center-align table cells on smaller screens */
+    .order-table td {
+      text-align: center;
+    }
+  }

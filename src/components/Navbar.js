@@ -78,6 +78,20 @@ const Navbar2 = ({ user }) => {
             Products
           </NavLink>
         </li>
+
+        <li className="nav-item">
+          <NavLink
+            exact
+            to="/myorder"
+            activeClassName="active"
+            className="nav-links"
+            onClick={handleClick}
+
+           
+          >
+           My Order
+          </NavLink>
+        </li>
         <li className="nav-item">
           <NavLink
             exact

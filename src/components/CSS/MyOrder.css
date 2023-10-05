@@ -239,6 +239,44 @@
       margin: 0 5px;
     }
   }
+
+
+/* table */
+order-details-box {
+  width: 700px;
+  max-width: 100%;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+}
+
+.order-details-header {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-details-header p {
+  margin: 0;
+}
+
+.order-details-content {
+  padding: 20px;
+}
+
+@media (max-width: 600px) {
+  .order-details-box {
+    width: 90%;
+    margin: 20px auto;
+  }
+}
   
   
   

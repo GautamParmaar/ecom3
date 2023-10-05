@@ -13,6 +13,8 @@ import { Sidebar, Menu, MenuItem, SubMenu, useProSidebar } from "react-pro-sideb
 import { ProSidebarProvider } from "react-pro-sidebar";
 import { useEffect } from "react";
 import MyOrder from "./Order/MyOrder";
+import { Link, NavLink } from "react-router-dom";
+import MyOrder2 from "./Order/MyOrder2";
 
 
 
@@ -57,27 +59,25 @@ const SideBar = () => {
   return (
     <>
 
- <div style={{ display: "flex", height: "100vh" }}>
-      <Sidebar  className="app ">
-        <Menu>
-        <MenuItem className="menu1" icon={<MenuRoundedIcon onClick={() => {
-                  collapseSidebar();
-                }} />}>
-            {/* <h2>Customer Tab</h2> */}
-          </MenuItem>
-          <MenuItem icon={<Person2Icon/>}  >Profile </MenuItem>
-          <MenuItem icon={<InventoryIcon/>}> Order Hisory </MenuItem>
-          <MenuItem icon={<Icon icon={shoppingCart} size={25}/>}> Cart</MenuItem>
-          
-          <MenuItem icon={<LogoutIcon/>}> Logout </MenuItem>
-        </Menu>
-      </Sidebar>
-      {/* <h1>WELCOME TO QUICKPAY</h1> */}
-      <div className="right-side"></div>
-      
-    </div>
-
- 
+<div style={{ display: "flex", height: "100vh" }}>
+  <Sidebar className="app">
+    <Menu>
+      <MenuItem className="menu1" icon={<MenuRoundedIcon onClick={() => {
+        collapseSidebar();
+      }} />}>
+        {/* <h2>Customer Tab</h2> */} 
+      </MenuItem>
+     <NavLink className="textNav"> <MenuItem icon={<Person2Icon/>}  >Profile </MenuItem></NavLink>
+     <NavLink className="textNav">  <MenuItem icon={<InventoryIcon/>}> Order History </MenuItem></NavLink>
+     <NavLink className="textNav">  <MenuItem icon={<Icon icon={shoppingCart} size={25}/>}> Cart</MenuItem></NavLink>
+     <NavLink className="textNav">   <MenuItem icon={<LogoutIcon/>}> Logout </MenuItem></NavLink>
+    </Menu>
+  </Sidebar>
+  <div className="right-side">
+    
+    <MyOrder2/>
+  </div>
+</div>
     </>
   );
 };
