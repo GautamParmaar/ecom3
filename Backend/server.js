@@ -337,6 +337,7 @@ if (userDoc.exists()) {
     console.log('No such document!');
 
 }
+if(orderIds){
 
 const retrieveOrderDetails = async (orderId) => {
   try {
@@ -384,7 +385,9 @@ else{
 fetchOrderDetails();}catch(error){
   res.json('error')
 }
-
+}else{
+  console.log('user has not ordered anything')
+}
 })
 
 
