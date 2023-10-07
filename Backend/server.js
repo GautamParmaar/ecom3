@@ -5,7 +5,7 @@ const stripe=require('stripe')('sk_test_51NuEdsSH8i0IOWv3rBuz9dY785hElk1BzfxmzjN
 // const db=require("./src/config/Config.js")
 const {initializeApp}=require('firebase/app')
 const {getAuth}=require('firebase/auth')
-const {getFirestore}=require('firebase/firestore')
+const {getFirestore, collection, getDocs}=require('firebase/firestore')
 const {getStorage}=require('firebase/storage')
 const {doc,updateDoc,getDoc,arrayUnion,setDoc}=require('firebase/firestore')
 
@@ -95,7 +95,9 @@ const session=await stripe.checkout.sessions.create({
     quantity :JSON.stringify(totalQty),
     productName:JSON.stringify(nameOfProducts),
     Date:datetime,
-    lineItems:JSON.stringify(lineItems)
+    lineItems:JSON.stringify(lineItems),
+    UID:id
+    // customer id is UID
   }
 
 })
@@ -120,7 +122,8 @@ try {
 
     // Update the document with the modified data
     await updateDoc(userDocRef, {
-        OrderId: arrayUnion(session.id)
+        OrderId: arrayUnion(session.id),
+        
     });
 
     console.log("Data updated successfully");
@@ -156,14 +159,16 @@ if (existingData.exists()) {
     console.log("Data updated successfully");
   } else {
     await setDoc(doc(db, "Orders", id), {
-      Orders: [session]
+      Orders: [session],
+     
     });
     console.log("Data has been created");
   }
 } else {
   // If the document doesn't exist, create it with the 'Orders' field containing the new session object
    await setDoc(doc(db, "Orders", id), {
-      Orders: [session]
+      Orders: [session],
+     
     });
         console.log("Data has been created2");
 
@@ -310,11 +315,7 @@ app.get('/orderDetails',async(req,res)=>{
 // res.json({orderData})
 
 })
-const orderIds = [
-  'cs_test_b136rhgWjZ1UG5En3w2czBWyZY9XHfzZlYygc9fTlDp5cNHClhb8YIRkAz',
-  'cs_test_b1L2NluARSC1e1PeN3rN4VJU6Zk3AVbT3T8yJqZNHcbxfWUnrrHo94dJFc'
-  // Add more order IDs as needed
-];
+
 
 
 app.get('/orderDetails2',async(req,res,orderId)=>{
@@ -388,6 +389,91 @@ fetchOrderDetails();}catch(error){
 }else{
   console.log('user has not ordered anything')
 }
+})
+
+
+app.get('/trial',(req,res)=>{
+  const ordersCollection = collection(db, 'Orders');
+let ordersData
+    // Fetch all documents from the collection
+    const fetchData = async () => {
+      try {
+        const querySnapshot = await getDocs(ordersCollection);
+         ordersData = [];
+
+        querySnapshot.forEach((doc) => {
+          // Store the data
+          ordersData.push({ ...doc.data() });
+        });
+
+       
+        // console.log(ordersData,"orders")
+        let third=[]
+        let sec=ordersData.map((index,item)=>{
+          console.log(index.Orders)
+         
+        })
+
+    //     // console.log(third,'name')
+
+    //    third.forEach((item,index)=>{
+    //     console.log(item,index)
+    //    })
+       
+    //  let  JSONObject  = new JSONObject(third);
+     
+      } catch (error) {
+        console.error('Error fetching documents: ', error);
+      }
+    };
+    fetchData();
+
+    // console.log(ordersData)
+   
+
+//     const allOrdersWithId = [];
+
+// // Loop through the array of objects
+// ordersData.forEach((item) => {
+//   // Destructure the object to get the 'id' and 'Orders' properties
+//   const { id, Orders } = item;
+
+//   // If 'Orders' exists and is an array, push it into 'allOrdersWithId' along with the 'id'
+//   if (Array.isArray(Orders)) {
+//     allOrdersWithId.push({  Orders });
+//   }
+// });
+
+// // 'allOrdersWithId' now contains objects with 'id' and 'Orders' properties
+// console.log(allOrdersWithId.Orders,'chck');
+
+// orders.forEach((item,index)=>{
+//   console.log(item.Orders,'item')
+  
+// })
+
+// console.log(allOrdersWithId.length,)
+// let secArray=[]
+
+// allOrdersWithId.forEach((item,index)=>{
+//   console.log(item.Orders,index)
+//   secArray.push(item.Orders)
+
+// })
+
+// let third=[]
+// console.log(secArray,'second')
+// secArray.map((item,index)=>{
+//   console.log(item,index,'sec')
+  
+  
+// })
+// secArray.forEach((item,index)=>{
+//   console.log(item.id)
+// })
+
+   
+    res.send('ok')
 })
 
 
