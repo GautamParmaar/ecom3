@@ -105,17 +105,10 @@ const session=await stripe.checkout.sessions.create({
 })
 res.json({id:session.id})
 
-console.log(session)
+
 order.push(session.id)
 
-const metadat2={
-  products:JSON.stringify(data),
-    quantity :JSON.stringify(totalQty),
-    productName:JSON.stringify(nameOfProducts),
-    Date:datetime,
-    lineItems:JSON.stringify(lineItems),
-    UID:id
-}
+
 
 
 //code for inserting order id into user's database
@@ -137,7 +130,28 @@ try {
         
     });
 
-    console.log("Data updated successfully");
+    const cartProductRef = doc(db, 'Orders', id);
+    const existingData = await getDoc(cartProductRef);
+    if(existingData.exists()){
+      await updateDoc(cartProductRef, {
+        Orders: arrayUnion(session),
+      });
+      console.log('data has been inserted into Orders collection')
+
+    }
+
+
+else{
+  await setDoc(doc(db, "Orders", id), {
+    Orders: [session],
+   
+   
+  });
+  console.log("Data has been created");
+}
+
+
+   
 } else {
   
 }
@@ -145,47 +159,12 @@ try {
   console.error('Error updating document: ', error);
 }
 
-const SessionData=[]
+
 
 //for inserting order details in order database ,document id will be user uid
 
-const cartProductRef = doc(db, 'Orders', id);
-const existingData = await getDoc(cartProductRef);
 
-if (existingData.exists()) {
-  // Get the existing product data from the document
-  const existingProductData = existingData.data();
 
-  // Check if the 'Orders' field exists and is an array
-  if (existingProductData.hasOwnProperty('Orders') && Array.isArray(existingProductData.Orders)) {
-    // Create a copy of the existing array
-    const existingOrders = [...existingProductData.Orders];
-
-    // Add the new session object to the array
-    existingOrders.push(session,metadat2);
-
-    // Update the document with the modified array
-   
-
-    console.log("Data updated successfully");
-  } else {
-    await setDoc(doc(db, "Orders", id), {
-      Orders: [session],
-      Customer:[metadat2]
-     
-    });
-    console.log("Data has been created");
-  }
-} else {
-  // If the document doesn't exist, create it with the 'Orders' field containing the new session object
-   await setDoc(doc(db, "Orders", id), {
-      Orders: [session],
-      Customer:[metadat2]
-     
-    });
-        console.log("Data has been created2");
-
-}
 
 
 

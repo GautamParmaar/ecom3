@@ -5,7 +5,7 @@ import {Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import "../CSS/AlOrder.css"
 import { collection, getDocs } from 'firebase/firestore';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function AllOrders() {
  const [userid,setUID]=useState(null)
@@ -25,8 +25,8 @@ function AllOrders() {
     })
    
   },[]) 
+  const adminUID = 'xjOj4RwBPnUNyFscGqqB6GJHbBt2';
 
-   let dataofOrders=[]
 
   useEffect(() => {
     // Reference to your Firestore collection
@@ -55,18 +55,13 @@ function AllOrders() {
   user&& fetchData();
   },[]);
 
-// orders[0].Orders.map((item,index)=>{
-//   console.log(item)
-  
-// })
+
 
      
-      const adminUID = 'xjOj4RwBPnUNyFscGqqB6GJHbBt2';
       
 
       
-      // fetchUserData()
-
+      
       const pluckValuesFromAllOrders = (data, key) =>
       orders.flatMap((orderObj) =>
     orderObj.Orders?.map((order) => order[key]) || []
@@ -75,9 +70,9 @@ function AllOrders() {
 
   const orderIds = pluckValuesFromAllOrders(orders, 'id');
   const paymentStatuses = pluckValuesFromAllOrders(orders, 'payment_status');
+  const amountTotal=pluckValuesFromAllOrders(orders,'amount_total')
 
-  // const values = pluckValuesFromMetadata(orders, '');
-  //   console.log(values,'id')
+
 
   //metadata code is working
   const pluckValuesFromMetadata = (data, key) =>
@@ -89,7 +84,7 @@ const orderMeta = pluckValuesFromMetadata(orders, 'ID');
 console.log(orderMeta, 'meta');
 console.log(orderIds,'id')
 
-
+//using this code for fetching metadata from order object
 const pluckvaluefromData = (data, key) =>
   data.flatMap((orderObj) =>
     orderObj.Orders.flatMap((order) =>
@@ -97,8 +92,9 @@ const pluckvaluefromData = (data, key) =>
     )
   );
 
-const meta = pluckvaluefromData(orders, 'UID'); // Use 'uid' instead of 'UID'
-console.log(meta, 'hhhh');
+const quantity = pluckvaluefromData(orders, 'quantity'); // Use 'uid' instead of 'UID'
+const Date=pluckvaluefromData(orders,'Date')
+
       
 
 
@@ -111,27 +107,29 @@ console.log(meta, 'hhhh');
       {/* table for displaying data */}
    
       <div className='table-responsive'>
-      <Table className='table'>
-        <Thead>
+      <Table className='table  table-bordered table-hover'>
+        <Thead className='table-dark'>
           <Tr>
-            <Th>#</Th>
-            <Th>Order ID</Th>
-            <Th>Payment Status</Th>
-            <Th>Quantity</Th>
-            <Th>Total Price</Th>
-            <Th>Payment Status</Th>
+            <Th className="text-center">#</Th>
+            <Th className="text-center">Order ID</Th>
+            <Th className="text-center">Payment Status</Th>
+            <Th className="text-center">Quantity</Th>
+            <Th className="text-center">Total Price</Th>
+            <Th className="text-center">Date</Th>
+            <Th className="text-center">Action</Th>
           </Tr>
         </Thead>
         <Tbody>
         {orders && orderIds.map((orderId, index) => (
           <Tr key={orderId}>
-            <Td>{index+1}</Td>
-            <Td style={{fontSize:'0.8rem'}}>{orderId}</Td>
+            <Td className="text-center">{index+1}</Td>
+           <Td className="text-center" style={{fontSize:'0.8rem'}}><Link style={{textDecoration:'none'}} to={`/singleorder/${orderId}`}>{orderId}</Link></Td>
             
-            <Td>{paymentStatuses[index]}</Td>
-            <Td>{orderMeta[index]}</Td>
-            <Td></Td>
-            <Td></Td>
+            <Td className="text-center">{paymentStatuses[index]}</Td>
+            <Td className="text-center">{quantity[index]}</Td>
+            <Td className="text-center">{amountTotal[index]/100}</Td>
+            <Td className="text-center">{Date[index]}</Td>
+            <Td className="text-center"><button className='btn btn-danger'>Cancel</button></Td>
           </Tr>
             ))} 
         </Tbody>
