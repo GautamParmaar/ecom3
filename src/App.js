@@ -23,6 +23,7 @@ import AdminLogin from './components/Admin/AdminLogin';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import AdminNavbar from './components/Admin/AdminNavbar';
 import AllOrders from './components/Admin/AllOrders';
+import AllOrders2 from './components/Admin/AllOrders2';
 
 
 function App() {
@@ -88,6 +89,9 @@ const [products, setProducts]=useState([]);
           <Route path='/AdminLogin' element={<AdminLogin/>}/>
           <Route path='/AdminDashboard' element={<>  <AdminDashboard/></>}/>
           <Route path='/adminOrders' element={<AllOrders/>}/>
+          <Route path='/adminOrders2' element={<AllOrders2/>}/>
+
+
 
           
 

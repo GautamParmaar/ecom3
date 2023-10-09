@@ -160,6 +160,7 @@ if (existingData.exists()) {
   } else {
     await setDoc(doc(db, "Orders", id), {
       Orders: [session],
+      Customer:products
      
     });
     console.log("Data has been created");
@@ -168,6 +169,7 @@ if (existingData.exists()) {
   // If the document doesn't exist, create it with the 'Orders' field containing the new session object
    await setDoc(doc(db, "Orders", id), {
       Orders: [session],
+      Customer:products
      
     });
         console.log("Data has been created2");
@@ -405,22 +407,13 @@ let ordersData
           // Store the data
           ordersData.push({ ...doc.data() });
         });
+          console.log(ordersData)
+
+        
 
        
         // console.log(ordersData,"orders")
-        let third=[]
-        let sec=ordersData.map((index,item)=>{
-          console.log(index.Orders)
-         
-        })
-
-    //     // console.log(third,'name')
-
-    //    third.forEach((item,index)=>{
-    //     console.log(item,index)
-    //    })
        
-    //  let  JSONObject  = new JSONObject(third);
      
       } catch (error) {
         console.error('Error fetching documents: ', error);
@@ -428,49 +421,9 @@ let ordersData
     };
     fetchData();
 
-    // console.log(ordersData)
+    
+
    
-
-//     const allOrdersWithId = [];
-
-// // Loop through the array of objects
-// ordersData.forEach((item) => {
-//   // Destructure the object to get the 'id' and 'Orders' properties
-//   const { id, Orders } = item;
-
-//   // If 'Orders' exists and is an array, push it into 'allOrdersWithId' along with the 'id'
-//   if (Array.isArray(Orders)) {
-//     allOrdersWithId.push({  Orders });
-//   }
-// });
-
-// // 'allOrdersWithId' now contains objects with 'id' and 'Orders' properties
-// console.log(allOrdersWithId.Orders,'chck');
-
-// orders.forEach((item,index)=>{
-//   console.log(item.Orders,'item')
-  
-// })
-
-// console.log(allOrdersWithId.length,)
-// let secArray=[]
-
-// allOrdersWithId.forEach((item,index)=>{
-//   console.log(item.Orders,index)
-//   secArray.push(item.Orders)
-
-// })
-
-// let third=[]
-// console.log(secArray,'second')
-// secArray.map((item,index)=>{
-//   console.log(item,index,'sec')
-  
-  
-// })
-// secArray.forEach((item,index)=>{
-//   console.log(item.id)
-// })
 
    
     res.send('ok')

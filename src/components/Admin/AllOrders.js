@@ -5,8 +5,12 @@ import {Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import "../CSS/AlOrder.css"
 import { collection, getDocs } from 'firebase/firestore';
+import axios from 'axios';
 
 function AllOrders() {
+ const [userid,setUID]=useState(null)
+    const [user,setUser]=useState();
+    const [orders, setOrders] = useState([]); 
 
   useEffect(()=>{
     auth.onAuthStateChanged(user=>{
@@ -22,9 +26,7 @@ function AllOrders() {
    
   },[]) 
 
-    const [userid,setUID]=useState(null)
-    const [user,setUser]=useState();
-    const [orders, setOrders] = useState([]); 
+   let dataofOrders=[]
 
   useEffect(() => {
     // Reference to your Firestore collection
@@ -38,81 +40,54 @@ function AllOrders() {
 
         querySnapshot.forEach((doc) => {
           // Store the document ID along with the data
-          ordersData.push({  ...doc.data() });
+          ordersData.push({...doc.data() });
         });
+       
 
         setOrders(ordersData);
         console.log(orders,"orders")
+       
       } catch (error) {
         console.error('Error fetching documents: ', error);
       }
     };
 
-   fetchData();
-  }, [db]);
-//data for admin order panel is so mixed up thats why i will use this map & array destructuring method
+  user&& fetchData();
+  },[]);
 
-// Create an array to store all the Orders arrays along with their respective ids
-
-const allOrdersWithId = [];
-
-// Loop through the array of objects
-orders.forEach((item) => {
-  // Destructure the object to get the 'id' and 'Orders' properties
-  const { id, Orders } = item;
-
-  // If 'Orders' exists and is an array, push it into 'allOrdersWithId' along with the 'id'
-  if (Array.isArray(Orders)) {
-    allOrdersWithId.push({  Orders });
-  }
-});
-
-// 'allOrdersWithId' now contains objects with 'id' and 'Orders' properties
-console.log(allOrdersWithId.Orders,'chck');
-
-orders.forEach((item,index)=>{
-  console.log(item.Orders,'item')
+// orders[0].Orders.map((item,index)=>{
+//   console.log(item)
   
-})
+// })
 
-console.log(allOrdersWithId.length,)
-let secArray=[]
-
-allOrdersWithId.forEach((item,index)=>{
-  console.log(item.Orders,index)
-  secArray.push(item.Orders)
-
-})
-
-let third=[]
-console.log(secArray,'second')
-secArray.map((item,index)=>{
-  console.log(item,index,'sec')
-  
-  
-})
-secArray.forEach((item,index)=>{
-  console.log(item.id)
-})
-
-
-
-
-
-
-
-
-
-    
      
       const adminUID = 'xjOj4RwBPnUNyFscGqqB6GJHbBt2';
+      
 
+      
+      // fetchUserData()
 
-      //for checking details of order array
-      // orders && orders.Orders.map((item,index)=>{
-      //   console.log(item,"hello")
+      const pluckValuesFromAllOrders = (data, key) =>
+      orders.flatMap((orderObj) =>
+    orderObj.Orders?.map((order) => order[key]) || []
+  );
+ 
 
-      // })
+  const orderIds = pluckValuesFromAllOrders(orders, 'id');
+  const paymentStatuses = pluckValuesFromAllOrders(orders, 'payment_status');
+
+  // const values = pluckValuesFromMetadata(orders, '');
+  //   console.log(values,'id')
+  const pluckValuesFromMetadata = (data, key) =>
+  orders.flatMap((orderObj) =>
+    orderObj.Customer?.map((customer) => customer[key]) || []
+  );
+
+const orderMeta = pluckValuesFromMetadata(orders, 'ID');
+console.log(orderMeta, 'meta');
+console.log(orderIds,'id')
+
+      
 
 
     
@@ -129,20 +104,20 @@ secArray.forEach((item,index)=>{
           <Tr>
             <Th>#</Th>
             <Th>Order ID</Th>
-            <Th>Product</Th>
+            <Th>Payment Status</Th>
             <Th>Quantity</Th>
             <Th>Total Price</Th>
             <Th>Payment Status</Th>
           </Tr>
         </Thead>
         <Tbody>
-        {orders && orders.map((order, index) => (
-          <Tr key={index}>
+        {orders && orderIds.map((orderId, index) => (
+          <Tr key={orderId}>
             <Td>{index+1}</Td>
-            <Td>{order.id}</Td>
+            <Td style={{fontSize:'0.8rem'}}>{orderId}</Td>
             
-            <Td></Td>
-            <Td></Td>
+            <Td>{paymentStatuses[index]}</Td>
+            <Td>{orderMeta[index]}</Td>
             <Td></Td>
             <Td></Td>
           </Tr>
