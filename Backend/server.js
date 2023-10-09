@@ -83,6 +83,8 @@ products.map((products)=>{
   qtyData=products.qty
   console.log(data)
 })
+
+
 // console.log(products,"hello")
 const session=await stripe.checkout.sessions.create({
   payment_method_types:["card"],
@@ -105,6 +107,15 @@ res.json({id:session.id})
 
 console.log(session)
 order.push(session.id)
+
+const metadat2={
+  products:JSON.stringify(data),
+    quantity :JSON.stringify(totalQty),
+    productName:JSON.stringify(nameOfProducts),
+    Date:datetime,
+    lineItems:JSON.stringify(lineItems),
+    UID:id
+}
 
 
 //code for inserting order id into user's database
@@ -151,7 +162,7 @@ if (existingData.exists()) {
     const existingOrders = [...existingProductData.Orders];
 
     // Add the new session object to the array
-    existingOrders.push(session);
+    existingOrders.push(session,metadat2);
 
     // Update the document with the modified array
    
@@ -160,7 +171,7 @@ if (existingData.exists()) {
   } else {
     await setDoc(doc(db, "Orders", id), {
       Orders: [session],
-      Customer:products
+      Customer:[metadat2]
      
     });
     console.log("Data has been created");
@@ -169,7 +180,7 @@ if (existingData.exists()) {
   // If the document doesn't exist, create it with the 'Orders' field containing the new session object
    await setDoc(doc(db, "Orders", id), {
       Orders: [session],
-      Customer:products
+      Customer:[metadat2]
      
     });
         console.log("Data has been created2");

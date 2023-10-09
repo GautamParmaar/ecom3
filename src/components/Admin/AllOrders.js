@@ -78,6 +78,8 @@ function AllOrders() {
 
   // const values = pluckValuesFromMetadata(orders, '');
   //   console.log(values,'id')
+
+  //metadata code is working
   const pluckValuesFromMetadata = (data, key) =>
   orders.flatMap((orderObj) =>
     orderObj.Customer?.map((customer) => customer[key]) || []
@@ -87,6 +89,16 @@ const orderMeta = pluckValuesFromMetadata(orders, 'ID');
 console.log(orderMeta, 'meta');
 console.log(orderIds,'id')
 
+
+const pluckvaluefromData = (data, key) =>
+  data.flatMap((orderObj) =>
+    orderObj.Orders.flatMap((order) =>
+      order.metadata ? [order.metadata[key]] : []
+    )
+  );
+
+const meta = pluckvaluefromData(orders, 'UID'); // Use 'uid' instead of 'UID'
+console.log(meta, 'hhhh');
       
 
 
