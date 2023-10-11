@@ -33,6 +33,7 @@ function App() {
  
 const [userid,setUID]=useState(null)
 const [user,setUser]=useState();
+const [orders, setOrders] = useState([]); 
 useEffect(()=>{
   auth.onAuthStateChanged(user=>{
     if(user){
@@ -91,7 +92,7 @@ const [products, setProducts]=useState([]);
           <Route path='/AdminDashboard' element={<>  <AdminDashboard/></>}/>
           <Route path='/adminOrders' element={<AllOrders/>}/>
           <Route path='/adminOrders2' element={<AllOrders2/>}/>
-          <Route path='/singleorder/:id' element={<SpecificOrder/>}/>
+          <Route path='/singleorder/:id'exact  element={<SpecificOrder/>}/>
 
 
 

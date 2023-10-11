@@ -38,10 +38,30 @@ app.get('/',(req,res)=>{
 
 app.post('/create-checkout',async(req,res)=>{
   let order=[]
+  let userName;
+  let userEmail;
+  let userPhone;
+  let userAddress;
 const {products,id,totalQty}=req.body;
 // console.log(products,"gggg")
 console.log(id,"id");
 // console.log(products,"pppp")
+ const userDocRef = doc(db, 'users', id);
+    const userDoc = await getDoc(userDocRef);
+    if (userDoc.exists()) {
+      // Document data exists, you can access it using .data() method
+      const userData = userDoc.data();
+      console.log('Fetched data:', userData);
+      userName=userData.name;
+      userEmail=userData.email
+      userPhone=userData.phone
+      
+      
+      
+    } else {
+      console.log('No such document!');
+     
+    }
 
 const lineItems= await products.map((products)=>({
   price_data:{
@@ -98,7 +118,10 @@ const session=await stripe.checkout.sessions.create({
     productName:JSON.stringify(nameOfProducts),
     Date:datetime,
     lineItems:JSON.stringify(lineItems),
-    UID:id
+    UID:id,
+    CustomerName:JSON.stringify(userName),
+    CustomerEmail:JSON.stringify(userEmail),
+    CustomerPhone:JSON.stringify(userPhone)
     // customer id is UID
   }
 
