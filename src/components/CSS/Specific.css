@@ -13,18 +13,19 @@
   padding-top: 10px;
 }
 .search-container {
-  float: right;
+  float: left;
+  margin-left: 110px;
 }
 .search-container input[type="text"] {
   width: 200px;
   height: 40px;
   padding: 10px;
   border: 1px solid #ccc;
-  transition: 0.5s all;
+  /* transition: 0.5s all; */
 }
-.search-container input[type="text"]:focus{
+/* .search-container input[type="text"]:focus{
 width: 300px;
-}
+} */
 .search-container button {
   height: 40px;
   width: 40px;
@@ -90,7 +91,7 @@ width: 300px;
   padding: 0;
 }
 .orderLeft li {
-  width: 22% !important;
+  width: 100% !important;
   position: relative;
 }
 .orderLeft li .customerName {
@@ -186,8 +187,9 @@ border-bottom: 0;
 width: 100%;
 }
 .itemDesc {
-  float: right;
+  
   width: 80%;
+  margin-left: 55px;
 }
 .itemDesc p span {
   display: inline-block;
@@ -314,9 +316,81 @@ background: transparent;
 @media screen and (max-width: 768px) {
   .order-id {
     font-size: 14px; 
-    max-width: 100px;
+    max-width: 60px;
   margin-bottom: 5px; /* Add some spacing between elements */
-  white-space: normal; /* Allow the text to wrap */
-  word-break: break-all; /* Reduce font size for smaller screens */
+  /* Reduce font size for smaller screens */
   }
 }
+
+.invoiceDetails p{
+  font-weight: bold;
+}
+
+.invoiceDetails span{
+  font-weight: none;
+}
+
+/* Default styles for larger screens */
+.orderLeft {
+  display: flex;
+  flex-direction: row;
+}
+
+.orderLeft li {
+  margin-right: 2rem;
+}
+
+
+/* Media query for screens with a maximum width of 768px (adjust as needed) */
+@media (max-width: 768px) {
+  .orderLeft {
+    flex-direction: column;
+  }
+
+  .orderLeft li {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  .order-date {
+    display: block;
+  }
+  .orderHead ul{
+    display: flex;
+    flex-direction: row;
+  }
+  .itemDesc {
+  
+    width: 100%;
+    margin-left: 0;
+  }
+  .invoiceDetails{
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .orderLeft  {
+    
+    flex-direction: row;
+  }
+
+  .orderLeft li {
+    display: flex;
+    flex-direction: column;
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  .order-date {
+    display: block;
+  }
+  .orderHead ul{
+    display: flex;
+    flex-direction: column;
+  }
+  .orderDate{
+    display: none;
+  }
+}
+/* custom */

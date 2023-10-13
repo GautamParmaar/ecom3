@@ -8,6 +8,7 @@ import "./CSS/NavBar.css";
 import { auth, db } from "../config/Config";
 import { signOut } from "firebase/auth";
 import { collection, onSnapshot, query } from "firebase/firestore";
+import MenuIcon from '@mui/icons-material/Menu';
 
 
 
@@ -49,21 +50,11 @@ const Navbar2 = ({ user }) => {
     <div className="nav-container">
       <NavLink exact to="/" className="nav-logo">
         Ecommerce
-        <i className="fas fa-code"></i>
+       
       </NavLink>
 
       <ul className={click ? "nav-menu active" : "nav-menu"}>
-        {/* <li className="nav-item">
-          <NavLink
-            exact
-            to="/"
-            activeClassName="active"
-            className="nav-links"
-            onClick={handleClick}
-          >
-            Home
-          </NavLink>
-        </li> */}
+        
         <li className="nav-item">
           <NavLink
             exact
@@ -152,12 +143,13 @@ const Navbar2 = ({ user }) => {
         </li>
         
       </ul>
-      <div className="nav-icon" onClick={handleClick}>
-        <i className={click ? "fas fa-times" : "fas fa-bars"}></i>
+      <div style={{marginTop:'auto',marginBottom:'auto'}} className="nav-icon" onClick={handleClick}>
+        {/* <i className={click ? "fas fa-times" : "fas fa-bars"}> </i> */}
+        <MenuIcon   fontSize="large" />
       </div>
     </div>
   </nav>
-<br/>
+
   {/* <SmallNav/> */}
    
   </>

@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+.filterBox{
+  margin-top: 5px;
+}
+.center{
+cursor: pointer;
+}

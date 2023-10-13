@@ -270,6 +270,9 @@ order-details-box {
 .order-details-content {
   padding: 20px;
 }
+.search-container2{
+  margin-left: 145px;
+}
 
 @media (max-width: 600px) {
   .order-details-box {
@@ -277,6 +280,21 @@ order-details-box {
     margin: 20px auto;
   }
 }
+
+@media (max-width:768px){
+  .search-container2{
+    margin-left: 0;
+  }
+  .textWidth{
+    width: 300px;
+    word-wrap: break-word;
+  }
+}
+.buttonTransaction{
+  float: right;
+}
+
+
   
   
   

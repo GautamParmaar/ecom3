@@ -118,5 +118,8 @@ nav{
     font-size: 1.8rem;
     cursor: pointer;
     color: #ffdd40;
+    margin-right: -10px;
   }
+
+  
 }

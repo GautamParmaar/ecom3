@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import Navbar2, { Navbar } from './Navbar'
-// import Products3 from './Products'
 import {db,auth } from "../config/Config.js"
 import { collection, getDocs,setDoc,doc } from 'firebase/firestore';
 import Products3 from './Products';
-import Sidebar from './SideBar';
 import { useNavigate } from 'react-router-dom';
 import IndividualFilteredProduct2 from './IndividualFilteredProduct2';
-import SingleProduct from './SingleProduct';
 import SmallNav from './SmallNav';
+import { Link } from 'react-router-dom'
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 
 
 
 
 
 
-const Home2 = (props) => {
+const Home2 = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedBrand, setSelectedBrand] = useState('All');
+
+
   const history=useNavigate();
 //getting current user id
 function GetUserId(){
 const [uid,setUID]=useState(null)
+
 useEffect(()=>{
   auth.onAuthStateChanged(user=>{
     if(user){
@@ -139,54 +142,66 @@ const data = [
 ];
 const [selectedCategory, setSelectedCategory] = useState('All');
 
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-    filterFunction(event.target.value)
-  };
+const handleChange = (individualSpan) => {
+  setActive(individualSpan.id);
+  setCategory(individualSpan.text);
+  filterFunction(individualSpan.text, selectedBrand); // Include selected brand
+};
+
+const handleCategoryChange = (event) => {
+  setSelectedCategory(event.target.value);
+  filterFunction(event.target.value, selectedBrand); // Include selected brand
+};
+const handleBrandChange = (event) => {
+  setSelectedBrand(event.target.value);
+  filterFunction(category, event.target.value); // Include selected category
+};
 
   const filteredData = selectedCategory === 'All' ? data : data.filter(item => item.category === selectedCategory);
 
-const categories=[
-  'generic',
-  'special'
-]
+
 
 //for filtering by brand
-const Branddata = [
-  { id: 1, name: 'Cipla', category: 'Cipla' },
-  { id: 2, name: 'Jio', category: 'Jio' },
-  // Add more data items here
-];
-const [selectedBrand, setSelectedBrand] = useState('All');
-const handleBrandChange = (event) => {
-  setSelectedBrand(event.target.value);
-};
+
 
 
 //handle change will set category
-const handleChange=(individualSpan)=>{
- setActive(individualSpan.id);
- setCategory(individualSpan.text)
- filterFunction(individualSpan.text)
-}
+
 
 //filtered products state
 const [filteredProducts,setfilteredProducts]=useState([])
 //filter function
-const filterFunction=(text)=>{
- const filter=products.filter((product)=>product.category===text)
- setfilteredProducts(filter)
-}
+const filterFunction = (categoryText, brandText) => {
+  const filter = products.filter(
+    (product) =>
+      (categoryText === '' || product.category === categoryText) &&
+      (brandText === 'All' || product.brand === brandText)
+  );
+  setfilteredProducts(filter);
+};
 
 const returnToAllProducts=()=>{
   setCategory('');
   setfilteredProducts([]);
 }
 
+
+//code for searching products through search box
+const handleSearch = () => {
+  // Perform a search based on the searchQuery
+  // You can filter the products using the searchQuery
+  // For example, if you want to search by product name:
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  setfilteredProducts(filteredProducts);
+};
+
   return (
    <>
 
-  <br/>
+ 
   {/* {products.length>0 &&
   (
     <div className='container-fluid'>
@@ -202,13 +217,40 @@ const returnToAllProducts=()=>{
   } {products.length<1 && (
     <div className='container-fluid'>Please wait......</div>
   )}   */}
+{/* code of small navbar */}
+<div className="strip">
+  <div className="strip-content">
+  <div class="search-container2">
+  <input
+    type="text"
+    placeholder="Search Products"
+    name="search"
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+  />
+  <button type="submit" onClick={handleSearch}>
+    <i class="fa fa-search"></i>
+  </button>
+</div>  </div>
+    <ul className="strip-right">
+     
+      <li> 
+        <Link className='UlText' style={{textDecoration:'none'}}>Offers</Link>
+      </li>
+    </ul>
+    <div className='offerIcon'>
+  <LocalOfferIcon/>
+</div>
+</div> 
 
 
 
-   <div className='container-fluid filter-products-main-box'>
+{/* small navbar code ends */}
 
-   <div>
-      <h6>Filter by Category</h6>
+   <div  className='container-fluid filter-products-main-box'>
+
+   <div className='filterBox'>
+      <h6 >Filter by Category</h6>
       <div>
         <select id="categoryFilter" value={selectedCategory} onChange={handleCategoryChange}>
           <option value="All">All</option>
@@ -223,12 +265,13 @@ const returnToAllProducts=()=>{
       </ul> */}
     </div>
     <div>
-    <h6>Filter by Category</h6>
+    <h6>Filter by Brand</h6>
       <div>
-        <select id="brandFilter" value={selectedBrand} onChange={handleBrandChange}>
+        <select id="brandFilter"   value={selectedBrand}
+  onChange={handleBrandChange} >
           <option value="All">All</option>
-          <option value="generic">Jio</option>
-          <option value="special">Cipla</option>
+          <option value="Jio">Jio</option>
+          <option value="Cipla">Cipla</option>
         </select>
       </div><br/>
 </div>
@@ -237,7 +280,7 @@ const returnToAllProducts=()=>{
     filteredProducts.length>0 &&(
      <div className='my-products text-center'>
       <h1 className='text-center'>{category}</h1>
-      <a className='center' onClick={returnToAllProducts}>Return to All Products</a>
+      <a className='center' onClick={returnToAllProducts}><h3>Return to All Products</h3></a>
       <div className='products-box'>
         {filteredProducts.map(IndividualFilteredProduct=>(
           <IndividualFilteredProduct2 data={data} key={IndividualFilteredProduct.ID} IndividualFilteredProduct={IndividualFilteredProduct} addToCart={addToCart} />

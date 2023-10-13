@@ -105,6 +105,23 @@ const customerPhone=pluckvaluefromData(orders,'CustomerPhone')
 // console.log('UID,',customerUID)
 
 
+ // Function to handle changes in the search input
+ 
+
+  // Function to sort orders by date
+  const sortByDate = (date) => {
+    const sortedOrders = orders
+      .map((order, index) => ({ order, index }))
+      .sort((a, b) => new Date(b.order.Date) - new Date(a.order.Date));
+
+    return date ? sortedOrders.filter((item) => new Date(item.order.Date) <= new Date(date)) : sortedOrders;
+  };
+
+  // State for sorting date
+  const [sortDate, setSortDate] = useState(null);
+
+
+
 
 
 
@@ -116,7 +133,10 @@ const customerPhone=pluckvaluefromData(orders,'CustomerPhone')
     <div>
     {user && user.uid === adminUID ? (
       <><AdminNavbar/>
+
+      
       <div align="center" className='my-4'>Welcome to the Admin order Dashboard</div>
+      
       {/* table for displaying data */}
    
       {/* <div className='table-responsive'>
@@ -157,10 +177,7 @@ const customerPhone=pluckvaluefromData(orders,'CustomerPhone')
     <div class="orderTop">
       <h2 class="hidden-xs">All Orders</h2>
       <div class="search-container">
-        <form action="/action_page.php">
-          <input type="text" placeholder="Search all orders" name="search"/>
-          <button type="submit"><i class="fa fa-search"></i></button>
-        </form>
+       
       </div>
     </div>
     <div class="order_tab">
@@ -190,7 +207,7 @@ const customerPhone=pluckvaluefromData(orders,'CustomerPhone')
           S.No : <span>{index+1}</span>
         </li>
             <li>
-              <p   key={orderId}> ORDER ID <span className='order-id'>{orderId}</span></p>
+              <p   key={orderId} > <b>ORDER ID</b> <span className='order-id'>{orderId}</span></p>
             </li>
             {/* <li>
               <p>TOTAL <span>$413.00</span></p>
@@ -214,9 +231,11 @@ const customerPhone=pluckvaluefromData(orders,'CustomerPhone')
               </ul>
               <span class="modelClose"><i class="fa fa-times" aria-hidden="true"></i></span>
             </div> */}
-            <p>Order Date :{Date[index]}</p>
+            <p >Order Date : <span >{Date[index]}</span> </p> 
+           
           </div>
         </div>
+        
         <div class="itemDetails">
           {/* <h3>Delivered 16-Mar-2019</h3>
           <p>Package was handed to a receptionist</p>
@@ -231,11 +250,11 @@ const customerPhone=pluckvaluefromData(orders,'CustomerPhone')
             <div class="itemDesc">
               <h4>Product : {JSON.parse(productname[index]).join(', ')} </h4>
              
-              <span class="itemPrice">Price : ₹{amountTotal[index]/100}</span>
-              <span class="itemPrice">Quantity {quantity[index]} </span>
-              <span class="itemPrice">Payment Status :{paymentStatuses[index]} </span>
+              <span class="itemPrice"><b>Price: </b>₹{amountTotal[index]/100}</span>
+              <span class="itemPrice"><b>Quantity: </b>{quantity[index]} </span>
+              <span class="itemPrice"><b>Payment Status: </b>{paymentStatuses[index]} </span>
 
-              <button class="buy_again">Cancel</button>
+             
             </div>
           </div> 
 
@@ -252,16 +271,20 @@ const customerPhone=pluckvaluefromData(orders,'CustomerPhone')
               <img src="images/product1.jpg" alt=""/>
             </div>
             <div class="itemDesc">
-              <h4>Customer Name :  {customerName[index]}</h4>
-              <p>Email: <span>{customerEmail[index]}</span></p>
-              <span class="itemPrice">Phone : {customerPhone[index]}</span>
-              <span class="itemPrice">Address : </span>
+              <h4>   &nbsp;Customer Name: {customerName[index]}</h4>
+              
+
+              <span class="itemPrice"><b>&nbsp;Email: </b>{customerEmail[index]}</span>
+              <span class="itemPrice"><b>&nbsp;Phone: </b>{customerPhone[index]} </span>
+              <span class="itemPrice"><b>Address: </b> </span>
              
             </div>
+            
           </div>
 
-       
+          <button class="buy_again">Cancel Order</button>
       </div>
+      
     </div>
   ))} 
   
