@@ -21,9 +21,8 @@ function Profile({user}) {
     else{
       setUsername()
     }
-    console.log(user);
-    console.log(user.uid);
-    const userDocRef = doc(db, 'users', user.uid);
+  
+   if(user){ const userDocRef = doc(db, 'users', user.uid);
     const userDoc = await getDoc(userDocRef);
     if (userDoc.exists()) {
       // Document data exists, you can access it using .data() method
@@ -36,7 +35,7 @@ function Profile({user}) {
     } else {
       console.log('No such document!');
       return null;
-    }
+    }}
   
    })
   

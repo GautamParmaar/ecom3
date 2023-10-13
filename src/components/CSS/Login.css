@@ -110,3 +110,21 @@ a {
 .new{
    margin-left: 6px;
 }
+.createAccount{
+   width: 120%;
+ margin-left: 2em;
+}
+.signup{
+    color:blue;
+}
+
+@media(max-width:768px){
+    .createAccount{
+       float: left;
+       margin-left: -5em;
+       margin-right: 30px;
+     } 
+     .submitButton{
+        float: left; 
+     }
+}

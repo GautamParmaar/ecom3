@@ -111,158 +111,145 @@ order.Orders && order.Orders.map((order,index)=>{
 
   
   return (
-    < >
+    <>
+      <button className='btn btn-success my-2  buttonTransaction' onClick={handleToken2}>Refresh Transactions</button>
 
-    {/* <input type='text' value={filter} placeholder='Search' onChange={searchText.bind(this)} /> */}
- 
+      {/* Search input and button */}
+      <div class="search-container2 my-2">
+        <input
+          type="text"
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          placeholder="Search by product name"
+        />
+        <button type="submit" onClick={handleSearch}>
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
 
-    <button className='btn btn-success mx-2 my-2' onClick={handleToken2}>Refresh Transactions</button>
-
-    
-
-
-
-
-
-{/* <!-- ion-icons --> */}
-<div class="search-container2 ">
-  <input
-    type="text"
-    value={searchInput}
-    onChange={(e) => setSearchInput(e.target.value)}
-    placeholder="Search by product name"
-  />
-  <button type="submit" onClick={handleSearch}  >
-    <i class="fa fa-search"></i>
-  </button>
-</div>
-
-
-
- {/* Display search results or all orders */}
- {searchResults.length > 0
-        ? searchResults.map((orderItem, index) => (
-            <div className="container" key={orderItem.id}>
-              <div className="customer_details orderList">
-                <div style={{ marginBottom: '2rem' }} id="order_tab" className="orderCardWrap tab-content1 current">
-                  <div className="orderCard">
-                    <div className="orderHead">
-                      <ul className="orderLeft">
-                        <li>
+      {order.Orders && order.Orders.length > 0 ? (
+        searchResults.length > 0
+          ? searchResults.map((orderItem, index) => (
+              <div className="container" key={orderItem.id}>
+                <div className="customer_details orderList">
+                  <div style={{ marginBottom: '2rem' }} id="order_tab" className="orderCardWrap tab-content1 current">
+                    <div className="orderCard">
+                      <div className="orderHead">
+                        <ul className="orderLeft">
+                          <li>
+                            <p>
+                              <b>ORDER ID :</b> <span className="textWidth">{orderItem.id}</span>
+                            </p>
+                          </li>
+                          <li>
+                            <p className="orderDate">Order Date: {orderItem.metadata.Date}</p>
+                          </li>
+                        </ul>
+                        <div className="invoiceDetails">
                           <p>
-                            <b>ORDER ID :</b> <span className="textWidth">{orderItem.id}</span>
+                            <span>Order Date: {orderItem.metadata.Date}</span>
                           </p>
-                        </li>
-                        <li>
-                          <p className="orderDate">Order Date : {orderItem.metadata.Date}</p>
-                        </li>
-                      </ul>
-                      <div className="invoiceDetails">
-                        <p>
-                          <span>Order Date: {orderItem.metadata.Date}</span>
-                        </p>
-                        <div className="invioceModel">
-                          <ul>
-                            <li>
-                              <a href="#">Invoice 1</a>
-                            </li>
-                            <li>
-                              <a href="#">Invoice 1</a>
-                            </li>
-                            <li>
-                              <a href="#">Invoice 1</a>
-                            </li>
-                          </ul>
-                          <span className="modelClose">
-                            <i className="fa fa-times" aria-hidden="true"></i>
-                          </span>
+                          <div className="invioceModel">
+                            <ul>
+                              <li>
+                                <a href="#">Invoice 1</a>
+                              </li>
+                              <li>
+                                <a href="#">Invoice 1</a>
+                              </li>
+                              <li>
+                                <a href="#">Invoice 1</a>
+                              </li>
+                            </ul>
+                            <span className="modelClose">
+                              <i className="fa fa-times" aria-hidden="true"></i>
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="itemDetails">
-                      <div className="itemInfo">
-                        <div className="itemDesc">
-                          <h4>Product: {JSON.parse(orderItem.metadata.productName).join(', ')}</h4>
-                          <h4>Quantity: {orderItem.metadata.quantity}</h4>
-                          <h4>
-                            <p>
-                              Payment Status: <span>{orderItem.payment_status}</span>
-                            </p>
-                          </h4>
-                          <span className="itemPrice">Price: ₹{orderItem.amount_total / 100}</span>
-                          <button className="buy_again">Cancel Order</button>
+                      <div className="itemDetails">
+                        <div className="itemInfo">
+                          <div className="itemDesc">
+                            <h4>Product: {JSON.parse(orderItem.metadata.productName).join(', ')}</h4>
+                            <h4>Quantity: {orderItem.metadata.quantity}</h4>
+                            <h4>
+                              <p>
+                                Payment Status: <span>{orderItem.payment_status}</span>
+                              </p>
+                            </h4>
+                            <span className="itemPrice">Price: ₹{orderItem.amount_total / 100}</span>
+                            <button className="buy_again">Cancel Order</button>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))
-        : order.Orders &&
-          order.Orders.map((orderItem, index) => (
-            <div className="container" key={orderItem.id}>
-              <div className="customer_details orderList">
-                <div style={{ marginBottom: '2rem' }} id="order_tab" className="orderCardWrap tab-content1 current">
-                  <div className="orderCard">
-                    <div className="orderHead">
-                      <ul className="orderLeft">
-                        <li>
+            ))
+          : order.Orders.map((orderItem, index) => (
+              <div className="container" key={orderItem.id}>
+                <div className="customer_details orderList">
+                  <div style={{ marginBottom: '2rem' }} id="order_tab" className="orderCardWrap tab-content1 current">
+                    <div className="orderCard">
+                      <div className="orderHead">
+                        <ul className="orderLeft">
+                          <li>
+                            <p>
+                              <b>ORDER ID :</b> <span className="textWidth">{orderItem.id}</span>
+                            </p>
+                          </li>
+                          <li>
+                            <p className="orderDate">Order Date: {orderItem.metadata.Date}</p>
+                          </li>
+                        </ul>
+                        <div className="invoiceDetails">
                           <p>
-                            <b>ORDER ID :</b> <span className="textWidth">{orderItem.id}</span>
+                            <span>Order Date: {orderItem.metadata.Date}</span>
                           </p>
-                        </li>
-                        <li>
-                          <p className="orderDate">Order Date: {orderItem.metadata.Date}</p>
-                        </li>
-                      </ul>
-                      <div className="invoiceDetails">
-                        <p>
-                          <span>Order Date: {orderItem.metadata.Date}</span>
-                        </p>
-                        <div className="invioceModel">
-                          <ul>
-                            <li>
-                              <a href="#">Invoice 1</a>
-                            </li>
-                            <li>
-                              <a href="#">Invoice 1</a>
-                            </li>
-                            <li>
-                              <a href="#">Invoice 1</a>
-                            </li>
-                          </ul>
-                          <span className="modelClose">
-                            <i className="fa fa-times" aria-hidden="true"></i>
-                          </span>
+                          <div className="invioceModel">
+                            <ul>
+                              <li>
+                                <a href="#">Invoice 1</a>
+                              </li>
+                              <li>
+                                <a href="#">Invoice 1</a>
+                              </li>
+                              <li>
+                                <a href="#">Invoice 1</a>
+                              </li>
+                            </ul>
+                            <span className="modelClose">
+                              <i className="fa fa-times" aria-hidden="true"></i>
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="itemDetails">
-                      <div className="itemInfo">
-                        <div className="itemDesc">
-                          <h4>Product: {JSON.parse(orderItem.metadata.productName).join(', ')}</h4>
-                          <h4>Quantity: {orderItem.metadata.quantity}</h4>
-                          <h4>
-                            <p>
-                              Payment Status: <span>{orderItem.payment_status}</span>
-                            </p>
-                          </h4>
-                          <span className="itemPrice">Price: ₹{orderItem.amount_total / 100}</span>
-                          <button className="buy_again">Cancel Order</button>
+                      <div className="itemDetails">
+                        <div className="itemInfo">
+                          <div className="itemDesc">
+                            <h4>Product: {JSON.parse(orderItem.metadata.productName).join(', ')}</h4>
+                            <h4>Quantity: {orderItem.metadata.quantity}</h4>
+                            <h4>
+                              <p>
+                                Payment Status: <span>{orderItem.payment_status}</span>
+                              </p>
+                            </h4>
+                            <span className="itemPrice">Price: ₹{orderItem.amount_total / 100}</span>
+                            <button className="buy_again">Cancel Order</button>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-
-
-
-
-
+            ))
+      ) : (
+        <div className="container">
+          <h4 align='center'>No Orders found</h4>
+        </div>
+      )}
     </>
   )
 }
