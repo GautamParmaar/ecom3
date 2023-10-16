@@ -35,18 +35,7 @@ export const IndividualProduct = ({individualProduct,addToCart}) => {
     <div className='product-text description'>{individualProduct.description}</div>
     <div className='product-text price'>₹ {individualProduct.price}</div>
 <div className='btn btn-primary '  onClick={handleAddToCart}>ADD TO CART</div>
-<ToastContainer
-position="top-right"
-autoClose={3000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="light"
-/>
+
 {/* Same as */}
 <ToastContainer />
 
