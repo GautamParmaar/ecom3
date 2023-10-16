@@ -87,25 +87,21 @@
   .offerIcon{
     display: none; /* Hide the left side (search bar) on small devices */
   }
-  .search-container2 input[type="text"] {
-    width: 300px;
-    height: 45px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    color: black;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Add shadow to the input */
-  }
+  
   .search-container2 button {
     margin-top: auto;
-    margin-bottom: auto;
-    height: 46px;
-    width: 40px;
-    /* margin-left: -5px; */
-    background: #141617;
-    border: 0;
-    color: #fff;
-    font-size: 17px;
+    width: 20%;
+    
     /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); Add shadow to the button */
+  }
+
+  .search-container2 {
+    width: 100%; /* Set the width to 100% on mobile screens */
+    margin: 0; /* Remove any margin to take up the full width */
+  }
+
+  .search-container2 input[type="text"] {
+    width: 80%; /* Set the input width to 100% on mobile screens */
   }
   
  

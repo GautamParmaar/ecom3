@@ -3,7 +3,9 @@
   width: 49%; /* Set the width to 49% for both elements */
  margin-left: 0.5%;
  margin-right: 0.5%;
+ margin-bottom: 5px;
   display: inline-block; /* Display the divs as inline-block elements */
+  
 }
 .container-offer2 {
   font-size: 24px;
