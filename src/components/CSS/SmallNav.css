@@ -72,6 +72,12 @@
   font-size: 17px;
   /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); Add shadow to the button */
 }
+.strip-right {
+  display: none; /* Hide the left side (search bar) on small devices */
+}
+.offerIcon{
+  display: none; /* Hide the left side (search bar) on small devices */
+}
 
 /* Media queries */
 @media (max-width: 768px) {
@@ -139,4 +145,8 @@
   .offerIcon:hover{
     color: blue;
   }
+}
+
+.offer:hover{
+  color: blue;
 }

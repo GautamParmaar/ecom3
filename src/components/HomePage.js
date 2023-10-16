@@ -3,10 +3,13 @@ import "./CSS/Home.css"
 import SignUp from './SignUp'
 import CarouselProduct from './CarouselProduct'
 import SmallNav from './SmallNav'
+import Schemes from './Schemes'
 
 
 
-function HomePage() {
+function HomePage({user}) {
+
+
   return (
     <>
     
@@ -38,7 +41,8 @@ function HomePage() {
 
 </div>
 <br/>
-<CarouselProduct/>
+<Schemes/>
+<CarouselProduct user={user}/>
 
 
 

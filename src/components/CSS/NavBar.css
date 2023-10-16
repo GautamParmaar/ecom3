@@ -1,6 +1,6 @@
 .navbar {
   position: sticky !important; /* Change to position: fixed */
-  top: 0;
+  top: 0px;
   background-color: #00030b;
   height: 80px;
   display: flex;
@@ -8,7 +8,7 @@
   align-items: center;
   font-size: 1.2rem;
   margin-bottom: 0;
-  z-index: 500;
+  z-index: 1000;
 }
 nav{
   position: sticky;
@@ -122,4 +122,16 @@ nav{
   }
 
   
+}
+
+.cartTotal{
+  margin-left: 2px;
+  font-size: 17px;
+ 
+}
+
+@media(max-width:768px){
+.navbar{
+  top: 0;
+}
 }

@@ -25,6 +25,7 @@ import AdminNavbar from './components/Admin/AdminNavbar';
 import AllOrders from './components/Admin/AllOrders';
 import AllOrders2 from './components/Admin/AllOrders2';
 import SpecificOrder from './components/Admin/SpecificOrder';
+import Topbar from './components/Topbar';
 
 
 function App() {
@@ -69,19 +70,20 @@ const [products, setProducts]=useState([]);
    
     
     <Routes>
+    
            <Route path="/" element={<>
-            <Navbar2 user={user}/>
-           <HomePage/></> }/>
+            <Topbar/> <Navbar2 user={user}/>
+           <HomePage user={user}/></> }/>
 
-          <Route path="/products" element={<> <Navbar2 user={user}/><Home2/> </>}/>
+          <Route path="/products" element={<> <Topbar/> <Navbar2 user={user}/><Home2/> </>}/>
           <Route path="/signup2" element={<> <Navbar2 user={user}/><Signup2/></> }/>
           <Route path="/login2" element={<> <Navbar2 user={user}/><Login2/> </> }/>
           <Route path="/add" element={<AddProducts/>}/>
           <Route path="/cart" element={<> <Navbar2 user={user}/><Cart user={user} /></>}/>
           <Route path='/single/:id' element={<> <Navbar2 user={user}/><SingleProduct userid={userid}/></>}/>
           <Route path='/profile' element={<> <Navbar2 user={user}/><Profile user={user}/></>}></Route>
-          <Route path="/login" element={<> <Navbar2 user={user}/><Login/></> }/>
-          <Route path="/signup" element={<> <Navbar2 user={user}/><SignUp/></>}/>
+          <Route path="/login" element={<> <Topbar/> <Navbar2 user={user}/><Login/></> }/>
+          <Route path="/signup" element={<>  <Navbar2 user={user}/><SignUp/></>}/>
           <Route path='/order' element={<> <Navbar2 user={user}/><OrderDetails user={user}/></>}/>
           <Route path='/myorder' element={<> <Navbar2 user={user}/><MyOrder user={user}/></>}/>
           <Route path='order2' element={<> <Navbar2 user={user}/><MyOrder2/></>}/>

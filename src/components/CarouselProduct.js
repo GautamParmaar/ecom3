@@ -8,6 +8,7 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { faGift } from '@fortawesome/free-solid-svg-icons';
 import { faTag } from '@fortawesome/free-solid-svg-icons';
 import { faPuzzlePiece } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -19,7 +20,7 @@ import { faPuzzlePiece } from '@fortawesome/free-solid-svg-icons';
 
 
 
-function CarouselProduct() {
+function CarouselProduct({user}) {
     const responsive = {
         superLargeDesktop: {
           // the naming can be any, depends on you.
@@ -39,6 +40,15 @@ function CarouselProduct() {
           items: 1
         }
       };
+
+      const navigate=useNavigate();
+
+
+      const HandleAddToCart=()=>{
+        if(!user){
+          navigate("/login")
+           }
+      }
   return (
     <> 
     {/* <div className='box2'>
@@ -136,7 +146,8 @@ function CarouselProduct() {
 <p>description</p>
 <p className ="price">₹50</p>
 <p>Description</p>
-<p>Add to cart</p>
+<div className='btn btn-primary'  onClick={HandleAddToCart}>ADD TO CART</div>
+
   </div>
   <div className='card'>
 
@@ -145,7 +156,7 @@ function CarouselProduct() {
 <p>description</p>
 <p className ="price">₹50</p>
 <p>Description</p>
-<p>Add to cart</p>
+<div className='btn btn-primary'  onClick={HandleAddToCart}>ADD TO CART</div>
   </div>
   <div className='card'>
 
@@ -154,7 +165,7 @@ function CarouselProduct() {
 <p>description</p>
 <p className ="price">₹50</p>
 <p>Description</p>
-<p>Add to cart</p>
+<div className='btn btn-primary'  onClick={HandleAddToCart}>ADD TO CART</div>
   </div><div className='card'>
 
 <img className="product--image" src='./1.jpg'></img>
@@ -162,7 +173,7 @@ function CarouselProduct() {
 <p>description</p>
 <p className ="price">₹50</p>
 <p>Description</p>
-<p>Add to cart</p>
+<div className='btn btn-primary'  onClick={HandleAddToCart}>ADD TO CART</div>
   </div><div className='card'>
 
 <img className="product--image" src='./1.jpg'></img>
@@ -170,7 +181,7 @@ function CarouselProduct() {
 <p>description</p>
 <p className ="price">₹50</p>
 <p>Description</p>
-<p>Add to cart</p>
+<div className='btn btn-primary'  onClick={HandleAddToCart}>ADD TO CART</div>
   </div>
   <div>Item 2</div>
   <div>Item 3</div>

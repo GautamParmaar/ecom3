@@ -1,0 +1,39 @@
+.top-bar-strip {
+    position: sticky !important ; /* Change to position: fixed */
+   top: 0;
+   /* z-index:1001; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 20px; /* Decreased the strip height */
+    font-weight: bold;
+    color: black; /* Changed the font color to black */
+    font-size: 14px; /* Decreased the font size */
+  }
+  
+  .top-bar-content {
+    display: flex;
+   
+    gap: 20px;
+  }
+  
+  .top-bar-element {
+    padding: 3px 10px; /* Decreased the padding */
+    background-color: transparent;
+    border: 1px solid black; /* Changed the border color to black */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 12px; /* Decreased the font size */
+  }
+  
+  .top-bar-element:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Changed the hover background color to a light gray */
+  }
+
+  @media (max-width:768px){
+    .top-bar-strip{
+      display: none;
+    }
+  }
+  

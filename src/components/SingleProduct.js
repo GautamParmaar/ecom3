@@ -3,6 +3,8 @@ import "./CSS/SingleProduct.css"
 import { useNavigate, useParams } from 'react-router-dom';
 import { db } from '../config/Config';
 import { collection, doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function SingleProduct(props) {
@@ -14,6 +16,17 @@ function SingleProduct(props) {
 
     //for fetching individual products
     const [products, setProducts]=useState([]);
+    let addToCartToast=()=>{
+        toast.info('Product has been added to cart', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });};
 
     useEffect(() => {
         // Fetch the product data from Firebase Firestore by ID
@@ -49,10 +62,13 @@ const addToCart =async (product)=>{
     setDoc(docRef, Product)
       .then(() => {
         console.log("Document successfully written!");
+        addToCartToast()
       })
       .catch((error) => {
         console.error("Error writing document: ", error);
       });
+
+
 
 }
   
@@ -71,11 +87,11 @@ const addToCart =async (product)=>{
 
   return (
     <>
-  <div class="container-fluid">
+  <div style={{width:'100%'}} class="container-fluid">
         <div class="cart">
             <div class="row row1">
                 <div class="col-md-4">
-                    <img src={products.image} width="100%" id="ProductImg"/>
+                    <img style={{borderRadius:'20px'}} src={products.image} width="100%" id="ProductImg"/>
                     <div class="small-imgs">
                         {/* <img src="https://g.top4top.io/p_18005g0a61.jpg" width="100%" class="small-img"/>
                         <img src="https://h.top4top.io/p_1800o53842.jpg" width="100%" class="small-img"/>
@@ -142,12 +158,13 @@ const addToCart =async (product)=>{
                     </div>
                     <div class="buttons">
                         <div class="row">
-                            <div class="col-md-6">
-                            <div className='btn btn-danger btn-md cart-btn'  onClick={addToCart}>ADD TO CART</div>
+                            <div class="col-md-4">
+                            <div className='btn btn-primary'  onClick={addToCart}>ADD TO CART</div>
                             </div>
                             <div class="col-md-6">
                             </div>
                         </div>
+                        <ToastContainer/>
                     </div>
                 </div>
             </div>

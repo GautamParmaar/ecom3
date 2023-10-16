@@ -6,9 +6,11 @@ import { auth, db } from "../config/Config.js"
 import { NavLink, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
 
 function Login() {
   const navigate = useNavigate();
+  const [redirecting, setRedirecting] = useState(false);
 
   const [values, setValues] = useState({
     email: '',
@@ -21,38 +23,42 @@ function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(values);
-    signInWithEmailAndPassword(auth, values.email, values.password).then(async (res) => {
-      const user = res.user;
+    signInWithEmailAndPassword(auth, values.email, values.password)
+      .then(async (res) => {
+        const user = res.user;
+        toast.success('You are now logged in!', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
 
-
-      navigate("/")
-      toast.success('You are now logged in!', {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+        setRedirecting(true);
+      })
+      .catch((error) => {
+        console.error("Authentication error:", error);
+        toast.error(error.message, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       });
+  }
 
-
-
-    }).catch((error) => {
-      console.error("Authentication error:", error);
-      // Check if error.message is the expected error message
-      toast.error(error.message, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    });
+  // Use a conditional redirect to delay the navigation
+  if (redirecting) {
+    setTimeout(() => {
+      navigate('/');
+    }, 3000); // Adjust the delay time as needed
   }
   return (
     <>
@@ -92,7 +98,9 @@ function Login() {
                     </div>
                     <div class="col-lg-6 login-btm login-button">
                       <button type="submit" onClick={handleSubmit} class="btn  btn-outline-primary">LOGIN</button>
-                      {/* <p className='ml-5 createAccount'>Don't have an account ?<span className='signup'> Signup now</span></p> */}
+                      <span className="new">
+          Or <Link to='/signup'> <a className="signup" href="">Create new account</a></Link>
+        </span>
                 
                     </div>
                     

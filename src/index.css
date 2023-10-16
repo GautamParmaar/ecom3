@@ -124,10 +124,10 @@
   transition: all 0.3s ease-in-out;
   padding: 12px;
   border-radius: 10px; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
-
 .product:hover {
-  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 }
 
 @media(min-width: 768px){
@@ -279,3 +279,6 @@
   margin: 15px 0px;
   font-size: 14px;
 }
+
+
+/*  */

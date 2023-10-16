@@ -339,6 +339,9 @@ background: transparent;
 .orderLeft li {
   margin-right: 2rem;
 }
+.itemPrice{
+  width: 500px;
+}
 
 
 /* Media query for screens with a maximum width of 768px (adjust as needed) */
@@ -367,6 +370,9 @@ background: transparent;
   .invoiceDetails{
     display: none;
   }
+  .buy_again{
+    display: none;
+  }
 }
 
 @media (min-width: 768px) {
@@ -392,5 +398,6 @@ background: transparent;
   .orderDate{
     display: none;
   }
+ 
 }
 /* custom */

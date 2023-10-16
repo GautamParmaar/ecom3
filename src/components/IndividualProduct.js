@@ -26,6 +26,7 @@ export const IndividualProduct = ({individualProduct,addToCart}) => {
     }
   return (
     <>
+  
     <div className='product'>
     <div className='product-img'>
     <Link to={`/single/${individualProduct.ID}`}> <img src={individualProduct.image}></img></Link> 
@@ -33,7 +34,7 @@ export const IndividualProduct = ({individualProduct,addToCart}) => {
     <div className='product-text title'>{individualProduct.name}</div>
     <div className='product-text description'>{individualProduct.description}</div>
     <div className='product-text price'>₹ {individualProduct.price}</div>
-<div className='btn btn-danger btn-md cart-btn'  onClick={handleAddToCart}>ADD TO CART</div>
+<div className='btn btn-primary '  onClick={handleAddToCart}>ADD TO CART</div>
 <ToastContainer
 position="top-right"
 autoClose={3000}

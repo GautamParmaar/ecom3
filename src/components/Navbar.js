@@ -9,6 +9,7 @@ import { auth, db } from "../config/Config";
 import { signOut } from "firebase/auth";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import MenuIcon from '@mui/icons-material/Menu';
+import Topbar from "./Topbar";
 
 
 
@@ -138,7 +139,8 @@ const Navbar2 = ({ user }) => {
             className="nav-links"
             onClick={handleClick}
           >
-                            Cart <Icon icon={shoppingCart} size={25}/>
+                            Cart <Icon icon={shoppingCart} size={25}/><span className="cartTotal">({totalProducts})</span>
+                            
                                 </NavLink>
         </li>
         

@@ -4,7 +4,6 @@ import { collection, getDocs,setDoc,doc } from 'firebase/firestore';
 import Products3 from './Products';
 import { useNavigate } from 'react-router-dom';
 import IndividualFilteredProduct2 from './IndividualFilteredProduct2';
-import SmallNav from './SmallNav';
 import { Link } from 'react-router-dom'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 
@@ -118,7 +117,7 @@ const addToCart =async (product)=>{
 
     }
     else{
-        history('/login2');
+        history('/login');
     }
     
 }

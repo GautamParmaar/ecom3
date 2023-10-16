@@ -13,7 +13,7 @@ function SmallNav() {
           <button type="submit"><i class="fa fa-search"></i></button>
         
       </div>  </div>
-    <ul className="strip-right">
+      <span className='offer'>  <ul className="strip-right">
      
       <li> 
         <Link className='UlText' style={{textDecoration:'none'}}>Offers</Link>
@@ -21,7 +21,7 @@ function SmallNav() {
     </ul>
     <div className='offerIcon'>
   <LocalOfferIcon/>
-</div>
+</div></span>
 </div>
 
 

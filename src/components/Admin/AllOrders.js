@@ -13,6 +13,9 @@ function AllOrders() {
  const [userid,setUID]=useState(null)
     const [user,setUser]=useState();
     const [orders, setOrders] = useState([]); 
+    const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
 
   useEffect(()=>{
     auth.onAuthStateChanged(user=>{
@@ -102,23 +105,55 @@ const customerName=pluckvaluefromData(orders,'CustomerName')
 const customerEmail=pluckvaluefromData(orders,'CustomerEmail')
 const customerPhone=pluckvaluefromData(orders,'CustomerPhone')
 
+// Create a new object with the extracted data
+const newDataObject = {
+  orderIds,
+  paymentStatuses,
+  amountTotal,
+  orderMeta,
+  quantity,
+ 
+  customerUID,
+  customerName,
+  customerEmail,
+  customerPhone,
+};
+
+// You can now use newDataObject for rendering or any other purposes.
+console.log(newDataObject,'testing');
+
 // console.log('UID,',customerUID)
 
 
  // Function to handle changes in the search input
+
+ const parseCustomDate = (customDate) => {
+  if (customDate) {
+    const [dateStr, timeStr] = customDate.split(' @ ');
+    const [day, month, year] = dateStr.split('/').map(Number);
+    const [hour, minute, second] = timeStr.split(':').map(Number);
+
+    // Create a Date object using the UTC constructor
+    return new Date(Date.UTC(year, month - 1, day, hour, minute, second));
+  } else {
+    return null; // Handle the case where customDate is undefined
+  }
+};
+
+// Define a function to filter orders based on the selected date range
+const filterOrdersByDate = () => {
+  const filteredOrders = orders.filter((order) => {
+    const orderDate = parseCustomDate(order.Date);
+    return startDate <= orderDate && orderDate <= endDate;
+  });
+  setOrders(filteredOrders);  };
+
+ 
  
 
-  // Function to sort orders by date
-  const sortByDate = (date) => {
-    const sortedOrders = orders
-      .map((order, index) => ({ order, index }))
-      .sort((a, b) => new Date(b.order.Date) - new Date(a.order.Date));
+ 
 
-    return date ? sortedOrders.filter((item) => new Date(item.order.Date) <= new Date(date)) : sortedOrders;
-  };
-
-  // State for sorting date
-  const [sortDate, setSortDate] = useState(null);
+  
 
 
 
@@ -137,6 +172,17 @@ const customerPhone=pluckvaluefromData(orders,'CustomerPhone')
       
       <div align="center" className='my-4'>Welcome to the Admin order Dashboard</div>
       
+      <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate((e.target.value))}
+          />
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate((e.target.value))}
+          />
+          <button onClick={filterOrdersByDate}>Filter by Date</button>
       {/* table for displaying data */}
    
       {/* <div className='table-responsive'>
@@ -207,7 +253,7 @@ const customerPhone=pluckvaluefromData(orders,'CustomerPhone')
           S.No : <span>{index+1}</span>
         </li>
             <li>
-              <p   key={orderId} > <b>ORDER ID</b> <span className='order-id'>{orderId}</span></p>
+              <p   key={orderId} > <b>ORDER ID</b> <span className="textWidth">{orderId}</span></p>
             </li>
             {/* <li>
               <p>TOTAL <span>$413.00</span></p>
@@ -245,14 +291,13 @@ const customerPhone=pluckvaluefromData(orders,'CustomerPhone')
 
           <div class="itemInfo">
             <div class="itemImg">
-              <img src="images/product1.jpg" alt=""/>
             </div>
             <div class="itemDesc">
-              <h4>Product : {JSON.parse(productname[index]).join(', ')} </h4>
+              <h4><b style={{color:'black'}}>Product : </b> {JSON.parse(productname[index]).join(', ')} </h4>
              
-              <span class="itemPrice"><b>Price: </b>₹{amountTotal[index]/100}</span>
-              <span class="itemPrice"><b>Quantity: </b>{quantity[index]} </span>
-              <span class="itemPrice"><b>Payment Status: </b>{paymentStatuses[index]} </span>
+              <h4 class="itemPrice"><b style={{color:'black'}}>Price: </b >₹{amountTotal[index]/100}</h4>
+              <h4 class="itemPrice"><b style={{color:'black'}}>Quantity: </b>{quantity[index]} </h4>
+              <h4 class="itemPrice"><b style={{color:'black'}}>Payment Status: </b>{paymentStatuses[index]} </h4>
 
              
             </div>
@@ -268,22 +313,23 @@ const customerPhone=pluckvaluefromData(orders,'CustomerPhone')
         </div>
         <div class="itemInfo">
             <div class="itemImg">
-              <img src="images/product1.jpg" alt=""/>
+             
             </div>
             <div class="itemDesc">
-              <h4>   &nbsp;Customer Name: {customerName[index]}</h4>
+              <h4 class="itemPrice">&nbsp;&nbsp;<b style={{color:'black'}}>Customer Name:</b> {customerName[index]}</h4>
               
 
-              <span class="itemPrice"><b>&nbsp;Email: </b>{customerEmail[index]}</span>
-              <span class="itemPrice"><b>&nbsp;Phone: </b>{customerPhone[index]} </span>
-              <span class="itemPrice"><b>Address: </b> </span>
-             
+              <h4 class="itemPrice"><b style={{color:'black'}}>&nbsp;&nbsp;Email: </b>{customerEmail[index]}</h4>
+              <h4 class="itemPrice"><b style={{color:'black'}}>&nbsp;&nbsp;Phone: </b>{customerPhone[index]} </h4>
+              <h4 class="itemPrice"><b style={{color:'black'}}>&nbsp;&nbsp;Address: </b> </h4>
+              <button class="btn btn-danger mt-1">Cancel Order</button>
+
             </div>
             
           </div>
 
-          <button class="buy_again">Cancel Order</button>
       </div>
+      
       
     </div>
   ))} 

@@ -5,6 +5,8 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword,updateProfile  } from 'firebase/auth';
 import { setDoc,doc } from "firebase/firestore";
 import {auth,db } from "../config/Config.js"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function SignUp() {
@@ -40,6 +42,17 @@ function SignUp() {
      await updateProfile(user,{
       displayName:values.name,
      
+     }).catch((error)=>{
+      toast.error(error.message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
      })
      try {
       const docRef = await setDoc(doc(db, "users", user.uid), {
@@ -63,6 +76,17 @@ function SignUp() {
      navigate("/")
     }).catch((err)=>{console.log(err)
     seterrorMsg(err.message)
+    toast.error(err.message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+    
     }
     
     )
@@ -138,6 +162,7 @@ function SignUp() {
           </div>
           <div class="row align-items-center">
           <Link to="/login">  <a to="/login">Already have an account </a></Link>
+          <ToastContainer/>
 
           </div>
           <div class="">
