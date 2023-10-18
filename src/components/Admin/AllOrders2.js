@@ -8,58 +8,57 @@ import { collection, getDocs } from 'firebase/firestore';
 
 function AllOrders2() {
 
-    const [items, setItems] = useState([]);
+    const [orders, setOrders] = useState([]);
     // const [metadata, setMetadata] = useState([]);
     let metadata
 
 
-  useEffect(() => {
-    const fetchData = async () => {
+    useEffect(() => {
+      // Reference to your Firestore collection
+      const ordersCollection = collection(db, 'Orders');
+  
+      // Fetch all documents from the collection
+      const fetchData = async () => {
         try {
-          const ordersCollection = collection(db, 'Orders');
-          const ordersSnapshot = await getDocs(ordersCollection);
+          const querySnapshot = await getDocs(ordersCollection);
+          const ordersData = [];
   
-          const itemsData = [];
-          const metadataData = [];
-  
-          ordersSnapshot.forEach((doc) => {
-            if (doc.exists()) {
-              const data = {
-                id: doc.id,
-                ...doc.data(),
-              };
-              itemsData.push(data);
-  
-              // Check if the 'metadata' field exists in the document
-              if (data.Orders.metadata) {
-                metadataData.push({
-                  id: doc.id,
-                  metadata: data.metadata.Date,
-                });
-              }
-            }
+          querySnapshot.forEach((doc) => {
+            // Store the document ID along with the data
+            ordersData.push({...doc.data() });
           });
+         
   
-          setItems(itemsData);
-          metadata=metadataData
-          console.log(items,'items');
-          console.log(metadata,'metadata')
+          setOrders(ordersData);
+          // console.log(orders,"orders")
+         
         } catch (error) {
-          console.error('Error fetching data:', error);
+          console.error('Error fetching documents: ', error);
         }
       };
   
-      fetchData();
-    }, []);
-
+     fetchData();
+    },[]);
   return (
     <div>
-
-
-
-
-
-    </div>
+    <h2>Orders</h2>
+    <ul>
+      {orders.map((order, index) => (
+        <li key={index}>
+          <h3>Order {index + 1}</h3>
+          {order.Orders.map((orderData, subIndex) => (
+            <div key={subIndex}>
+              {/* Render each piece of data from your Orders */}
+              {/* For example: */}
+              <p>Product: {orderData.product}</p>
+              <p>Quantity: {orderData.quantity}</p>
+              {/* Add more data fields as needed */}
+            </div>
+          ))}
+        </li>
+      ))}
+    </ul>
+  </div>
   )
 }
 
