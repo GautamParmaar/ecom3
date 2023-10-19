@@ -8,16 +8,17 @@ const {getAuth}=require('firebase/auth')
 const {getFirestore, collection, getDocs}=require('firebase/firestore')
 const {getStorage}=require('firebase/storage')
 const {doc,updateDoc,getDoc,arrayUnion,setDoc}=require('firebase/firestore')
+require('dotenv').config();
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAUBHe6WP3wwKYtOUY4E9O3yPfdXHpdjOw",
-    authDomain: "ecom2-c701c.firebaseapp.com",
-    projectId: "ecom2-c701c",
-    storageBucket: "ecom2-c701c.appspot.com",
-    messagingSenderId: "182447993826",
-    appId: "1:182447993826:web:d2316f1a96c6f09a24ffbb",
-    measurementId: "G-PL4SE4E9ZH"
+    apiKey:process.env.apiKey ,
+    authDomain:process.env.authDomain ,
+    projectId:process.env.projectId ,
+    storageBucket:process.env.storageBucket ,
+    messagingSenderId:process.env.messagingSenderId ,
+    appId:process.env.appId ,
+    measurementId:process.env.measurementId 
   };
 
 const app=express();
