@@ -1,14 +1,17 @@
 const express=require('express');
+require('dotenv').config();
 const cors=require("cors");
+const path = require("path");
+const stripeKey=process.env.stripeKey
 const { v4: uuidv4 } = require('uuid');
-const stripe=require('stripe')('sk_test_51NuEdsSH8i0IOWv3rBuz9dY785hElk1BzfxmzjNjbYFZAUdZxFwmtqnDOJehlaIdB6bqyBMbpZC2FaqiZ3WSAVBU00v9WZPHkn')
+const stripe=require('stripe')(stripeKey)
 // const db=require("./src/config/Config.js")
 const {initializeApp}=require('firebase/app')
 const {getAuth}=require('firebase/auth')
 const {getFirestore, collection, getDocs}=require('firebase/firestore')
 const {getStorage}=require('firebase/storage')
 const {doc,updateDoc,getDoc,arrayUnion,setDoc}=require('firebase/firestore')
-require('dotenv').config();
+
 
 
 const firebaseConfig = {
@@ -32,8 +35,11 @@ const db = getFirestore(fb);
 const storage = getStorage(fb);
 
 
-app.get('/',(req,res)=>{
-    res.send("welcome")
+app.get("/", (req, res) => {
+ res.json('stripeKey')
+});
+app.get('/test',(req,res)=>{
+  res.send('test')
 })
 
 
