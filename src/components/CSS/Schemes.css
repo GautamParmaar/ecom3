@@ -7,6 +7,15 @@
   display: inline-block; /* Display the divs as inline-block elements */
   
 }
+.container-offer3 {
+  font-size: 24px;
+  width: 49%; /* Set the width to 49% for both elements */
+ margin-left: 0.5%;
+ margin-right: 0.5%;
+ margin-bottom: 5px;
+  display: inline-block; /* Display the divs as inline-block elements */
+  
+}
 .container-offer2 {
   font-size: 24px;
   width: 49%; /* Set the width to 49% for both elements */
@@ -64,8 +73,23 @@
   .container-offer2{
     display: none;
   }
+  .content p {
+    font-size: 12px;
+  }
+  .container-offer3 {
+    
+    width: 98%;
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+ 
 }
 
 @media (min-width: 768px) {
   /* Add styles for larger screens if needed */
+  .container-offer3 {
+    
+    display: none; /* Display the divs as inline-block elements */
+    
+  }
 }

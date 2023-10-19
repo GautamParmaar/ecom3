@@ -30,7 +30,7 @@ const handleAddToCart=()=>{
 <div className='product-text title'>{IndividualFilteredProduct.name}</div>
 <div className='product-text description'>{IndividualFilteredProduct.description}</div>
     <div className='product-text price'>₹ {IndividualFilteredProduct.price}</div>
-<div className='btn btn-danger btn-md cart-btn'  onClick={handleAddToCart}>ADD TO CART</div>
+<div className='btn btn-primary '  onClick={handleAddToCart}>ADD TO CART</div>
 <ToastContainer />
 
     </div>

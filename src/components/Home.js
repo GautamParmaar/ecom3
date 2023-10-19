@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import IndividualFilteredProduct2 from './IndividualFilteredProduct2';
 import { Link } from 'react-router-dom'
 import LocalOfferIcon from '@mui/icons-material/LocalOffer';
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -118,6 +120,19 @@ const addToCart =async (product)=>{
     }
     else{
         history('/login');
+        setTimeout(() => {
+          // login first toast message
+          toast.info('Please Login for adding items into cart', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+        }, 500);
     }
     
 }

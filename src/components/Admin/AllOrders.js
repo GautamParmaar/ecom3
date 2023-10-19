@@ -33,7 +33,7 @@ const [endDate, setEndDate] = useState(null);
     })
    
   },[]) 
-  const adminUID = 'xjOj4RwBPnUNyFscGqqB6GJHbBt2';
+  const adminUID = process.env.REACT_APP_ADMINUID;
 
 
   useEffect(() => {
@@ -78,6 +78,13 @@ const [endDate, setEndDate] = useState(null);
   });
 
 
+  //for reset button of date filter
+  const reset=()=>{
+    setStartDate(null)
+    setEndDate(null)
+  }
+
+
 
      
 
@@ -100,106 +107,89 @@ const [endDate, setEndDate] = useState(null);
   return (
     <div>
     {user && user.uid === adminUID ? (
-      <><AdminNavbar/>
+      <>
+        <AdminNavbar />
 
-      
-      <div align="center" className='my-4'>Welcome to the Admin order Dashboard</div>
-      
-      
-     
-     
-   
-      <div>
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => setStartDate(date)}
-              selectsStart
-              startDate={startDate}
-              endDate={endDate}
-              placeholderText="Start Date"
-            />
-            <DatePicker
-              selected={endDate}
-              onChange={(date) => setEndDate(date)}
-              selectsEnd
-              startDate={startDate}
-              endDate={endDate}
-              placeholderText="End Date"
-            />
-          </div>
-    
-     
-           
-      
-
-  
-
-
-<div class="container">
-  <div class="customer_details orderList">
-    <div class="orderTop">
-      <h2 class="hidden-xs">All Orders</h2>
-      <div class="search-container"></div>
-    </div>
-    <div class="order_tab"></div>
-
-    {orders && filteredOrders.map((order, index) => (
-      <div style={{ marginBottom: '2rem' }} id="order_tab" class="orderCardWrap tab-content1 current">
-        <div class="orderCard">
-          <div class="orderHead">
-          {order.Orders.map((orderData, subIndex) => ( <>
-            <ul class="orderLeft">
-              <li>
-                S.No: <span>{index + 1}</span>
-              </li>
-             
-                <li key={orderData.id}>
-                  <p><b>ORDER ID</b> <span className="textWidth">{orderData.id}</span></p>
-                </li>
-                
-            </ul>
-            <div class="invoiceDetails">
-              <p>Order Date: <span>{orderData.metadata.Date}</span></p>
-            </div></> ))}
-          </div>
-
-          {order.Orders.map((orderData, subIndex) => (
-            <div class="itemDetails" key={orderData.id}>
-              <div class="itemInfo">
-                <div class="itemImg"></div>
-                <div class="itemDesc">
-                  <h4><b style={{ color: 'black' }}>Product: </b> {JSON.parse(orderData.metadata.productName).join(', ')} </h4>
-                  <h4 class="itemPrice"><b style={{ color: 'black' }}>Price: </b>₹{orderData.amount_total / 100}</h4>
-                  <h4 class="itemPrice"><b style={{ color: 'black' }}>Quantity: </b>{orderData.metadata.quantity} </h4>
-                  <h4 class="itemPrice"><b style={{ color: 'black' }}>Payment Status: </b>{orderData.payment_status} </h4>
-                </div>
+        <h2 className='OrderLabel my-2'>All Orders</h2>
+        <div className="container">
+          <div className="customer_details orderList">
+            <div className="orderTop">
+              <div className="search-container"></div>
+              <h5>Filter Orders by Date</h5>
+              <label htmlFor="startDate">Select Date:</label>
+              <div className='filterbox2'>
+                <input
+                  className='dateInput'
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
+                <div className='Datelabel'>To</div>
+                <input
+                  className='dateInput'
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+               
               </div>
-              <div class="itemInfo">
-                <div class="itemImg"></div>
-                <div class="itemDesc">
-                  <h4 class="itemPrice"><b style={{ color: 'black' }}>Customer Name:</b> {JSON.parse(orderData.metadata.CustomerName)}</h4>
-                  <h4 class="itemPrice"><b style={{ color: 'black' }}>Email: </b>{JSON.parse(orderData.metadata.CustomerEmail)}</h4>
-                  <h4 class="itemPrice"><b style={{ color: 'black' }}>Phone: </b>{JSON.parse(orderData.metadata.CustomerPhone)} </h4>
-                  <h4 class="itemPrice"><b style={{ color: 'black' }}>Address:</b> </h4>
-                  <button class="btn btn-danger mt-1">Cancel Order</button>
-                </div>
-              </div>
+              <button className='btn btn-danger my-2 'onClick={reset}>Reset Filter</button>
             </div>
-          ))}
+            <div className="order_tab">
+              {filteredOrders.length > 0 ? (
+                filteredOrders.map((order, index) => (
+                  <div style={{ marginBottom: '2rem' }} id="order_tab" className="orderCardWrap tab-content1 current">
+                    <div className="orderCard">
+                      <div className="orderHead">
+                        {order.Orders.map((orderData, subIndex) => (
+                          <>
+                            <ul className="orderLeft">
+                              <li>
+                                S.No: <span>{index + 1}</span>
+                              </li>
+                              <li key={orderData.id}>
+                                <p><b>ORDER ID</b> <span className="textWidth">{orderData.id}</span></p>
+                              </li>
+                            </ul>
+                            <div className="invoiceDetails">
+                              <p>Order Date: <span>{orderData.metadata.Date}</span></p>
+                            </div>
+                          </>
+                        ))}
+                      </div>
+
+                      {order.Orders.map((orderData, subIndex) => (
+                        <div className="itemDetails" key={orderData.id}>
+                          <div className="itemInfo">
+                            <div className="itemImg"></div>
+                            <div className="itemDesc">
+                              <h4><b style={{ color: 'black' }}>Product: </b> {JSON.parse(orderData.metadata.productName).join(', ')} </h4>
+                              <h4 className="itemPrice"><b style={{ color: 'black' }}>Price: </b>₹{orderData.amount_total / 100}</h4>
+                              <h4 className="itemPrice"><b style={{ color: 'black' }}>Quantity: </b>{orderData.metadata.quantity} </h4>
+                              <h4 className="itemPrice"><b style={{ color: 'black' }}>Payment Status: </b>{orderData.payment_status} </h4>
+                            </div>
+                          </div>
+                          <div className="itemInfo">
+                            <div className="itemImg"></div>
+                            <div className="itemDesc">
+                              <h4 className="itemPrice"><b style={{ color: 'black' }}>Customer Name:</b> {JSON.parse(orderData.metadata.CustomerName)}</h4>
+                              <h4 className="itemPrice"><b style={{ color: 'black' }}>Email: </b>{JSON.parse(orderData.metadata.CustomerEmail)}</h4>
+                              <h4 className="itemPrice"><b style={{ color: 'black' }}>Phone: </b>{JSON.parse(orderData.metadata.CustomerPhone)} </h4>
+                              <h4 className="itemPrice"><b style={{ color: 'black' }}>Address:</b> </h4>
+                              <button className="btn btn-danger mt-1">Cancel Order</button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div>No matching Orders</div>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
-    ))}
-  </div>
-</div>
-
-
-
-
-
-
-   
-
-      
       </>
     ) : (
       <div>Error: You are not authorized to view this content</div>

@@ -367,8 +367,8 @@ setUserDetails(user.uid)//for sending user's uid to backend
                             Total Price to Pay :<span> ₹ {totalPrice}</span>
                         </div>
                         <br />
-                        <button className='btn btn-success' onClick={makePayment}>Procced to Pay</button>
-                        <StripeCheckout stripeKey='pk_test_51NuEdsSH8i0IOWv3H4lHoRZIosQT0yraBQpCA2WNVGAHY3pWCUtRMlwY88bStOpKzZj63AnuPA7tNummvV4K5rCF00aLQTZTNe' token={handleToken}
+                        <button className='btn btn-primary' onClick={makePayment}>Procced to Pay</button>
+                        {/* <StripeCheckout stripeKey='pk_test_51NuEdsSH8i0IOWv3H4lHoRZIosQT0yraBQpCA2WNVGAHY3pWCUtRMlwY88bStOpKzZj63AnuPA7tNummvV4K5rCF00aLQTZTNe' token={handleToken}
                             //   billingAddress='Jaora'
 
                             shippingAddress='jaora'
@@ -376,7 +376,7 @@ setUserDetails(user.uid)//for sending user's uid to backend
                             amount={totalPrice * 100}
                         >
 
-                        </StripeCheckout>
+                        </StripeCheckout> */}
                     </div>
                 </div>
             )}

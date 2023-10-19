@@ -11,10 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function SignUp() {
   const navigate=useNavigate();
-  const [userType, setUserType] = useState(''); // State to track the selected user type
-  const handleUserTypeChange = (event) => {
-    setUserType(event.target.value);
-  };
+ 
+ 
 
 
   // for backend
@@ -24,7 +22,8 @@ function SignUp() {
     name :'',
     phone:'',
     select :'',
-    GST:''
+    GST:'',
+    confirmPass:''
 
     // name: '',
     // number: ''
@@ -33,65 +32,149 @@ function SignUp() {
 
   const [errorMsg,seterrorMsg]=useState('')
 
-  const handleSubmit=(event)=>{
+  const handleSubmit = (event) => {
     event.preventDefault();
-   
-    console.log(values);
-    createUserWithEmailAndPassword(auth,values.email,values.pass).then(async(res)=>{
-     const user=res.user;
-     await updateProfile(user,{
-      displayName:values.name,
-     
-     }).catch((error)=>{
-      toast.error(error.message, {
-        position: "top-center",
+
+    // Custom validation checks
+    if (!values.name || !values.phone || !values.email || !values.pass) {
+      toast.error('Please fill in all required fields.', {
+        position: 'top-center',
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
-        });
-     })
-     try {
-      const docRef = await setDoc(doc(db, "users", user.uid), {
-            uid:user.uid,
-            name:user.displayName,
-            email:user.email,
-            phone:values.phone,
-            GST:values.GST,
-            registerAs :values.select
+        theme: 'light',
       });
-      console.log("Document written with ID: ");
-    } catch (e) {
-      console.error("Error adding document: ", e);
+      return;
     }
-     
-    
-     console.log(user.displayName);
-  
-     
-   
-     navigate("/")
-    }).catch((err)=>{console.log(err)
-    seterrorMsg(err.message)
-    toast.error(err.message, {
-      position: "top-center",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      });
-    
-    }
-    
-    )
-  }
 
+    if (values.pass !== values.confirmPass) {
+      toast.error('Password and Confirm Password do not match.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+      return;
+    }
+
+    if (values.select === 'retailer' && !values.GST) {
+      toast.error('GST number is required for Retailers/Wholesalers.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+      return;
+    }
+
+    // Mobile number validation using regex (10 digits)
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(values.phone)) {
+      toast.error('Please enter a valid 10-digit mobile number.', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+      return;
+    }
+
+    // If all validation checks pass, continue with form submission
+    createUserWithEmailAndPassword(auth, values.email, values.pass)
+      .then(async (res) => {
+        const user = res.user;
+        setTimeout(() => {
+          console.log('delayed')
+          navigate("/");
+          toast.success('Account Created successfully', {
+      
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+        }, 1000);
+
+        await updateProfile(user, {
+          displayName: values.name,
+        }).catch((error) => {
+          // Handle profile update error
+          toast.error(error.message, {
+            position: 'top-center',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          });
+        });
+
+        try {
+          const docRef = await setDoc(doc(db, 'users', user.uid), {
+            uid: user.uid,
+            name: user.displayName,
+            email: user.email,
+            phone: values.phone,
+            GST: values.GST,
+            registerAs: values.select,
+          });
+
+          setTimeout(() => {
+            console.log('delayed');
+            toast.success('Account Created successfully', {
+      
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              });
+         
+          }, 1000); // Adjust the delay as needed
+        } catch (e) {
+          console.error('Error adding document: ', e);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        seterrorMsg(err.message);
+        toast.error(err.message, {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      });
+  }
+  
 
   return (
     <>
@@ -135,7 +218,9 @@ function SignUp() {
 }} placeholder="Password" required/>
             </div>
             <div class="col">
-              <input type="password" class="form-control" placeholder="Confirm Password" required/>
+              <input type="password" class="form-control" placeholder="Confirm Password" onChange={(events)=>{
+  setValues((prev)=>({...prev,confirmPass:events.target.value}))
+}}  required/>
             </div><br/>
             
             
@@ -154,21 +239,33 @@ function SignUp() {
         </select>
 
         <div class="col mt-2">
-              <input type="text" name='GST' disabled={values.select === 'Doctor'}  title="GST number is only required for Retailers/Wholesalers"  class="form-control" onChange={(events)=>{
-  setValues((prev)=>({...prev,GST:events.target.value}))
-}} placeholder="Your GST number" required/>
-            </div>
+  <input
+    type="text"
+    name='GST'
+    disabled={values.select === 'Doctor'}
+    title="GST number is only required for Retailers/Wholesalers"
+    class="form-control"
+    onChange={(events) => {
+      setValues((prev) => ({ ...prev, GST: events.target.value }));
+    }}
+    placeholder="Your GST number"
+    required={values.select === 'retailer'} 
+  />
+</div>
       </div> <br/><br/>
           </div>
           <div class="row align-items-center">
           <Link to="/login">  <a to="/login">Already have an account </a></Link>
           <ToastContainer/>
+          <ToastContainer/>
+
 
           </div>
           <div class="">
               <button type='submit' onClick={handleSubmit} class="btn btn-primary mt-2">Submit</button>
 
           </div>
+    
       
           
           
