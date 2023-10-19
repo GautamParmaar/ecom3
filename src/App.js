@@ -47,7 +47,7 @@ useEffect(()=>{
     }
   })
  
-},[])
+},)
 
 
 
@@ -78,7 +78,7 @@ const [products, setProducts]=useState([]);
           <Route path="/products" element={<> <Topbar/> <Navbar2 user={user}/><Home2/> </>}/>
           <Route path="/signup2" element={<> <Navbar2 user={user}/><Signup2/></> }/>
           <Route path="/login2" element={<> <Navbar2 user={user}/><Login2/> </> }/>
-          <Route path="/add" element={<AddProducts/>}/>
+          <Route path="/add" element={<AddProducts user={user}/>}/>
           <Route path="/cart" element={<> <Navbar2 user={user}/><Cart user={user} /></>}/>
           <Route path='/single/:id' element={<> <Navbar2 user={user}/><SingleProduct userid={userid}/></>}/>
           <Route path='/profile' element={<> <Navbar2 user={user}/><Profile user={user}/></>}></Route>

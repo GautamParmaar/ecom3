@@ -2,11 +2,12 @@ import React,{useState} from 'react'
 import { setDoc,doc, addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import {db,storage } from "../config/Config.js"
+import AdminNavbar from './Admin/AdminNavbar.js';
 
 
 
 
-function AddProducts() {
+function AddProducts({user}) {
     const [values, setValues] = useState({
 		name: '',
 		brand: '',
@@ -59,84 +60,88 @@ function AddProducts() {
 		
 		
 	  }
+    const adminUID = process.env.REACT_APP_ADMINUID;
+    console.log(user)
+
 
   return (
     <>
-    
-    <div className='container'>
+    {user && user.uid === adminUID ? (
+      <div>
+        <AdminNavbar />
+        <div className="container">
+          <br></br>
+          <br></br>
+          <h1>Add Products</h1>
+          <hr></hr>
+          <div className="success-msg"></div>
+          <br></br>
+          <form autoComplete="off" className="form-group" onSubmit={handleSubmit}>
+            <label>Product Title</label>
+            <input
+              type="text"
+              className="form-control"
+              required
+              name="name"
+              onChange={(events) => {
+                setValues((prev) => ({ ...prev, name: events.target.value }));
+              }}
+            ></input>
             <br></br>
+            <label>Product Description</label>
+            <input
+              type="text"
+              className="form-control"
+              required
+              onChange={(events) => {
+                setValues((prev) => ({ ...prev, desc: events.target.value }));
+              }}
+            ></input>
             <br></br>
-            <h1>Add Products</h1>
-            <hr></hr>        
-            <>
-                <div className='success-msg'></div>
-                <br></br>
-            </>
-            <form autoComplete="off" className='form-group'onSubmit={handleSubmit} >
-                <label>Product Title</label>
-                <input type="text" className='form-control' required
-                name='name' onChange={(events)=>{
-                    setValues((prev)=>({...prev,name:events.target.value}))
-                  }}></input>
-                <br></br>
-                <label>Product Description</label>
-                <input type="text" className='form-control' required
-                onChange={(events)=>{
-                    setValues((prev)=>({...prev,desc:events.target.value}))
-                  }}></input>
-                <br></br>
-                <label>Product Price</label>
-                <input type="number" className='form-control' required
-                name='price'  onChange={(events)=>{
-                    setValues((prev)=>({...prev,price:events.target.value}))
-                  }}></input>
-                <br></br>
-                <label>Category</label>
-
-                <input type="text" className='form-control' required
-                name='category'  onChange={(events)=>{
-                    setValues((prev)=>({...prev,category:events.target.value}))
-                  }}></input>
-                <br></br>
-                {/* <label>Product Category</label>
-                <select className='form-control' required
-                value={category} onChange={(e)=>setCategory(e.target.value)}>                                    
-                    <option value="">Select Product Category</option>                   
-                    <option>Electronic Devices</option>
-                    <option>Mobile Accessories</option>
-                    <option>TV & Home Appliances</option>
-                    <option>Sports & outdoors</option>
-                    <option>Health & Beauty</option>
-                    <option>Home & Lifestyle</option>
-                    <option>Men's Fashion</option>
-                    <option>Watches, bags & Jewellery</option>
-                    <option>Groceries</option>
-                </select> */}
-                <br></br>
-                <label>Upload Product Image</label>
-                <input type="file" id="file" className='form-control' required
-               onChange={(e)=>setImage(e.target.files[0])}></input>
-                
-                
-                    <br></br>
-                    <div className='error-msg'></div>
-                   
-            
-                <br></br>           
-                <div style={{display:'flex', justifyContent:'flex-end'}}>
-                    <button type="submit" className='btn btn-success btn-md'>
-                        SUBMIT
-                    </button>
-                </div>
-            </form>
-           <>
-                    <br></br>
-                    <div className='error-msg'></div>
-                    
-                </>
-
+            <label>Product Price</label>
+            <input
+              type="number"
+              className="form-control"
+              required
+              name="price"
+              onChange={(events) => {
+                setValues((prev) => ({ ...prev, price: events.target.value }));
+              }}
+            ></input>
+            <br></br>
+            <label>Category</label>
+            <input
+              type="text"
+              className="form-control"
+              required
+              name="category"
+              onChange={(events) => {
+                setValues((prev) => ({ ...prev, category: events.target.value }));
+              }}
+            ></input>
+            <br></br>
+            <label>Upload Product Image</label>
+            <input
+              type="file"
+              id="file"
+              className="form-control"
+              required
+              onChange={(e) => setImage(e.target.files[0])}
+            ></input>
+            <br></br>
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <button type="submit" className="btn btn-success btn-md">
+                SUBMIT
+              </button>
+            </div>
+          </form>
+          <br></br>
         </div>
-    </>
+      </div>
+    ) : (
+      <div>Error: You are not authorized to view this content</div>
+    )}
+  </>
   )
 }
 
