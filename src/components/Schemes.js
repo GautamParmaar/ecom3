@@ -12,6 +12,11 @@ import GradeIcon from '@mui/icons-material/Grade';
 
 
 function Schemes() {
+  const imageStyles = {
+    maxWidth: '99%',
+    height: 'auto',
+    margin:'auto'
+  };
   return (<>
     <div className="container-offer">
     <div className="container-offer-box">
@@ -51,6 +56,9 @@ function Schemes() {
       {/* <!-- End content  div --> */}
     </div>
     
+  </div>
+  <div className='banner image-container'>
+<img src='/banner.jpg' alt='banner' style={imageStyles}></img>
   </div>
   <div className="container-offer3">
     <div className="container-offer-box">

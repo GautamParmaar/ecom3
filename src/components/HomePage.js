@@ -194,7 +194,7 @@ function HomePage({user}) {
     <div id="carouselExampleAutoplaying" data-interval="3000" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img  src="./4.png" className="d-block w-100" alt="..."/>
+      <img  src="./banner.jpg" className="d-block w-100" alt="..."/>
     </div>
     <div class="carousel-item">
       <img src="./5.jpg" class="d-block w-100" alt="..."/>

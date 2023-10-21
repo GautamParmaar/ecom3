@@ -15,6 +15,7 @@ function AllOrders() {
     const [orders, setOrders] = useState([]); 
     const [startDate, setStartDate] = useState(null);
 const [endDate, setEndDate] = useState(null);
+const [serialCounter, setSerialCounter] = useState(1); // Initialize the serial counter
     
   
     
@@ -86,7 +87,6 @@ const [endDate, setEndDate] = useState(null);
 
 
 
-     
 
  
  
@@ -108,13 +108,11 @@ const [endDate, setEndDate] = useState(null);
     <div>
     {user && user.uid === adminUID ? (
       <>
-        <AdminNavbar />
-
-        <h2 className='OrderLabel my-2'>All Orders</h2>
+        {/* Your AdminNavbar */}
+        <div className='OrderLabel my-2'>All Orders</div>
         <div className="container">
           <div className="customer_details orderList">
             <div className="orderTop">
-              <div className="search-container"></div>
               <h5>Filter Orders by Date</h5>
               <label htmlFor="startDate">Select Date:</label>
               <div className='filterbox2'>
@@ -131,57 +129,82 @@ const [endDate, setEndDate] = useState(null);
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
                 />
-               
               </div>
-              <button className='btn btn-danger my-2 'onClick={reset}>Reset Filter</button>
+              <button className='btn btn-danger my-2' onClick={reset}>Reset Filter</button>
             </div>
             <div className="order_tab">
               {filteredOrders.length > 0 ? (
                 filteredOrders.map((order, index) => (
-                  <div style={{ marginBottom: '2rem' }} id="order_tab" className="orderCardWrap tab-content1 current">
-                    <div className="orderCard">
-                      <div className="orderHead">
-                        {order.Orders.map((orderData, subIndex) => (
-                          <>
+                  <div key={index}>
+                    {order.Orders.map((orderData, subIndex) => (
+                      <div key={subIndex} style={{ marginBottom: '2rem' }}>
+                        <div className="orderCardWrap orderCard tab-content1 current" id="order_tab" >
+                          <div className="orderHead">
                             <ul className="orderLeft">
                               <li>
                                 S.No: <span>{index + 1}</span>
                               </li>
-                              <li key={orderData.id}>
-                                <p><b>ORDER ID</b> <span className="textWidth">{orderData.id}</span></p>
+                              <li>
+                                <p>
+                                  <b>ORDER ID</b>{' '}
+                                  <span className="textWidth">{orderData.id}</span>
+                                </p>
                               </li>
                             </ul>
                             <div className="invoiceDetails">
-                              <p>Order Date: <span>{orderData.metadata.Date}</span></p>
-                            </div>
-                          </>
-                        ))}
-                      </div>
-
-                      {order.Orders.map((orderData, subIndex) => (
-                        <div className="itemDetails" key={orderData.id}>
-                          <div className="itemInfo">
-                            <div className="itemImg"></div>
-                            <div className="itemDesc">
-                              <h4><b style={{ color: 'black' }}>Product: </b> {JSON.parse(orderData.metadata.productName).join(', ')} </h4>
-                              <h4 className="itemPrice"><b style={{ color: 'black' }}>Price: </b>₹{orderData.amount_total / 100}</h4>
-                              <h4 className="itemPrice"><b style={{ color: 'black' }}>Quantity: </b>{orderData.metadata.quantity} </h4>
-                              <h4 className="itemPrice"><b style={{ color: 'black' }}>Payment Status: </b>{orderData.payment_status} </h4>
+                              <p>
+                                Order Date: <span>{orderData.metadata.Date}</span>
+                              </p>
                             </div>
                           </div>
-                          <div className="itemInfo">
-                            <div className="itemImg"></div>
-                            <div className="itemDesc">
-                              <h4 className="itemPrice"><b style={{ color: 'black' }}>Customer Name:</b> {JSON.parse(orderData.metadata.CustomerName)}</h4>
-                              <h4 className="itemPrice"><b style={{ color: 'black' }}>Email: </b>{JSON.parse(orderData.metadata.CustomerEmail)}</h4>
-                              <h4 className="itemPrice"><b style={{ color: 'black' }}>Phone: </b>{JSON.parse(orderData.metadata.CustomerPhone)} </h4>
-                              <h4 className="itemPrice"><b style={{ color: 'black' }}>Address:</b> </h4>
-                              <button className="btn btn-danger mt-1">Cancel Order</button>
+
+                          <div className="itemDetails">
+                            <div className="itemInfo">
+                              <div className="itemImg"></div>
+                              <div className="itemDesc">
+                                <h4>
+                                  <b style={{ color: 'black' }}>Product: </b>{' '}
+                                  {JSON.parse(orderData.metadata.productName).join(', ')}
+                                </h4>
+                                <h4 className="itemPrice">
+                                  <b style={{ color: 'black' }}>Price: </b>
+                                  ₹{orderData.amount_total / 100}
+                                </h4>
+                                <h4 className="itemPrice">
+                                  <b style={{ color: 'black' }}>Quantity: </b>
+                                  {orderData.metadata.quantity}
+                                </h4>
+                                <h4 className="itemPrice">
+                                  <b style={{ color: 'black' }}>Payment Status: </b>
+                                  {orderData.payment_status}
+                                </h4>
+                              </div>
+                            </div>
+                            <div className="itemInfo">
+                              <div className="itemImg"></div>
+                              <div className="itemDesc">
+                                <h4 className="itemPrice">
+                                  <b style={{ color: 'black' }}>Customer Name:</b>{' '}
+                                  {JSON.parse(orderData.metadata.CustomerName)}
+                                </h4>
+                                <h4 className="itemPrice">
+                                  <b style={{ color: 'black' }}>Email: </b>
+                                  {JSON.parse(orderData.metadata.CustomerEmail)}
+                                </h4>
+                                <h4 className="itemPrice">
+                                  <b style={{ color: 'black' }}>Phone: </b>
+                                  {JSON.parse(orderData.metadata.CustomerPhone)}
+                                </h4>
+                                <h4 className="itemPrice">
+                                  <b style={{ color: 'black' }}>Address:</b>
+                                </h4>
+                                <button className="btn btn-danger mt-1">Cancel Order</button>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </div>
                 ))
               ) : (

@@ -321,7 +321,10 @@ setUserDetails(user.uid)//for sending user's uid to backend
         const headers = {
             "Content-Type": "application/json"
         }
-        const response = await fetch("http://localhost:8080/create-checkout",
+// for deployment & localhost ,there are two different endpoints
+
+        const response=await fetch("https://ecom-backend-weld.vercel.app/create-checkout",
+        // const response = await fetch("http://localhost:8080/create-checkout",
             {
                 method: "POST",
                 headers: headers,
