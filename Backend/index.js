@@ -13,6 +13,10 @@ const {getStorage}=require('firebase/storage')
 const {doc,updateDoc,getDoc,arrayUnion,setDoc}=require('firebase/firestore')
 
 
+// Allow requests from your frontend URL
+// const allowedOrigins = ['https://ecom2-c701c.web.app'];
+
+
 
 const firebaseConfig = {
     apiKey:process.env.apiKey ,
@@ -28,6 +32,19 @@ const app=express();
 app.use(cors());
 app.use(express.json());
 
+// // Allow requests from your frontend URL
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error('Not allowed by CORS'));
+//       }
+//     },
+//   })
+// );
+
 const fb = initializeApp(firebaseConfig);
 
 const auth=getAuth();
@@ -42,153 +59,284 @@ app.get('/test',(req,res)=>{
   res.send('test')
 })
 
-
-app.post('/create-checkout',async(req,res)=>{
-  let order=[]
+// using promises 
+app.post('/create-checkout', (req, res) => {
+  let order = [];
   let userName;
   let userEmail;
   let userPhone;
   let userAddress;
-const {products,id,totalQty}=req.body;
-// console.log(products,"gggg")
-console.log(id,"id");
-// console.log(products,"pppp")
- const userDocRef = doc(db, 'users', id);
-    const userDoc = await getDoc(userDocRef);
-    if (userDoc.exists()) {
-      // Document data exists, you can access it using .data() method
-      const userData = userDoc.data();
-      console.log('Fetched data:', userData);
-      userName=userData.name;
-      userEmail=userData.email
-      userPhone=userData.phone
-      
-      
-      
-    } else {
-      console.log('No such document!');
-     
-    }
+  const { products, id, totalQty } = req.body;
 
-const lineItems= await products.map((products)=>({
-  price_data:{
-    currency:"inr",
-    product_data:{
-      name:products.name,
-      
-    },
-    unit_amount:products.price*100,
-    customer_details:products.id,
-
-  },
-  quantity:products.qty,
-  customer_details:products.id,
-}))
-
-  const productID=[];
-  products.forEach((product) => {
-    productID.push(product.ID);
-  });
-  const metadata = {
-    'productID': JSON.stringify(products),
-  };
-  var currentdate = new Date(); 
-  var datetime = currentdate.getDate() + "/"
-                  + (currentdate.getMonth()+1)  + "/" 
-                  + currentdate.getFullYear() 
-  
-try{
-  const data=[]
-  const nameOfProducts=[]
-  let qtyData;
-products.map((products)=>{
-  data.push(products.ID)
-  nameOfProducts.push(products.name)
-  qtyData=products.qty
-  console.log(data)
-})
-
-
-// console.log(products,"hello")
-const session=await stripe.checkout.sessions.create({
-  payment_method_types:["card"],
-  line_items:lineItems,
-  mode:"payment",
-  success_url:'http://localhost:3000/',
-  cancel_url:"http://localhost:3000/cart",
-  metadata : {
-    products:JSON.stringify(data),
-    quantity :JSON.stringify(totalQty),
-    productName:JSON.stringify(nameOfProducts),
-    Date:datetime,
-    lineItems:JSON.stringify(lineItems),
-    UID:id,
-    CustomerName:JSON.stringify(userName),
-    CustomerEmail:JSON.stringify(userEmail),
-    CustomerPhone:JSON.stringify(userPhone)
-    // customer id is UID
-  }
-
-})
-res.json({id:session.id})
-
-
-order.push(session.id)
-
-
-
-
-//code for inserting order id into user's database
-const orderIds = [];
-orderIds.push(session.id)
-
- // Replace with your order IDs
-try {
   const userDocRef = doc(db, 'users', id);
 
-  const existingData = await getDoc(userDocRef);
-  if (existingData.exists()) {
-    // Get the existing product data from the document
+  getDoc(userDocRef)
+    .then((userDoc) => {
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        userName = userData.name;
+        userEmail = userData.email;
+        userPhone = userData.phone;
+      } else {
+        console.log('No such document!');
+      }
 
+      const lineItems = products.map((product) => ({
+        price_data: {
+          currency: "inr",
+          product_data: {
+            name: product.name,
+          },
+          unit_amount: product.price * 100,
+          customer_details: product.id,
+        },
+        quantity: product.qty,
+        customer_details: product.id,
+      }));
 
-    // Update the document with the modified data
-    await updateDoc(userDocRef, {
-        OrderId: arrayUnion(session.id),
-        
-    });
-
-    const cartProductRef = doc(db, 'Orders', id);
-    const existingData = await getDoc(cartProductRef);
-    if(existingData.exists()){
-      await updateDoc(cartProductRef, {
-        Orders: arrayUnion(session),
+      const productID = [];
+      products.forEach((product) => {
+        productID.push(product.ID);
       });
-      console.log('data has been inserted into Orders collection')
 
-    }
+      const metadata = {
+        'productID': JSON.stringify(products),
+      };
+      var currentdate = new Date();
+      var datetime = currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear();
 
+      const data = [];
+      const nameOfProducts = [];
+      let qtyData;
+      products.map((product) => {
+        data.push(product.ID);
+        nameOfProducts.push(product.name);
+        qtyData = product.qty;
+      });
 
-else{
-  await setDoc(doc(db, "Orders", id), {
-    Orders: [session],
-   
-   
-  });
-  console.log("Data has been created");
-}
+      const sessionData = {
+        payment_method_types: ["card"],
+        line_items: lineItems,
+        mode: "payment",
+        success_url: 'https://ecom2-c701c.web.app/myorder',
+        cancel_url: 'https://ecom2-c701c.web.app/myorder',
+        metadata: {
+          products: JSON.stringify(data),
+          quantity: JSON.stringify(totalQty),
+          productName: JSON.stringify(nameOfProducts),
+          Date: datetime,
+          lineItems: JSON.stringify(lineItems),
+          UID: id,
+          CustomerName: JSON.stringify(userName),
+          CustomerEmail: JSON.stringify(userEmail),
+          CustomerPhone: JSON.stringify(userPhone),
+        }
+      };
 
+      stripe.checkout.sessions.create(sessionData)
+        .then((session) => {
+          res.json({ id: session.id });
+          order.push(session.id);
 
-   
-} else {
+          const orderIds = [];
+          orderIds.push(session.id);
+
+          const cartProductRef = doc(db, 'Orders', id);
+          getDoc(cartProductRef)
+            .then((existingData) => {
+              if (existingData.exists()) {
+                return updateDoc(cartProductRef, {
+                  Orders: arrayUnion(session),
+                }).then(() => {
+                  console.log('data has been inserted into Orders collection');
+                });
+              } else {
+                return setDoc(doc(db, 'Orders', id), {
+                  Orders: [session],
+                }).then(() => {
+                  console.log('Data has been created');
+                });
+              }
+            })
+            .then(() => {
+              // Now we handle the user document update
+              const userDocRef = doc(db, 'users', id);
+              return getDoc(userDocRef)
+                .then((existingData) => {
+                  if (existingData.exists()) {
+                    return updateDoc(userDocRef, {
+                      OrderId: arrayUnion(session.id),
+                    }).then(() => {
+                      console.log('id updated');
+                    });
+                  }
+                });
+            })
+            .catch((error) => {
+              console.error('Error updating document: ', error);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+// 
+
+// using async await
+// app.post('/create-checkout',async(req,res)=>{
+//   let order=[]
+//   let userName;
+//   let userEmail;
+//   let userPhone;
+//   let userAddress;
+// const {products,id,totalQty}=req.body;
+
+//  const userDocRef = doc(db, 'users', id);
+//     const userDoc = await getDoc(userDocRef);
+//     if (userDoc.exists()) {
+//       // Document data exists, you can access it using .data() method
+//       const userData = userDoc.data();
+     
+//       userName=userData.name;
+//       userEmail=userData.email
+//       userPhone=userData.phone
+      
+      
+      
+//     } else {
+//       console.log('No such document!');
+     
+//     }
+
+// const lineItems= await products.map((products)=>({
+//   price_data:{
+//     currency:"inr",
+//     product_data:{
+//       name:products.name,
+      
+//     },
+//     unit_amount:products.price*100,
+//     customer_details:products.id,
+
+//   },
+//   quantity:products.qty,
+//   customer_details:products.id,
+// }))
+
+//   const productID=[];
+//   products.forEach((product) => {
+//     productID.push(product.ID);
+//   });
+//   const metadata = {
+//     'productID': JSON.stringify(products),
+//   };
+//   var currentdate = new Date(); 
+//   var datetime = currentdate.getDate() + "/"
+//                   + (currentdate.getMonth()+1)  + "/" 
+//                   + currentdate.getFullYear() 
   
-}
-} catch (error) {
-  console.error('Error updating document: ', error);
-}
+// try{
+//   const data=[]
+//   const nameOfProducts=[]
+//   let qtyData;
+// products.map((products)=>{
+//   data.push(products.ID)
+//   nameOfProducts.push(products.name)
+//   qtyData=products.qty
+//   // console.log(data)
+// })
+
+
+// // console.log(products,"hello")
+// const session=await stripe.checkout.sessions.create({
+//   payment_method_types:["card"],
+//   line_items:lineItems,
+//   mode:"payment",
+//   // success_url:'http://localhost:3000/',
+//   success_url:'https://ecom2-c701c.web.app/myorder',
+//   // cancel_url:"http://localhost:3000/cart",
+//   cancel_url:"https://ecom2-c701c.web.app/myorder",
+//   metadata : {
+//     products:JSON.stringify(data),
+//     quantity :JSON.stringify(totalQty),
+//     productName:JSON.stringify(nameOfProducts),
+//     Date:datetime,
+//     lineItems:JSON.stringify(lineItems),
+//     UID:id,
+//     CustomerName:JSON.stringify(userName),
+//     CustomerEmail:JSON.stringify(userEmail),
+//     CustomerPhone:JSON.stringify(userPhone)
+//     // customer id is UID
+//   }
+
+// })
+// res.json({id:session.id})
+
+
+// order.push(session.id)
 
 
 
-//for inserting order details in order database ,document id will be user uid
+
+// //code for inserting order id into user's database
+// const orderIds = [];
+// orderIds.push(session.id)
+
+
+// const cartProductRef = doc(db, 'Orders', id);
+// const existingData = await getDoc(cartProductRef);
+// if(existingData.exists()){
+//   await updateDoc(cartProductRef, {
+//     Orders: arrayUnion(session),
+//   });
+//   console.log('data has been inserted into Orders collection')
+
+// }
+
+
+// else{
+// await setDoc(doc(db, "Orders", id), {
+// Orders: [session],
+
+
+// });
+// console.log("Data has been created");
+// }
+//  // Replace with your order IDs
+// try {
+//   const userDocRef = doc(db, 'users', id);
+
+//   const existingData = await getDoc(userDocRef);
+//   if (existingData.exists()) {
+//     // Get the existing product data from the document
+
+
+//     // Update the document with the modified data
+//     await updateDoc(userDocRef, {
+//         OrderId: arrayUnion(session.id),
+        
+        
+//     });
+//     console.log('id updated')
+   
+
+
+   
+// } else {
+  
+// }
+// } catch (error) {
+//   console.error('Error updating document: ', error);
+// }
+
+
+
+// //for inserting order details in order database ,document id will be user uid
 
 
 
@@ -197,13 +345,13 @@ else{
 
 
 
-}
-catch(error){
-  console.log(error)
-}
+// }
+// catch(error){
+//   console.log(error)
+// }
 
 
-})
+// })
 
 app.post('/checkout',async(req,res)=>{
     let error;
