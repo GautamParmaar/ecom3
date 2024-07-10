@@ -26,6 +26,7 @@ import AllOrders from './components/Admin/AllOrders';
 import AllOrders2 from './components/Admin/AllOrders2';
 import SpecificOrder from './components/Admin/SpecificOrder';
 import Topbar from './components/Topbar';
+import Demo from './components/Demo';
 
 
 function App() {
@@ -81,7 +82,7 @@ const [products, setProducts]=useState([]);
           <Route path="/add" element={<AddProducts user={user}/>}/>
           <Route path="/cart" element={<> <Navbar2 user={user}/><Cart user={user} /></>}/>
           <Route path='/single/:id' element={<> <Navbar2 user={user}/><SingleProduct userid={userid}/></>}/>
-          <Route path='/profile' element={<> <Navbar2 user={user}/><Profile user={user}/></>}></Route>
+          {/* <Route path='/profile' element={<> <Navbar2 user={user}/><Profile user={user}/></>}></Route> */}
           <Route path="/login" element={<> <Topbar/> <Navbar2 user={user}/><Login/></> }/>
           <Route path="/signup" element={<>  <Navbar2 user={user}/><SignUp/></>}/>
           <Route path='/order' element={<> <Navbar2 user={user}/><OrderDetails user={user}/></>}/>
@@ -95,6 +96,7 @@ const [products, setProducts]=useState([]);
           <Route path='/adminOrders' element={<AllOrders/>}/>
           <Route path='/adminOrders2' element={<AllOrders2/>}/>
           <Route path='/singleorder/:id'exact  element={<SpecificOrder/>}/>
+          <Route path='/homedemo' element={<Demo/>}/>
 
 
 

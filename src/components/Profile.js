@@ -98,10 +98,10 @@ function Profile({user}) {
                   <dt>Email</dt>
                   <dd>{userEmail}</dd>
                 </dl>
-                <dl className="dl-horizontal">
+                {/* <dl className="dl-horizontal">
                   <dt>GST</dt>
                   <dd>{userGST}</dd>
-                </dl>
+                </dl> */}
               </div>
 
               <div className="profile-edit">
@@ -126,7 +126,7 @@ function Profile({user}) {
                   </dd>
                 </dl> */}
                 
-                <dl className="dl-horizontal">
+                {/* <dl className="dl-horizontal">
                   <dt className="p-10">Pincode</dt>
                   <dd>
                     <div className="fg-line">
@@ -149,7 +149,7 @@ function Profile({user}) {
                       <input type="text" className="form-control" placeholder="eg. 00971 12345678"/>
                     </div>
                   </dd>
-                </dl>
+                </dl> */}
 
                 <div className="m-t-30">
                   <button className=" btn btn-primary " style={{color:'white'}}>Save</button>

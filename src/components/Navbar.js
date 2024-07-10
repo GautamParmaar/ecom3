@@ -49,8 +49,8 @@ const Navbar2 = ({ user }) => {
 
     <nav className="navbar" >
     <div className="nav-container">
-      <NavLink exact to="/" className="nav-logo">
-        Ecommerce
+      <NavLink  exact to="/" className="nav-logo">
+        E-pharmacy
        
       </NavLink>
 
@@ -83,7 +83,7 @@ const Navbar2 = ({ user }) => {
            My Order
           </NavLink>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <NavLink
             exact
             to="/profile"
@@ -95,7 +95,7 @@ const Navbar2 = ({ user }) => {
           >
            Profile
           </NavLink>
-        </li>
+        </li> */}
         {!user&&
         <li className="nav-item">
           <NavLink
