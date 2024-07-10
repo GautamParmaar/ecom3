@@ -26,10 +26,10 @@ function AdminNavbar() {
   return (
     <>
   
-  <nav className="navbar" >
+  <nav className="navbar" style={{position:'sticky',top:'0',zIndex:'10110'}} >
     <div className="nav-container">
       <NavLink exact to="/" className="nav-logo">
-        Ecommerce
+        Epharmacy
        
       </NavLink>
 

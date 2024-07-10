@@ -197,10 +197,10 @@ function HomePage({user}) {
       <img  src="./banner.jpg" className="d-block w-100" alt="..."/>
     </div>
     <div class="carousel-item">
-      <img src="./5.jpg" class="d-block w-100" alt="..."/>
+      <img src="./banner.jpg" class="d-block w-100" alt="..."/>
     </div>
     <div class="carousel-item">
-      <img src="./3.jpg" class="d-block w-100" alt="..."/>
+      <img src="./banner.jpg" class="d-block w-100" alt="..."/>
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
@@ -216,7 +216,8 @@ function HomePage({user}) {
 
 {/* signup form for laptop & bg screen devices */}
 {/* <SignUp className='signUpComponent' /> */}
-<section className='sectionContainer signUpComponent' >
+
+{/* <section className='sectionContainer signUpComponent' >
     <div class="container signupForm">
       
       
@@ -309,7 +310,7 @@ function HomePage({user}) {
         </div>
       </div>
     </div>
-  </section>
+  </section> */}
 
 </div>
 <br/>
