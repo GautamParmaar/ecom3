@@ -9,6 +9,10 @@ import { ToastContainer, toast } from 'react-toastify'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { auth, db } from '../config/Config'
 import { doc, setDoc } from 'firebase/firestore'
+import Header from './Header'
+import Features from './Features'
+import About from './About'
+import Testimonial from './Testimonial'
 
 
 
@@ -187,138 +191,10 @@ function HomePage({user}) {
 
   return (
     <>
-    
-
-
-    <div className='d-sm-flex borderBox' >
-    <div id="carouselExampleAutoplaying" data-interval="3000" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img  src="./banner.jpg" className="d-block w-100" alt="..."/>
-    </div>
-    <div class="carousel-item">
-      <img src="./banner.jpg" class="d-block w-100" alt="..."/>
-    </div>
-    <div class="carousel-item">
-      <img src="./banner.jpg" class="d-block w-100" alt="..."/>
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
-
-
-{/* signup form for laptop & bg screen devices */}
-{/* <SignUp className='signUpComponent' /> */}
-
-{/* <section className='sectionContainer signUpComponent' >
-    <div class="container signupForm">
-      
-      
-      
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-8 col-xl-6">
-          <div class="row">
-            <div class="col text-center">
-              <h2>Register</h2>
-              <p class="text-h3"> Registration on this platform is exclusively available to medical professionals and individuals in the retail or wholesale sector.</p>
-            </div>
-          </div>
-          <div class="row align-items-center mt-0">
-            <div class="col mt-0">
-              <input type="text" name='name' class="form-control" placeholder="Your Name" required onChange={(events)=>{
-  setValues((prev)=>({...prev,name:events.target.value}))
-}} />
-            </div>
-          </div>
-          <div class="row align-items-center mt-2">
-            <div class="col">
-              <input type="number" class="form-control" placeholder="Your Phone Number" name='phone' onChange={(events)=>{
-  setValues((prev)=>({...prev,phone:events.target.value}))
-}} required/>
-            </div>
-            <div class="col">
-              <input type="email" class="form-control" placeholder="Your Email" name='email' onChange={(events)=>{
-  setValues((prev)=>({...prev,email:events.target.value}))
-}} required/>
-            </div>
-          </div>
-          <div class="row align-items-center mt-2">
-            <div class="col">
-              <input type="password" name='pass' class="form-control"onChange={(events)=>{
-  setValues((prev)=>({...prev,pass:events.target.value}))
-}} placeholder="Password" required/>
-            </div>
-            <div class="col">
-              <input type="password" class="form-control" placeholder="Confirm Password" onChange={(events)=>{
-  setValues((prev)=>({...prev,confirmPass:events.target.value}))
-}}  required/>
-            </div><br/>
-            
-            
-          </div>
-          
-          
-            <div class="row align-items-center mt-2">
-            <h6>Business Type</h6>
-            <div className='col'>
-        <select id="brandFilter" name='select'  required onChange={(events)=>{
-          setValues((prev)=>({...prev,select:events.target.value}))
-        }}    >
-                    <option value="retailer">Retailer/wholesaler</option>
-
-          <option  value="Doctor">Doctor</option>
-        </select>
-
-        <div class="col mt-2">
-  <input
-    type="text"
-    name='GST'
-    disabled={values.select === 'Doctor'}
-    title="GST number is only required for Retailers/Wholesalers"
-    class="form-control"
-    onChange={(events) => {
-      setValues((prev) => ({ ...prev, GST: events.target.value }));
-    }}
-    placeholder="Your GST number"
-    required={values.select === 'retailer'} 
-  />
-</div>
-      </div> <br/><br/>
-          </div>
-          <div class="row align-items-center">
-          <Link to="/login">  <a to="/login">Already have an account </a></Link>
-          <ToastContainer/>
-          <ToastContainer/>
-
-
-          </div>
-          <div class="">
-              <button type='submit' onClick={handleSubmit} class="btn btn-primary mt-2">Submit</button>
-
-          </div>
-    
-      
-          
-          
-        </div>
-      </div>
-    </div>
-  </section> */}
-
-</div>
-<br/>
-
-
-{/* signup form ends here */}
-<Schemes/>
-<CarouselProduct user={user}/>
+    <Header/>
+    <Features/>
+    <About/>
+    <Testimonial/>
 
 
 
