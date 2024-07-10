@@ -303,14 +303,13 @@ input{
   display: table;
   width: 100%;
   padding: 0;
-  /* background: url('../banner.jpg') center center no-repeat; */
-  background-image: url('/public/intro.jpg');
-  background-color: #e5e5e5;
+  /* background-image: url('/public/intro.jpg'); */
+  background-image: url('/public/pharma8.jpg');
+  /* background-color: #e5e5e5; */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
   -o-background-size: cover;
-  /* background-image: "./banner.jpg" */
 }
 .intro .overlay {
   background: rgba(0, 0, 0, 0.2);
@@ -343,6 +342,26 @@ header .intro-text {
   margin-left: 60px;
 }
 
+/* Media Queries for Small Screen Devices */
+@media (max-width: 768px) {
+  header .intro-text {
+    padding-top: 200px;
+    padding-bottom: 100px;
+    margin-left: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .intro h1 {
+    font-size: 36px;
+  }
+
+  .intro p {
+    font-size: 18px;
+    line-height: 24px;
+  }
+}
+
 
 /* Features Section */
 #features {
@@ -371,6 +390,127 @@ header .intro-text {
   flex-wrap: wrap; /* Allows wrapping to the next line */
   justify-content: center; /* Centers the items horizontally */
  
+}
+
+/* About Section */
+#about {
+  padding: 100px 0;
+}
+#about h3 {
+  font-size: 22px;
+  margin: 0 0 20px;
+}
+#about h2 {
+  position: relative;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+}
+#about h2::after {
+  position: absolute;
+  content: "";
+  background: linear-gradient(to right, #5ca9fb 0%, #6372ff 100%);
+  height: 4px;
+  width: 60px;
+  bottom: 0;
+  left: 0;
+}
+#about .about-text li {
+  margin-bottom: 6px;
+  margin-left: 6px;
+  list-style: none;
+  padding: 0;
+}
+#about .about-text li:before {
+  content: "\f00c";
+  font-family: "FontAwesome";
+  color: #5ca9fb;
+  font-size: 11px;
+  font-weight: 300;
+  padding-right: 8px;
+}
+#about img {
+  width: 100%;
+  max-width: 520px;
+  margin-top: 10px;
+  background: #fff;
+  border-right: 0;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.06);
+}
+#about p {
+  line-height: 24px;
+  margin: 30px 0;
+}
+/* Add this CSS to center align the bullet points */
+.list-style .row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list-style ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.list-style ul li {
+  text-align: left; /* Align text to the left */
+  margin-bottom: 10px;
+}
+
+
+/* Media Queries for Small Screen Devices */
+@media (max-width: 768px) {
+  #about img {
+    width: 100%;
+    max-width: none;
+  }
+
+  .about-text {
+    text-align: center;
+  }
+}
+
+
+
+/* Testimonials Section */
+#testimonials {
+  padding: 100px 0;
+  background: #f6f6f6;
+}
+#testimonials i {
+  color: #e6e6e6;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+.testimonial {
+  position: relative;
+  padding: 20px;
+}
+.testimonial-image {
+  float: left;
+  margin-right: 15px;
+}
+.testimonial-image,
+.testimonial-image img {
+  display: block;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
+.testimonial-content {
+  position: relative;
+  overflow: hidden;
+}
+.testimonial-content p {
+  margin-bottom: 0;
+  font-size: 14px;
+  font-style: italic;
+}
+.testimonial-meta {
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #666;
 }
 
 

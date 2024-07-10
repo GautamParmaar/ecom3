@@ -1,31 +1,25 @@
-import React from 'react'
+import React from 'react';
 
 function Header() {
   return (
     <header id="header">
-    <div className="intro">
+      <div className="intro">
         {/* <img className='intro' src='/intro.jpg'/> */}
-      <div className="overlay">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 col-md-offset-2 intro-text">
-              <h1>
-                {/* {props.data ? props.data.title : "Loading"} */}
-                WE ARE A LANDING PAGE
-                <span></span>
-              </h1>
-              {/* <p>{props.data ? props.data.paragraph : "Loading"}</p> */}
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sed commodo nibh ante facilisis bibendum.
-
-
-             
+        <div className="overlay">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-8 col-md-offset-2 intro-text">
+                <h1>
+                  WE ARE A E-PHARMACY STORE
+                  <span></span>
+                </h1>
+                Your trusted source for high-quality medicines, dedicated to providing safe and effective pharmaceutical products.              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    {/* css -> index.css */}
-  </header>  )
+    </header>
+  );
 }
 
-export default Header
+export default Header;
