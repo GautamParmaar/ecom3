@@ -1,7 +1,7 @@
 .navbar {
   position: sticky !important; 
   top: 0px;
-  background-color:#196fd1;
+  background-color: #196fd1;
   height: 60px;
   display: flex;
   justify-content: center;
@@ -10,10 +10,12 @@
   margin-bottom: 0;
   z-index: 1000;
 }
-nav{
+
+nav {
   position: sticky;
   top: 0;
 }
+
 .nav-container {
   display: flex;
   justify-content: center;
@@ -32,7 +34,6 @@ nav{
   text-decoration: none;
   font-size: 1.5rem;
   flex-grow: 1;
-  /* margin-top: 0; */
   margin-bottom: 13px;
 }
 
@@ -50,6 +51,7 @@ nav{
   height: 100%;
   border-bottom: 3px solid transparent;
 }
+
 .fa-code {
   margin-left: 1rem;
 }
@@ -87,7 +89,7 @@ nav{
     display: flex;
     flex-direction: column;
     width: 100%;
-    border-top: 1pxsolid #fff;
+    border-top: 1px solid #fff;
     position: absolute;
     top: 80px;
     left: -110%;
@@ -96,16 +98,24 @@ nav{
   }
 
   .nav-menu.active {
-    background: #1f5156;
+    background: #ffffff; /* Set background color to white */
+    color: #000000; /* Set font color to black */
     left: 0px;
     opacity: 1;
     transition: all 0.5s ease;
     z-index: 1;
+    margin-top: -22px;
   }
+
+  .nav-menu.active .nav-links {
+    color: #000000; /* Ensure nav links inherit the new font color */
+  }
+
   .nav-item .active {
     color: #ffdd40;
     border: none;
   }
+
   .nav-links {
     padding: 1.5rem;
     width: 100%;
@@ -113,28 +123,27 @@ nav{
   }
 
   .nav-icon {
-    display: block;
+    display: flex;  /* Changed from block to flex */
     position: absolute;
     top: 0;
     right: 0;
-    transform: translate(-100%, 60%);
+    transform: translate(-100%, 50%);  /* Adjusted from 60% to 50% */
     font-size: 1.8rem;
     cursor: pointer;
     color: #ffdd40;
     margin-right: -10px;
+    align-items: center;  /* Ensures vertical centering */
+    justify-content: center;  /* Ensures horizontal centering */
   }
-
-  
 }
 
-.cartTotal{
+.cartTotal {
   margin-left: 2px;
   font-size: 17px;
- 
 }
 
-@media(max-width:768px){
-.navbar{
-  top: 0;
-}
+@media (max-width: 768px) {
+  .navbar {
+    top: 0;
+  }
 }

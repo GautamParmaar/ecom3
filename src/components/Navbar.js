@@ -9,7 +9,6 @@ import { auth, db } from "../config/Config";
 import { signOut } from "firebase/auth";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import MenuIcon from '@mui/icons-material/Menu';
-import Topbar from "./Topbar";
 
 
 
@@ -120,17 +119,7 @@ const Navbar2 = ({ user }) => {
             Signout
           </NavLink>
         </li>}
-        {/* <li className="nav-item">
-          <NavLink
-            exact
-            to="/add"
-            activeClassName="active"
-            className="nav-links"
-            onClick={handleClick}
-          >
-            Add product
-          </NavLink>
-        </li> */}
+       
         <li className="nav-item">
           <NavLink
             exact
@@ -152,7 +141,6 @@ const Navbar2 = ({ user }) => {
     </div>
   </nav>
 
-  {/* <SmallNav/> */}
    
   </>
   );
