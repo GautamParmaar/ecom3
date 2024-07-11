@@ -49,6 +49,7 @@ app.get('/test',(req,res)=>{
 })
 
 // using promises 
+// endpoint for order creation
 app.post('/create-checkout', async (req, res) => {
   let order = [];
   let userName, userEmail, userPhone;
@@ -83,8 +84,8 @@ app.post('/create-checkout', async (req, res) => {
           payment_method_types: ["card"],
           line_items: lineItems,
           mode: "payment",
-          success_url: 'https://ecom2-c701c.web.app/myorder',
-          cancel_url: 'https://ecom2-c701c.web.app/myorder',
+          success_url: 'http://localhost:3000/myorder',
+          cancel_url: 'http://localhost:3000/products',
           metadata: {
               products: JSON.stringify(products.map(p => p.ID)),
               quantity: JSON.stringify(totalQty),
@@ -124,121 +125,116 @@ app.post('/create-checkout', async (req, res) => {
 
 
 
-app.post('/checkout',async(req,res)=>{
-    let error;
-    let status;
-    let order=[]
-    let productNames=[]
+// app.post('/checkout',async(req,res)=>{
+//     let error;
+//     let status;
+//     let order=[]
+//     let productNames=[]
 
     
-    try{
-        const {cart,token,user,id,Products}=req.body;
-        console.log("cart",Products)
+//     try{
+//         const {cart,token,user,id,Products}=req.body;
+//         console.log("cart",Products)
       
 
-        status="success"
-        order.push(charge.id);
-        const cartProductRef = doc(db, 'users', user.uid);
-        const existingData = await getDoc(cartProductRef);
-       if (existingData.exists()) {
-                            // Get the existing product data from the document
-                            const product = existingData.data();
+//         status="success"
+//         order.push(charge.id);
+//         const cartProductRef = doc(db, 'users', user.uid);
+//         const existingData = await getDoc(cartProductRef);
+//        if (existingData.exists()) {
+//                             // Get the existing product data from the document
+//                             const product = existingData.data();
                         
-                            // Update the 'qty' and 'TotalProductPrice' fields
-                            product.OrderId = order;
+//                             // Update the 'qty' and 'TotalProductPrice' fields
+//                             product.OrderId = order;
                         
-                            // Update the document with the modified data
-                            await updateDoc(cartProductRef,{
-                                OrderId: arrayUnion(charge.id)
-                            });
+//                             // Update the document with the modified data
+//                             await updateDoc(cartProductRef,{
+//                                 OrderId: arrayUnion(charge.id)
+//                             });
 
   
 
 
                             
-                            console.log("Data updated successfully");
-                        } else {
-                            console.log("Document does not exist");
-                        } 
+//                             console.log("Data updated successfully");
+//                         } else {
+//                             console.log("Document does not exist");
+//                         } 
 
-        console.log(charge.id)
-    }catch(error){
-        console.log(error)
-        status="error"
-    }
-    res.json({status})
-})
+//         console.log(charge.id)
+//     }catch(error){
+//         console.log(error)
+//         status="error"
+//     }
+//     res.json({status})
+// })
 
-app.get('/orderDetails',async(req,res)=>{
-               const { id } = req.query;
-            console.log("cart",id)
-            let orderData;
+// app.get('/orderDetails',async(req,res)=>{
+//                const { id } = req.query;
+//             console.log("cart",id)
+//             let orderData;
 
-//code for getting product id
-            const orderIds = []; // Replace with your order IDs
-            const userDocRef = doc(db, 'users', id);
-            const userDoc = await getDoc(userDocRef);
-            if (userDoc.exists()) {
-              // Document data exists, you can access it using .data() method
-              const userData = userDoc.data();
-              orderIds.push(...userData.OrderId)
-              // console.log('Fetched data:', userData.OrderId);
-              // console.log(orderIds)
+// //code for getting product id
+//             const orderIds = []; // Replace with your order IDs
+//             const userDocRef = doc(db, 'users', id);
+//             const userDoc = await getDoc(userDocRef);
+//             if (userDoc.exists()) {
+//               // Document data exists, you can access it using .data() method
+//               const userData = userDoc.data();
+//               orderIds.push(...userData.OrderId)
+//               // console.log('Fetched data:', userData.OrderId);
+//               // console.log(orderIds)
              
-            } else {
-              console.log('No such document!');
-              return null;
-            }
+//             } else {
+//               console.log('No such document!');
+//               return null;
+//             }
 
 
-            const paymentIntents = [];
+//             const paymentIntents = [];
 
-            // Use map to fetch payment intents for each order ID
-            const fetchPaymentIntentsSequentially = async () => {
-              for (const orderId of orderIds) {
-                try {
-                  const paymentIntent = await retrievePaymentIntent('cs_test_b1riX13bwreSi7YqRTaLxJh6UWNgZI9UcSH3vt9jL05gujVyidf5CIEXQy');
-                  paymentIntents.push(paymentIntent);
-                  console.log(paymentIntents,"payment");
+//             // Use map to fetch payment intents for each order ID
+//             const fetchPaymentIntentsSequentially = async () => {
+//               for (const orderId of orderIds) {
+//                 try {
+//                   const paymentIntent = await retrievePaymentIntent('cs_test_b1riX13bwreSi7YqRTaLxJh6UWNgZI9UcSH3vt9jL05gujVyidf5CIEXQy');
+//                   paymentIntents.push(paymentIntent);
+//                   console.log(paymentIntents,"payment");
 
 
-                  const docRef = await setDoc(doc(db, "Orders", id), {
-                    uid:id,
-                    paymentIntents
-              });
-              console.log("Document written with ID: ");
-                } catch (error) {
-                  console.error(`Error fetching payment intent for order ID ${orderId}: ${error.message}`);
-                }
-              }
+//                   const docRef = await setDoc(doc(db, "Orders", id), {
+//                     uid:id,
+//                     paymentIntents
+//               });
+//               console.log("Document written with ID: ");
+//                 } catch (error) {
+//                   console.error(`Error fetching payment intent for order ID ${orderId}: ${error.message}`);
+//                 }
+//               }
             
-              console.log('Payment Intents:', paymentIntents);
-              // Handle payment intents data as needed
-            };
+//               console.log('Payment Intents:', paymentIntents);
+//               // Handle payment intents data as needed
+//             };
             
-            // Function to retrieve a payment intent by ID
-            const retrievePaymentIntent = async (paymentIntentId) => {
-              return new Promise((resolve, reject) => {
-                stripe.paymentIntents.retrieve(paymentIntentId, (err, paymentIntent) => {
-                  if (err) {
-                    reject(err);
-                  } else {
-                    resolve(paymentIntent);
-                  }
-                });
-              });
-            };
+//             // Function to retrieve a payment intent by ID
+//             const retrievePaymentIntent = async (paymentIntentId) => {
+//               return new Promise((resolve, reject) => {
+//                 stripe.paymentIntents.retrieve(paymentIntentId, (err, paymentIntent) => {
+//                   if (err) {
+//                     reject(err);
+//                   } else {
+//                     resolve(paymentIntent);
+//                   }
+//                 });
+//               });
+//             };
             
-            // Rest of your code
-            
-            // Call the fetchPaymentIntentsSequentially function to retrieve and process payment intents
-            fetchPaymentIntentsSequentially();
+//             fetchPaymentIntentsSequentially();
 
-// console.log(transaction)
-// orderData=paymentIntents;
-// res.json({orderData})
 
-})
+
+// })
 
 
 
@@ -316,40 +312,7 @@ fetchOrderDetails();}catch(error){
 })
 
 
-app.get('/trial',(req,res)=>{
-  const ordersCollection = collection(db, 'Orders');
-let ordersData
-    // Fetch all documents from the collection
-    const fetchData = async () => {
-      try {
-        const querySnapshot = await getDocs(ordersCollection);
-         ordersData = [];
 
-        querySnapshot.forEach((doc) => {
-          // Store the data
-          ordersData.push({ ...doc.data() });
-        });
-          console.log(ordersData)
-
-        
-
-       
-        // console.log(ordersData,"orders")
-       
-     
-      } catch (error) {
-        console.error('Error fetching documents: ', error);
-      }
-    };
-    fetchData();
-
-    
-
-   
-
-   
-    res.send('ok')
-})
 
 
 

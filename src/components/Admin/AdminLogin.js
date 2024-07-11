@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
-import "../CSS/AdminLogin.css"
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import "../CSS/AdminLogin.css";
+import { useNavigate } from "react-router-dom";
 import { auth } from '../../config/Config';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import AdminNavbar from './AdminNavbar';
 
 function AdminLogin() {
     const navigate = useNavigate();
@@ -11,77 +13,89 @@ function AdminLogin() {
     const [values, setValues] = useState({
         email: '',
         password: '',
-
-
-
-    })
+    });
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(values);
-        signInWithEmailAndPassword(auth, values.email, values.password).then(async (res) => {
-            const user = res.user;
+        signInWithEmailAndPassword(auth, values.email, values.password)
+            .then(async (res) => {
+                const user = res.user;
+                toast.success('Logged in successfully!', {
+                    position: 'top-center',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
+                });
+                navigate("/AdminDashboard");
+            })
+            .catch((err) => {
+                console.error(err);
+                toast.error('Login failed. Please check your credentials.', {
+                    position: 'top-center',
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
+                });
+            });
+    };
 
-            console.log(user);
-            navigate("/AdminDashboard")
-
-
-        }).catch(err => console.log(err))
-    }
     return (
         <>
-
-
-            <div class="container my-4">
-                <div class="row">
-                    <div class="col-lg-3 col-md-2"></div>
-                    <div class="col-lg-6 col-md-8 login-box">
-                        <div class="col-lg-12 login-key">
-                            <i class="fa fa-key" aria-hidden="true"></i>
+        <AdminNavbar/>
+        <div className="login-container">
+            <div className="login-box">
+                <div className="login-title">ADMIN PANEL</div>
+                <form onSubmit={handleSubmit}>
+                    <div className="login-row">
+                        <div className="login-textbox">
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                required
+                                onChange={(e) => setValues({ ...values, email: e.target.value })}
+                            />
                         </div>
-                        <div class="col-lg-12 login-title">
-                            ADMIN PANEL
-                        </div>
-
-                        <div class="col-lg-12 login-form">
-                            <div class="col-lg-12 login-form">
-                                <form>
-                                    <div class="form-group">
-                                        <label class="form-control-label">USERNAME</label>
-                                        <input type="text" class="form-control" name='email' onChange={(events) => {
-                                            setValues((prev) => ({ ...prev, email: events.target.value }))
-                                        }} />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-control-label">PASSWORD</label>
-                                        <input type="password" class="form-control" name='password'
-                                            onChange={(events) => {
-                                                setValues((prev) => ({ ...prev, password: events.target.value }))
-                                            }} i />
-                                    </div>
-
-                                    <div class="col-lg-12 loginbttm">
-                                        <div class="col-lg-6 login-btm login-text">
-                                            {/* <!-- Error Message --> */}
-                                        </div>
-                                        <div class="col-lg-6 login-btm login-button">
-                                            <button type="submit" onClick={handleSubmit} class="btn btn-outline-primary">LOGIN</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-2"></div>
                     </div>
-                </div>        </div>
-
-
-
-
-
-
+                    <div className="login-row">
+                        <div className="login-textbox">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                required
+                                onChange={(e) => setValues({ ...values, password: e.target.value })}
+                            />
+                        </div>
+                    </div>
+                    <button type="submit" className="login-button">LOGIN</button>
+                </form>
+                <ToastContainer
+                    position="top-center"
+                    autoClose={3000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />
+            </div>
+        </div>
         </>
-    )
+    );
 }
 
-export default AdminLogin
+export default AdminLogin;

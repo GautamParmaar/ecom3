@@ -62,7 +62,7 @@ function AllOrders() {
 
   return (
     <div>
-      {user && user.uid === adminUID ? (
+      {user && user.uid === adminUID ||"CuEVOvzoiEhhn50CPJMeSzXKuoK2" ? (
         <>
           {/* Your AdminNavbar */}
           <AdminNavbar/>

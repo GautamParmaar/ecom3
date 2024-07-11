@@ -20,9 +20,10 @@ const [user,setUser]=useState();
    
   },[]) 
   const adminUID = 'xjOj4RwBPnUNyFscGqqB6GJHbBt2';
+  const admin2='CuEVOvzoiEhhn50CPJMeSzXKuoK2';
   return (
     <div>
-      {user && user.uid === adminUID ? (
+      {user && user.uid === adminUID || user && user.uid===admin2? (
         <><AdminNavbar/>
         <div>Welcome to the Admin Dashboard</div></>
       ) : (

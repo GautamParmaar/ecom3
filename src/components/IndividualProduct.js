@@ -5,15 +5,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 export const IndividualProduct = ({individualProduct,addToCart}) => {
-  let params=useParams();
   let addToCartToast=()=>{
     toast.info('Product has been added to cart', {
       position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
+      pauseOnHover: false,
+      draggable: false,
       progress: undefined,
       theme: "light",
       });};
