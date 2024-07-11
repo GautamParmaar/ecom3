@@ -22,16 +22,7 @@ useEffect(()=>{
 
 },[])
     console.log(userid);
-    const handleToken=async(token)=>{
-        const cart={id:userid}
-        const queryParams = new URLSearchParams(cart).toString();
-
-
-        const response=await axios.get(`http://localhost:8080/orderDetails?${queryParams}`)
-        let orderData=[]
-       
-      
-        }
+    
 
         const handleToken2=async(token)=>{
           const cart={id:userid}
@@ -96,7 +87,7 @@ const handleSearch = (event) => {
               </div>
               <div className="buttons">
                 <button className="btn btn-primary my-0 mx-1">Order Details</button>
-                <button className="btn btn-danger my-0 mx-1">Cancel Order</button>
+                {/* <button className="btn btn-danger my-0 mx-1">Cancel Order</button> */}
                 <button className="btn btn-primary my-0 mx-1">Pay Now</button>
               </div>
             </div>

@@ -512,5 +512,169 @@ header .intro-text {
   font-weight: 600;
   color: #666;
 }
+/* Login component styles */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh; 
+  background-color: #f0f2f5; 
+  margin-top: -20px;
+  
+}
 
+.login-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 500px;
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.login-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.login-textbox {
+  flex: 1;
+  margin-right: 10px; /* Adjust spacing between label and input */
+}
+
+.login-textbox label {
+  color: #333;
+}
+
+.login-textbox input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.login-textbox input:focus {
+  border-color: #007bff;
+}
+
+.login-button {
+  padding: 10px; /* Adjust button padding */
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  text-align: center;
+  align-items: center;
+  width: 100%; /* Ensure button takes full width */
+  display: flex; /* Use flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+.login-forgot {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-forgot:hover {
+  text-decoration: underline;
+}
+
+
+/* AddProducts component styles */
+.add-products-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: #f0f2f5;
+}
+
+.add-products-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 500px;
+}
+
+.add-products-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.add-products-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-products-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.add-products-textbox {
+  flex: 1;
+}
+
+.add-products-textbox input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.add-products-textbox input:focus {
+  border-color: #007bff;
+}
+
+.add-products-button {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.add-products-button:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  text-align: center;
+  color: red;
+  font-size: 18px;
+}
+.Toastify__toast-container {
+  z-index: 9999;
+}
 

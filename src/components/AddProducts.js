@@ -1,148 +1,136 @@
-import React,{useState} from 'react'
-import { setDoc,doc, addDoc, collection } from "firebase/firestore";
+import React, { useState } from 'react';
+import { setDoc, doc, addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import {db,storage } from "../config/Config.js"
+import { db, storage } from "../config/Config.js";
 import AdminNavbar from './Admin/AdminNavbar.js';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+function AddProducts({ user }) {
+  const [values, setValues] = useState({
+    name: '',
+    brand: '',
+    category: '',
+    price: '',
+    desc: '',
+  });
+  const [image, setImage] = useState('');
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const timestamp = new Date().getTime();
+    const uniqueFileName = `${timestamp}_${image.name}`;
 
-
-function AddProducts({user}) {
-    const [values, setValues] = useState({
-		name: '',
-		brand: '',
-		category:'',
-		price:'',
-		desc:'',
-		// img:''
-	
-		// name: '',
-		// number: ''
-	
-	  })
-      const [image, setImage] = useState('');
-      const handleSubmit=async(event)=>{
-		event.preventDefault();
-		// if(image==null)return;
-		// const imageRef=storage.ref(`/image/${image.name}`).put(image).on("state_changed");
-		// imageRef()
-		// const imageUrl = await getDownloadURL(imageRef);
-		const timestamp = new Date().getTime();
-		const uniqueFileName = `${timestamp}_${image.name}`;
-
-		const storageRef =ref(storage, 'ProductImages/' + uniqueFileName);
+    const storageRef = ref(storage, 'ProductImages/' + uniqueFileName);
     await uploadBytes(storageRef, image);
 
-    // Get the download URL of the uploaded image
     const imageUrl = await getDownloadURL(storageRef);
-		
-		
-		 try {
-		  const docRef =  addDoc(collection(db, "products" ), {
-				name:values.name,
-				brand:values.brand,
-				category:values.category,
-				price:values.price,
-				description:values.desc,
-				image:imageUrl
 
-		  });
-		  console.log("Document written with ID: ");
-		} catch (e) {
-		  console.error("Error adding document: ", e);
-		}
-		 
-		
-	  
-		 
-	   
-		 
-		
-		
-	  }
-    const adminUID = process.env.REACT_APP_ADMINUID;
-    console.log(user)
+    try {
+      await addDoc(collection(db, "products"), {
+        name: values.name,
+        brand: values.brand,
+        category: values.category,
+        price: values.price,
+        description: values.desc,
+        image: imageUrl
+      });
+      toast.success('Product added successfully!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (e) {
+      toast.error('Error adding product: ' + e.message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }
 
+  const adminUID = process.env.REACT_APP_ADMINUID;
+  const admin2 = 'CuEVOvzoiEhhn50CPJMeSzXKuoK2';
 
   return (
     <>
-    {user && user.uid === adminUID ? (
-      <div>
-        <AdminNavbar />
-        <div className="container">
-          <br></br>
-          <br></br>
-          <h1>Add Products</h1>
-          <hr></hr>
-          <div className="success-msg"></div>
-          <br></br>
-          <form autoComplete="off" className="form-group" onSubmit={handleSubmit}>
-            <label>Product Title</label>
-            <input
-              type="text"
-              className="form-control"
-              required
-              name="name"
-              onChange={(events) => {
-                setValues((prev) => ({ ...prev, name: events.target.value }));
-              }}
-            ></input>
-            <br></br>
-            <label>Product Description</label>
-            <input
-              type="text"
-              className="form-control"
-              required
-              onChange={(events) => {
-                setValues((prev) => ({ ...prev, desc: events.target.value }));
-              }}
-            ></input>
-            <br></br>
-            <label>Product Price</label>
-            <input
-              type="number"
-              className="form-control"
-              required
-              name="price"
-              onChange={(events) => {
-                setValues((prev) => ({ ...prev, price: events.target.value }));
-              }}
-            ></input>
-            <br></br>
-            <label>Category</label>
-            <input
-              type="text"
-              className="form-control"
-              required
-              name="category"
-              onChange={(events) => {
-                setValues((prev) => ({ ...prev, category: events.target.value }));
-              }}
-            ></input>
-            <br></br>
-            <label>Upload Product Image</label>
-            <input
-              type="file"
-              id="file"
-              className="form-control"
-              required
-              onChange={(e) => setImage(e.target.files[0])}
-            ></input>
-            <br></br>
-            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <button type="submit" className="btn btn-success btn-md">
-                SUBMIT
-              </button>
+      <ToastContainer />
+      {user && (user.uid === adminUID || user.uid === admin2) ? (
+        <div>
+          <AdminNavbar />
+          <div className="add-products-container">
+            <div className="add-products-box">
+              <div className="add-products-title">Add Products</div>
+              <form onSubmit={handleSubmit} className="add-products-form">
+                <div className="add-products-row">
+                  <div className="add-products-textbox">
+                    <input
+                      type="text"
+                      placeholder="Product Title"
+                      required
+                      onChange={(e) => setValues({ ...values, name: e.target.value })}
+                    />
+                  </div>
+                </div>
+                <div className="add-products-row">
+                  <div className="add-products-textbox">
+                    <input
+                      type="text"
+                      placeholder="Product Description"
+                      required
+                      onChange={(e) => setValues({ ...values, desc: e.target.value })}
+                    />
+                  </div>
+                </div>
+                <div className="add-products-row">
+                  <div className="add-products-textbox">
+                    <input
+                      type="number"
+                      placeholder="Product Price"
+                      required
+                      onChange={(e) => setValues({ ...values, price: e.target.value })}
+                    />
+                  </div>
+                </div>
+                <div className="add-products-row">
+                  <div className="add-products-textbox">
+                    <input
+                      type="text"
+                      placeholder="Category"
+                      required
+                      onChange={(e) => setValues({ ...values, category: e.target.value })}
+                    />
+                  </div>
+                </div>
+                <div className="add-products-row">
+                  <div className="add-products-textbox">
+                    <input
+                      type="file"
+                      required
+                      onChange={(e) => setImage(e.target.files[0])}
+                    />
+                  </div>
+                </div>
+                <button type="submit" className="add-products-button">SUBMIT</button>
+              </form>
             </div>
-          </form>
-          <br></br>
+          </div>
         </div>
-      </div>
-    ) : (
-      <div>Error: You are not authorized to view this content</div>
-    )}
-  </>
+      ) : (
+        <div className="error-message">Error: You are not authorized to view this content</div>
+      )}
+    </>
   )
 }
 
-export default AddProducts
+export default AddProducts;
