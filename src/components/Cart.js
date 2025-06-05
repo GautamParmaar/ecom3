@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { auth, db } from '../config/Config';
 import { getDoc, doc, collection, getDocs, onSnapshot, updateDoc, deleteDoc } from "firebase/firestore";
 import CartProducts from './CartProducts';
-import StripeCheckout from 'react-stripe-checkout'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { loadStripe } from '@stripe/stripe-js';
-import MyOrder from './Order/MyOrder';
 
 
 

@@ -2,12 +2,7 @@ import React from 'react'
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import "./CSS/Carousel.css"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClinicMedical } from '@fortawesome/free-solid-svg-icons'; // Import the pharmacy sign icon
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { faGift } from '@fortawesome/free-solid-svg-icons';
-import { faTag } from '@fortawesome/free-solid-svg-icons';
-import { faPuzzlePiece } from '@fortawesome/free-solid-svg-icons';
+
 import { useNavigate } from 'react-router-dom';
 
 

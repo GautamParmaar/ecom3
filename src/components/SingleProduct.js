@@ -1,8 +1,8 @@
 import React,{useEffect, useState} from 'react'
 import "./CSS/SingleProduct.css"
-import { useNavigate, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import { db } from '../config/Config';
-import { collection, doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -12,7 +12,6 @@ function SingleProduct(props) {
     const productID=id.id;
     console.log("id",id.id);
     console.log(props.userid)
-    const history=useNavigate()
 
     //for fetching individual products
     const [products, setProducts]=useState([]);
@@ -159,7 +158,7 @@ const addToCart =async (product)=>{
                     <div class="buttons">
                         <div class="row">
                             <div class="col-md-4">
-                            <div className='btn btn-primary'  onClick={addToCart}>ADD TO CART</div>
+                            <div style={{marginLeft:'-50px'}} className='btn btn-primary'  onClick={addToCart}>ADD TO CART</div>
                             </div>
                             <div class="col-md-6">
                             </div>
