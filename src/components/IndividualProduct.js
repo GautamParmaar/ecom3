@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -35,7 +35,6 @@ export const IndividualProduct = ({individualProduct,addToCart}) => {
     <div className='product-text price'>₹ {individualProduct.price}</div>
 <div className='btn btn-primary '  onClick={handleAddToCart}>ADD TO CART</div>
 
-{/* Same as */}
 <ToastContainer />
 
     </div>

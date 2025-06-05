@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { setDoc, doc, addDoc, collection } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { db, storage } from "../config/Config.js";
 import AdminNavbar from './Admin/AdminNavbar.js';
@@ -40,8 +40,8 @@ function AddProducts({ user }) {
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
+        pauseOnHover: false,
+        draggable: false,
         progress: undefined,
         theme: "light",
       });

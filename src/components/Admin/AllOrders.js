@@ -3,7 +3,7 @@ import { auth, db } from '../../config/Config';
 import AdminNavbar from './AdminNavbar';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import moment from 'moment';
+import moment from 'moment'; //for date manipulation
 import { collection, getDocs } from 'firebase/firestore';
 import "../CSS/Specific.css";
 
@@ -13,7 +13,7 @@ function AllOrders() {
   const [orders, setOrders] = useState([]);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [serialCounter, setSerialCounter] = useState(1); // Initialize the serial counter
+  const [serialCounter, setSerialCounter] = useState(1); 
 
   useEffect(() => {
     auth.onAuthStateChanged(user => {
@@ -67,7 +67,7 @@ function AllOrders() {
           {/* Your AdminNavbar */}
           <AdminNavbar/>
           <div style={{fontSize:'30px',textAlign:'center',marginTop:'5px',}} className='OrderLabel my-2'>All Orders</div>
-          <div className="container">
+          <div  className="container">
             <div className="customer_details orderList">
               <div className="orderTop">
                 <h5>Filter Orders by Date</h5>
@@ -92,10 +92,10 @@ function AllOrders() {
               <div className="order_tab">
                 {filteredOrders.length > 0 ? (
                   filteredOrders.map((order, index) => (
-                    <div key={index}>
+                    <div  key={index}>
                       {order.Orders.map((orderData, subIndex) => (
                         <div key={subIndex} style={{ marginBottom: '2rem' }}>
-                          <div className="orderCardWrap orderCard tab-content1 current" id="order_tab">
+                          <div style={{marginTop:'5px',marginBottom:'5px'}} className="orderCardWrap orderCard tab-content1 current" id="order_tab">
                             <div className="orderHead">
                               <ul className="orderLeft">
                                 <li>
